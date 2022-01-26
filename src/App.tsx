@@ -2,27 +2,25 @@ import React from 'react';
 import './App.css';
 import { CssBaseline, Typography } from '@mui/material';
 import Layout from './theme/layout';
+
+import { Routes, Route, Link } from "react-router-dom";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+
 function App() {
-  function greeter(fn: (a: string) => void) {
-    fn('Hello, World');
-  }
+  
 
-  function printToConsole(s: string) {
-    console.log(s);
-  }
-
-  greeter(printToConsole);
   return (
     <>
-      <CssBaseline />
-      <Layout>
-        <Typography variant="h1">h1</Typography>
-        <Typography variant="h2">h2</Typography>
-        <Typography variant="h3">h3</Typography>
-        <Typography variant="subtitle1">subtitle1</Typography>
-        <Typography variant="subtitle2">subtitle2</Typography>
-        <Typography variant="bodySmall">bodySmall</Typography>
-      </Layout>
+      <Link to="/">Home</Link>
+      <Link to="/login">Login</Link>
+
+      <Routes>
+            <Route path="/login" element={<Login />}>
+            </Route>
+            <Route path="/" element={<Home />}>
+            </Route>
+      </Routes>
     </>
   );
 }
