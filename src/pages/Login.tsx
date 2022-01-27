@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import loginImg from '../images/login.png';
 
-const Login = (): any => {
+const Login = () => {
   return (
     <Grid container spacing={0}>
       <Grid item xs={6}>

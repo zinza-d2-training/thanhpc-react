@@ -1,6 +1,4 @@
-const Home = (): any=>{
-    return(
-        <div>Home page</div>
-    ) 
-}
+const Home = () => {
+  return <div>Home page</div>;
+};
 export default Home;
