@@ -10,20 +10,19 @@ import loginImg from '../images/login.png';
 
 const Login = () => {
   return (
-    <Grid container spacing={0}>
+    <Grid container>
       <Grid item xs={6}>
-        <Box sx={{ fontSize: '0' }}>
-          <Box
-            component="img"
-            sx={{
-              height: '100vh',
-              width: '100%',
-              objectFit: 'cover'
-            }}
-            alt=""
-            src={loginImg}
-          />
-        </Box>
+        <Box
+          component="img"
+          sx={{
+            height: '100vh',
+            width: '100%',
+            objectFit: 'cover',
+            verticalAlign: 'middle'
+          }}
+          alt=""
+          src={loginImg}
+        />
       </Grid>
       <Grid item xs={6}>
         <Box
@@ -38,10 +37,7 @@ const Login = () => {
             sx={{
               width: '376px'
             }}>
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 'bold', mb: 3 }}
-              component="div">
+            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
               Đăng nhập vào tài khoản
             </Typography>
             <Box>
@@ -77,7 +73,8 @@ const Login = () => {
                     '&:hover': {
                       background: colors.green['400']
                     }
-                  }}>
+                  }}
+                  type="submit">
                   Đăng nhập
                 </Button>
               </Box>
@@ -95,7 +92,8 @@ const Login = () => {
                     },
                     borderColor: colors.green['400'],
                     border: 1
-                  }}>
+                  }}
+                  type="submit">
                   Đăng ký
                 </Button>
               </Box>
