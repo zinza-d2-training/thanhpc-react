@@ -1,7 +1,8 @@
 import { FC } from 'react';
+import { Box } from '@mui/system';
 
 const Layout: FC = (props) => {
-  return <div className="App">{props.children}</div>;
+  return <Box className="App">{props.children}</Box>;
 };
 
 export default Layout;
