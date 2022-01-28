@@ -10,7 +10,6 @@ function App() {
   return (
     <>
       <Layout>
-        <Counter />
         <Routes>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Home />}></Route>
