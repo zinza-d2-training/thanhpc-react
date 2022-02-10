@@ -1,6 +1,4 @@
-import { Counter } from '../features/counter/Counter';
-
 const Home = () => {
-  return <Counter />;
+  return <h1>home</h1>;
 };
 export default Home;

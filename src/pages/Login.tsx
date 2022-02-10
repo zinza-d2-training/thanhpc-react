@@ -4,29 +4,41 @@ import {
   Typography,
   TextField,
   Button,
+  CircularProgress,
   colors
 } from '@mui/material';
-import loginImg from '../images/login.png';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '../validations/yups/userInfoSchema';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface UserInfo {
-  citizenId: string;
-  password: string;
-}
+import loginImg from '../images/login.png';
+import { schema } from '../validations/yups/userSchema';
+import { useAppDispatch, useAppSelector } from '../../src/store/hooks';
+import { loginSelector, loginAsync } from '../../src/features/login/loginSlice';
+import { User } from '../../src/models/User';
 
 const Login = () => {
   const {
     formState: { errors },
     control,
     handleSubmit
-  } = useForm<UserInfo>({
+  } = useForm<User>({
     resolver: yupResolver(schema)
   });
-  const formSubmitHandler: SubmitHandler<UserInfo> = (data: UserInfo) => {
-    console.log('data: ', data);
+  const dispatch = useAppDispatch();
+  const login_selector = useAppSelector(loginSelector);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (login_selector.response?.token) {
+      navigate('/user');
+    }
+  }, [navigate, login_selector]);
+
+  const formSubmitHandler: SubmitHandler<User> = (data: User) => {
+    dispatch(loginAsync(data));
   };
 
   return (
@@ -83,7 +95,11 @@ const Login = () => {
                   <Typography
                     component="label"
                     variant="body2"
-                    sx={{ color: colors.red['600'] }}>
+                    sx={{
+                      color: colors.red['600'],
+                      mt: 0.3,
+                      display: 'block'
+                    }}>
                     {errors.citizenId.message}
                   </Typography>
                 )}
@@ -95,11 +111,12 @@ const Login = () => {
                 <Controller
                   name="password"
                   control={control}
-                  defaultValue="thanhhienlanh"
+                  defaultValue="password123"
                   render={({ field }) => (
                     <TextField
                       fullWidth
-                      placeholder="thanhhienlanh"
+                      type="password"
+                      placeholder="password123"
                       {...field}
                       sx={{ root: { height: '50px' } }}
                     />
@@ -113,6 +130,18 @@ const Login = () => {
                     {errors.password.message}
                   </Typography>
                 )}
+                {login_selector.response?.statusCode === 401 ? (
+                  <Typography
+                    component="label"
+                    variant="body2"
+                    sx={{
+                      color: colors.red['600'],
+                      mt: 0.3,
+                      display: 'block'
+                    }}>
+                    {login_selector.response?.message}
+                  </Typography>
+                ) : null}
               </Box>
               <Box my={3}>
                 <Typography
@@ -128,10 +157,18 @@ const Login = () => {
                     color: '#fff',
                     height: '50px',
                     '&:hover': {
-                      background: colors.green['400']
+                      background: colors.green['600']
                     }
                   }}
-                  type="submit">
+                  disabled={Boolean(
+                    !!errors.citizenId?.message ||
+                      !!errors.password?.message ||
+                      login_selector.loading
+                  )}
+                  type="submit"
+                  startIcon={
+                    login_selector.loading && <CircularProgress size={20} />
+                  }>
                   Đăng nhập
                 </Button>
               </Box>
@@ -145,7 +182,7 @@ const Login = () => {
                     color: colors.green['400'],
                     height: '50px',
                     '&:hover': {
-                      background: '#fff'
+                      background: colors.green['100']
                     },
                     borderColor: colors.green['400'],
                     border: 1
