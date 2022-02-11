@@ -23,7 +23,7 @@ export function fetchAccount(value: User) {
           token: null,
           fullname: null,
           statusCode: 401,
-          message: 'Tên đăng nhập/mật khẩu không chính xác'
+          message: 'Số chứng minh nhân dân/mật khẩu không chính xác'
         };
         reject({
           data
