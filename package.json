@@ -16,7 +16,11 @@
     "@types/node": "^16.11.21",
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "heroku-ssl-redirect": "^0.1.1",
+    "on-headers": "^1.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.25.1",
@@ -30,8 +34,9 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
     "build": "react-scripts build",
+    "dev": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx src/",
