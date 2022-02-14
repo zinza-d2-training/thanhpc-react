@@ -1,7 +1,5 @@
 import Layout from './theme/layout';
-
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Routes, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import User from './pages/User';
