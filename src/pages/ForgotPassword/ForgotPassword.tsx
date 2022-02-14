@@ -1,5 +1,5 @@
 import { Box, Grid, Typography, colors } from '@mui/material';
-import loginImg from '../images/login.png';
+import loginImg from '../../images/login.png';
 
 const ForgotPassword = () => {
   return (

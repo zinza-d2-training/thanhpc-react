@@ -13,35 +13,37 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import loginImg from '../images/login.png';
-import { schema } from '../validations/yups/userSchema';
-import { useAppDispatch, useAppSelector } from '../../src/store/hooks';
-import { loginSelector, loginAsync } from '../../src/features/login/loginSlice';
-import { User } from '../../src/models/User';
+import loginImg from '../../images/login.png';
+import { schema } from '../../validations/yups/userSchema';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { loginSelector, loginAsync } from '../../features/login/loginSlice';
+import { User } from '../../models/User';
 
 const Login = () => {
   const {
-    formState: { errors },
+    formState: { errors, isValid },
     control,
     handleSubmit
   } = useForm<User>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    mode: 'onChange'
   });
   const dispatch = useAppDispatch();
-  const login_selector = useAppSelector(loginSelector);
+  const loginselectorResult = useAppSelector(loginSelector);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (login_selector.response?.token) {
+    if (loginselectorResult.response?.data?.token) {
       navigate('/user');
     }
-  }, [navigate, login_selector]);
+    console.log(loginselectorResult);
+  }, [navigate, loginselectorResult]);
 
   const formSubmitHandler: SubmitHandler<User> = (data: User) => {
     dispatch(loginAsync(data));
   };
 
-  return (
+  return !loginselectorResult.response?.data?.token ? (
     <Grid container>
       <Grid item xs={6}>
         <Box
@@ -61,16 +63,23 @@ const Login = () => {
           sx={{
             minHeight: '100vh',
             display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            justifyContent: 'center'
           }}>
           <Box
             component="form"
             onSubmit={handleSubmit(formSubmitHandler)}
             sx={{
-              width: '376px'
+              width: '376px',
+              mt: 6
             }}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 'bold',
+                mb: 3,
+                '@media(min-height: 768px)': { mt: '150px' },
+                '@media(min-height: 920px)': { mt: '25vh' }
+              }}>
               Đăng nhập vào tài khoản
             </Typography>
             <Box>
@@ -85,24 +94,18 @@ const Login = () => {
                   render={({ field }) => (
                     <TextField
                       fullWidth
+                      helperText={
+                        errors.citizenId?.message
+                          ? errors.citizenId?.message
+                          : null
+                      }
+                      error={errors.citizenId?.message ? true : false}
                       placeholder="123456789"
                       {...field}
-                      sx={{ root: { height: '50px' } }}
+                      sx={{ root: { height: '50px' }, mt: 0.5 }}
                     />
                   )}
                 />
-                {errors.citizenId?.message && (
-                  <Typography
-                    component="label"
-                    variant="body2"
-                    sx={{
-                      color: colors.red['600'],
-                      mt: 0.3,
-                      display: 'block'
-                    }}>
-                    {errors.citizenId.message}
-                  </Typography>
-                )}
               </Box>
               <Box>
                 <Typography component="label" variant="body1">
@@ -116,36 +119,22 @@ const Login = () => {
                     <TextField
                       fullWidth
                       type="password"
-                      placeholder="password123"
+                      placeholder="***********"
+                      helperText={
+                        errors.password?.message
+                          ? errors.password?.message
+                          : null
+                      }
+                      error={errors.password?.message ? true : false}
                       {...field}
-                      sx={{ root: { height: '50px' } }}
+                      sx={{ root: { height: '50px' }, mt: 0.5 }}
                     />
                   )}
                 />
-                {errors.password?.message && (
-                  <Typography
-                    component="label"
-                    variant="body2"
-                    sx={{ color: colors.red['600'] }}>
-                    {errors.password.message}
-                  </Typography>
-                )}
-                {login_selector.response?.statusCode === 401 ? (
-                  <Typography
-                    component="label"
-                    variant="body2"
-                    sx={{
-                      color: colors.red['600'],
-                      mt: 0.3,
-                      display: 'block'
-                    }}>
-                    {login_selector.response?.message}
-                  </Typography>
-                ) : null}
               </Box>
-              <Box my={3}>
+              <Box mt={2} mb={3}>
                 <Typography
-                  mb={3}
+                  mb={2}
                   align="right"
                   sx={{ cursor: 'pointer', color: colors.indigo['600'] }}>
                   <Link to="/forgot-password">Quên mật khẩu?</Link>
@@ -160,14 +149,13 @@ const Login = () => {
                       background: colors.green['600']
                     }
                   }}
-                  disabled={Boolean(
-                    !!errors.citizenId?.message ||
-                      !!errors.password?.message ||
-                      login_selector.loading
-                  )}
+                  variant="contained"
+                  disabled={Boolean(!isValid || loginselectorResult.loading)}
                   type="submit"
                   startIcon={
-                    login_selector.loading && <CircularProgress size={20} />
+                    loginselectorResult.loading && (
+                      <CircularProgress size={20} />
+                    )
                   }>
                   Đăng nhập
                 </Button>
@@ -196,6 +184,6 @@ const Login = () => {
         </Box>
       </Grid>
     </Grid>
-  );
+  ) : null;
 };
 export default Login;

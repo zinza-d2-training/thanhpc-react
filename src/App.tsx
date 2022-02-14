@@ -1,10 +1,10 @@
 import Layout from './theme/layout';
 
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import Login from './pages/Login';
-import Home from './pages/Home';
-import User from './pages/User';
-import ForgotPassword from './pages/ForgotPassword';
+import Login from './pages/Login/Login';
+import Home from './pages/Home/Home';
+import User from './pages/User/User';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 
 function App() {
   return (
