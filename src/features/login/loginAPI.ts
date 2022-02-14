@@ -19,7 +19,7 @@ export function fetchAccount(value: User) {
           }
         });
       } else {
-        const data: Partial<ResponseLogin> = {
+        const data: ResponseLogin = {
           token: null,
           fullname: null,
           statusCode: 401,

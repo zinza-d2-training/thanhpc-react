@@ -6,7 +6,7 @@ import { RootState } from '../../store';
 
 interface LoginState {
   user: User | null;
-  response: Partial<ResponseLogin> | null;
+  response: ResponseLogin | null;
   loading: boolean;
 }
 const initialState: LoginState = {
@@ -35,7 +35,7 @@ export const loginSlice = createSlice({
     });
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.loading = false;
-      state.response = action.payload;
+      state.response = action.payload as ResponseLogin;
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.response = action.payload as ResponseLogin;
@@ -45,4 +45,4 @@ export const loginSlice = createSlice({
 });
 
 export const loginSelector = (state: RootState) => state.login;
-export default loginSlice.reducer;
+export const loginReducer = loginSlice.reducer;
