@@ -1,12 +1,34 @@
 // config redux devtool + redux thunk
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import {
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers
+} from '@reduxjs/toolkit';
+
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // store
+import { loginReducer } from '../features/login/loginSlice';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['login']
+};
+
+const rootReducer = combineReducers({
+  login: loginReducer
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer
-  }
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false })
 });
+
+export const persistor = persistStore(store);
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
