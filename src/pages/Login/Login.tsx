@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';
 
-const Login = () => {
+export const Login = () => {
   const {
     formState: { errors, isValid },
     control,
@@ -166,6 +166,8 @@ const Login = () => {
                 </Typography>
                 <Button
                   fullWidth
+                  component={Link}
+                  to={'/register'}
                   sx={{
                     color: colors.green['400'],
                     height: '50px',
@@ -186,4 +188,3 @@ const Login = () => {
     </Grid>
   ) : null;
 };
-export default Login;

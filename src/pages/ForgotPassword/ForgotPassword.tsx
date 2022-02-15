@@ -16,7 +16,7 @@ import forgotPasswordImg from '../../images/forgot-password.png';
 import { CustomButton } from '../../components/CustomButton';
 import { useClock } from '../../hooks/useClock';
 
-const ForgotPassword = () => {
+export const ForgotPassword = () => {
   const [otp, setOtp] = useState<string>('');
   const [isShowResendOtp, setIsShowResendOtp] = useState<boolean>(false);
   const { time, setTime } = useClock({ hours: 0, minutes: 0, seconds: 0 });
@@ -274,4 +274,3 @@ const ForgotPassword = () => {
     </Grid>
   );
 };
-export default ForgotPassword;

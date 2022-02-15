@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { loginSelector } from '../../features/login/loginSlice';
 
-const User = () => {
+export const User = () => {
   const login_selector = useAppSelector(loginSelector);
 
   return login_selector.response?.data?.token ? (
@@ -12,4 +12,3 @@ const User = () => {
     <Navigate to="/login" />
   );
 };
-export default User;
