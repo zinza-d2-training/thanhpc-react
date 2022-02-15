@@ -36,7 +36,6 @@ const Login = () => {
     if (loginselectorResult.response?.data?.token) {
       navigate('/user');
     }
-    console.log(loginselectorResult);
   }, [navigate, loginselectorResult]);
 
   const formSubmitHandler: SubmitHandler<User> = (data: User) => {
