@@ -3,14 +3,20 @@ import { Box, Grid, Typography, TextField, colors } from '@mui/material';
 
 import loginImg from '../../images/login.png';
 import { StyledButton } from '../../components/StyledButton';
+import { useNavigate } from 'react-router-dom';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 
 const ForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   const handleOpenModal = () => {
     setOpen(true);
+  };
+
+  const handleBackToLogin = () => {
+    navigate('/login');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +96,8 @@ const ForgotPassword = () => {
                   color: colors.indigo['700'],
                   background: '#fff',
                   mr: 1
-                }}>
+                }}
+                onClick={handleBackToLogin}>
                 Quay lại
               </StyledButton>
               <StyledButton
