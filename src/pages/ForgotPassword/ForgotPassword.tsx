@@ -1,12 +1,5 @@
-import { useEffect, useState } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  colors,
-  Divider
-} from '@mui/material';
+import { useState } from 'react';
+import { Box, Grid, Typography, TextField, colors } from '@mui/material';
 
 import loginImg from '../../images/login.png';
 import { StyledButton } from '../../components/StyledButton';
@@ -14,8 +7,18 @@ import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 
 const ForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
+
   const handleOpenModal = () => {
     setOpen(true);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length === 9 || e.target.value.length === 12) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   const handleCloseModal = () => setOpen(false);
@@ -74,7 +77,8 @@ const ForgotPassword = () => {
             <Box>
               <TextField
                 fullWidth
-                sx={{ borderRadius: 1 }}
+                onChange={handleChange}
+                sx={{ borderRadius: 1, height: '50px' }}
                 placeholder="123456789"
               />
             </Box>
@@ -97,7 +101,9 @@ const ForgotPassword = () => {
                     background: colors.indigo['600']
                   }
                 }}
-                onClick={handleOpenModal}>
+                variant="contained"
+                onClick={handleOpenModal}
+                disabled={disabled}>
                 Gửi
               </StyledButton>
             </Box>
