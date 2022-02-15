@@ -6,9 +6,9 @@ export interface ApiResponse<TData> {
 }
 export interface LoginQueryResult {
   user: {
-    citizenId: String | null;
-    full_name: string | null;
+    citizenId: String;
+    full_name: string;
   };
-  token: string | null;
+  token: string;
 }
 export type LoginQueryResponse = ApiResponse<LoginQueryResult>;
