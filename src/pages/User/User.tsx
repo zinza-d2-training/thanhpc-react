@@ -4,10 +4,10 @@ import { useAppSelector } from '../../store/hooks';
 import { loginSelector } from '../../features/login/loginSlice';
 
 const User = () => {
-  const loginSelectorResult = useAppSelector(loginSelector);
+  const login_selector = useAppSelector(loginSelector);
 
-  return loginSelectorResult.response?.data?.token ? (
-    <h1>hello {loginSelectorResult.response?.data?.user.full_name}</h1>
+  return login_selector.response?.data?.token ? (
+    <h1>hello {login_selector.response?.data.user.full_name}</h1>
   ) : (
     <Navigate to="/login" />
   );
