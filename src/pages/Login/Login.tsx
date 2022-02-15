@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loginImg from '../../images/login.png';
-import { schema } from '../../validations/yups/userSchema';
+import { schema } from '../../features/login/userSchema';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';

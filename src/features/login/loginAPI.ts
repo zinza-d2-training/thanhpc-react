@@ -4,7 +4,7 @@ import {
   LoginQueryResult,
   QueryResult
 } from './responseLogin';
-import { fakeAccount } from '../../db/fakeAccount';
+import { fakeAccount } from './consts';
 import { SECRET_KEY } from './secret_key';
 export function fetchAccount(value: User) {
   return new Promise<LoginQueryResponse>((resolve, reject) => {
