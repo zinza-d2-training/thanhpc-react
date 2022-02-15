@@ -102,7 +102,7 @@ const Login = () => {
                       error={errors.citizenId?.message ? true : false}
                       placeholder="123456789"
                       {...field}
-                      sx={{ root: { height: '50px' }, mt: 0.5 }}
+                      sx={{ root: { height: '50px' }, mt: 1 }}
                     />
                   )}
                 />
@@ -127,7 +127,7 @@ const Login = () => {
                       }
                       error={errors.password?.message ? true : false}
                       {...field}
-                      sx={{ root: { height: '50px' }, mt: 0.5 }}
+                      sx={{ root: { height: '50px' }, mt: 1 }}
                     />
                   )}
                 />
