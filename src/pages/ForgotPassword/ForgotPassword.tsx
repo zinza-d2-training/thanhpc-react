@@ -13,7 +13,7 @@ import OtpInput from 'react-otp-input';
 
 import loginImg from '../../images/login.png';
 import forgotPasswordImg from '../../images/forgot-password.png';
-import { CustomButton } from '../../components/CustomButton';
+import { StyledButton } from '../../components/StyledButton';
 import { useClock } from '../../hooks/useClock';
 
 const ForgotPassword = () => {
@@ -164,7 +164,7 @@ const ForgotPassword = () => {
           )}
           <Box
             sx={{ justifyContent: 'center', display: 'flex', mt: 5, mb: 2.1 }}>
-            <CustomButton
+            <StyledButton
               sx={{
                 border: 1,
                 borderColor: colors.indigo['700'],
@@ -174,8 +174,8 @@ const ForgotPassword = () => {
               }}
               onClick={handleCloseModal}>
               Hủy Bỏ
-            </CustomButton>
-            <CustomButton
+            </StyledButton>
+            <StyledButton
               sx={{
                 background: colors.indigo['700'],
                 color: '#fff',
@@ -186,7 +186,7 @@ const ForgotPassword = () => {
               variant="contained"
               disabled={disabled}>
               Xác Nhận
-            </CustomButton>
+            </StyledButton>
           </Box>
         </Box>
       </Modal>
@@ -246,7 +246,7 @@ const ForgotPassword = () => {
               />
             </Box>
             <Box sx={{ justifyContent: 'center', display: 'flex', mt: 5 }}>
-              <CustomButton
+              <StyledButton
                 sx={{
                   border: 1,
                   borderColor: colors.indigo['700'],
@@ -255,8 +255,8 @@ const ForgotPassword = () => {
                   mr: 1
                 }}>
                 Quay lại
-              </CustomButton>
-              <CustomButton
+              </StyledButton>
+              <StyledButton
                 sx={{
                   background: colors.indigo['700'],
                   color: '#fff',
@@ -266,7 +266,7 @@ const ForgotPassword = () => {
                 }}
                 onClick={handleOpenModal}>
                 Gửi
-              </CustomButton>
+              </StyledButton>
             </Box>
           </Box>
         </Box>
