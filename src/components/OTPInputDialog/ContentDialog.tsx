@@ -18,8 +18,6 @@ export const ContentDialog = (props: Props) => {
   const { time, setTime } = useClock({ hours: 0, minutes: 2, seconds: 0 });
   const [disabled, setDisabled] = useState<boolean>(true);
 
-  console.log(time);
-  console.log(time);
   const handleChangeOtp = (otp: string) => {
     setOtp(otp);
   };
