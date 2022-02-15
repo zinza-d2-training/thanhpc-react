@@ -135,7 +135,8 @@ export const ContentDialog = (props: Props) => {
             }
           }}
           variant="contained"
-          disabled={disabled}>
+          disabled={disabled}
+          onClick={onClose}>
           Xác Nhận
         </StyledButton>
       </Box>
