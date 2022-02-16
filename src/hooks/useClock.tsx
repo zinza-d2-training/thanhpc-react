@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 
-import { Time } from '../../src/models/Time';
-
+interface Time {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
 const perfectNumber = (value: number) => {
   if (value < 10) {
     return '0' + value;

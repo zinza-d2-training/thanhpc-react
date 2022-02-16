@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loginImg from '../../images/login.png';
-import { schema } from '../../features/login/userSchema';
+import { userSchema } from '../../features/login/schema';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';
@@ -25,7 +25,7 @@ export const Login = () => {
     control,
     handleSubmit
   } = useForm<User>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(userSchema),
     mode: 'onChange'
   });
   const dispatch = useAppDispatch();
@@ -36,7 +36,6 @@ export const Login = () => {
     if (loginselectorResult.response?.data?.token) {
       navigate('/user');
     }
-    console.log(loginselectorResult);
   }, [navigate, loginselectorResult]);
 
   const formSubmitHandler: SubmitHandler<User> = (data: User) => {
