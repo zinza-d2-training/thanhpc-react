@@ -17,7 +17,7 @@ export function fetchAccount(value: User) {
         const data: QueryResult<LoginQueryResult> = {
           user: {
             citizenId: fakeAccount.citizenId,
-            full_name: fakeAccount.full_name
+            full_name: fakeAccount.full_name as string
           },
           token
         };

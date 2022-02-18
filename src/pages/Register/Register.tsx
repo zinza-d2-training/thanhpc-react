@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -6,20 +7,21 @@ import { Box, Grid, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
 
 import loginImg from '../../images/login.png';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { useForm, FormProvider } from 'react-hook-form';
-import { userSchema } from '../../features/login/schema';
+import { userSchema } from '../../validations/yups/schema';
 import { User } from '../../models/User';
-import { SubmitHandler } from 'react-hook-form';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
-  const methods = useForm();
+  const methods = useForm<User>({
+    resolver: yupResolver(userSchema),
+    mode: 'onChange'
+  });
   const onSubmit = (data: any) => console.log(data);
   const {
     formState: { errors, isValid },
@@ -49,10 +51,10 @@ export const Register = () => {
 
   switch (activeStep) {
     case 0:
-      contentComponent = <StepOne handleDisable={handleDisable} />;
+      contentComponent = <StepOne {...methods} handleDisable={handleDisable} />;
       break;
     case 1:
-      contentComponent = <StepTwo />;
+      contentComponent = <StepTwo {...methods} handleDisable={handleDisable} />;
       break;
     case 2:
       contentComponent = <StepThree />;
@@ -84,7 +86,12 @@ export const Register = () => {
           }}>
           <Typography
             variant="h4"
-            sx={{ mt: 2.75, mb: 1.5, textAlign: 'center', fontWeight: 'bold' }}>
+            sx={{
+              mt: 2.75,
+              mb: 1.25,
+              textAlign: 'center',
+              fontWeight: 'bold'
+            }}>
             Đăng ký tài khoản
           </Typography>
           <Box
@@ -111,9 +118,9 @@ export const Register = () => {
                   component="form"
                   onSubmit={methods.handleSubmit(onSubmit)}
                   sx={{
-                    width: '100%',
+                    width: '450px',
                     display: 'flex',
-                    justifyContent: 'center',
+                    alignItems: 'center',
                     flexDirection: 'column'
                   }}>
                   {contentComponent}
@@ -121,7 +128,7 @@ export const Register = () => {
                     sx={{
                       display: 'flex',
                       justifyContent: 'space-between',
-                      px: 18
+                      width: '100%'
                     }}>
                     <Button
                       variant="text"

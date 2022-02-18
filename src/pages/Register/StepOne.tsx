@@ -2,15 +2,12 @@ import { useEffect, useState } from 'react';
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
 import { Box, Typography, TextField, Button, colors } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Controller, useForm, useFormContext } from 'react-hook-form';
-
+import { Controller, useFormContext } from 'react-hook-form';
+// import { SubmitHandler } from 'react-hook-form';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
-const Input = styled('input')({
-  display: 'none'
-});
+import { Label } from '../../components/Label';
 interface Props {
   handleDisable: any;
 }
@@ -54,8 +51,8 @@ export const StepOne = (props: Props) => {
     setShowModalImage(false);
   };
   useEffect(() => {
-    handleDisable(isValid, listImage.length);
-  }, [handleDisable, isValid, listImage]);
+    handleDisable(listImage.length);
+  }, [handleDisable, listImage]);
   return (
     <>
       <ImageDialog
@@ -64,21 +61,19 @@ export const StepOne = (props: Props) => {
         onClose={onCloseTitleDialog}
       />
       <Box>
-        <Box sx={{ mb: 2, px: 14 }}>
-          <Typography component="label" variant="body1">
-            Chứng minh nhân dân/Căn cước công dân
-          </Typography>
+        <Box sx={{ mb: 2 }}>
+          <Label required={true}>Chứng minh nhân dân/Căn cước công dân</Label>
           <Controller
             name="citizenId"
-            control={control}
+            // control={control}
             defaultValue="123456789"
             render={({ field }) => (
               <TextField
                 fullWidth
-                helperText={
-                  errors.citizenId?.message ? errors.citizenId?.message : null
-                }
-                error={errors.citizenId?.message ? true : false}
+                // helperText={
+                //   errors.citizenId?.message ? errors.citizenId?.message : null
+                // }
+                // error={errors.citizenId?.message ? true : false}
                 placeholder="123456789"
                 {...field}
                 sx={{ root: { height: '50px' }, mt: 1 }}
@@ -86,36 +81,29 @@ export const StepOne = (props: Props) => {
             )}
           />
         </Box>
-        <Box sx={{ mb: 2, px: 14 }}>
-          <Typography component="label" variant="body1">
-            Mật khẩu
-          </Typography>
+        <Box sx={{ mb: 2 }}>
+          <Label required={true}>Mật khẩu</Label>
           <Controller
             name="password"
-            control={control}
+            // control={control}
             defaultValue="password123"
             render={({ field }) => (
               <TextField
                 fullWidth
                 type="password"
                 placeholder="***********"
-                helperText={
-                  errors.password?.message ? errors.password?.message : null
-                }
-                error={errors.password?.message ? true : false}
+                // helperText={
+                // errors.password?.message ? errors.password?.message : null
+                // }
+                // error={errors.password?.message ? true : false}
                 {...field}
                 sx={{ root: { height: '50px' }, mt: 1 }}
               />
             )}
           />
         </Box>
-        <Box
-          sx={{
-            px: 14
-          }}>
-          <Typography component="label" variant="body1">
-            Ảnh chụp CMND/CCCD 2 mặt
-          </Typography>
+        <Box>
+          <Label required={true}>Ảnh chụp CMND/CCCD 2 mặt</Label>
           <Box
             sx={{
               mt: 2,
