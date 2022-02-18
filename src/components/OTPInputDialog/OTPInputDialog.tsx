@@ -12,7 +12,7 @@ export const OTPInputDialog = (props: Props) => {
   const { onClose, open } = props;
   return (
     <Dialog open={open} hideBackdrop>
-      <HeaderDialog onClose={onClose} />
+      <HeaderDialog onClose={onClose} title="Xác thực OTP" />
       <Divider />
       <ContentDialog onClose={onClose} />
     </Dialog>
