@@ -13,37 +13,39 @@ import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { useForm, FormProvider } from 'react-hook-form';
-import { userSchema } from '../../validations/yups/schema';
+import { registerSchema } from '../../validations/yups/schema';
 import { User } from '../../models/User';
+import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
   const methods = useForm<User>({
-    resolver: yupResolver(userSchema),
+    resolver: yupResolver(registerSchema),
     mode: 'onChange'
   });
   const onSubmit = (data: any) => console.log(data);
-  const {
-    formState: { errors, isValid },
-    control
-  } = useForm<User>({
-    resolver: yupResolver(userSchema),
-    mode: 'onChange'
-  });
 
+  const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [activeStep, setActiveStep] = useState<number>(0);
 
   let contentComponent = null;
 
+  const handleOpenModal = () => setOpen(true);
+  const handleCloseModal = () => setOpen(false);
+
   const handleSkip = () => {
-    setActiveStep(activeStep + 1);
+    if (activeStep === steps.length - 1) {
+      handleOpenModal();
+    } else {
+      setActiveStep(activeStep + 1);
+    }
   };
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const handleDisable = (isValid: boolean, length: number) => {
-    if (length < 2 || !isValid) {
+  const handleDisable = (isHaveErrors: boolean, length: number) => {
+    if (isHaveErrors || length < 2) {
       return setDisabled(true);
     }
     setDisabled(false);
@@ -57,13 +59,16 @@ export const Register = () => {
       contentComponent = <StepTwo {...methods} handleDisable={handleDisable} />;
       break;
     case 2:
-      contentComponent = <StepThree />;
+      contentComponent = (
+        <StepThree {...methods} handleDisable={handleDisable} />
+      );
       break;
     default:
       break;
   }
   return (
     <Grid container>
+      <OTPInputDialog open={open} onClose={handleCloseModal} />
       <Grid item xs={6}>
         <Box
           component="img"
@@ -144,15 +149,15 @@ export const Register = () => {
                     </Button>
                     <Button
                       sx={{
-                        display:
-                          activeStep === steps.length - 1 ? 'none' : 'inherit',
                         marginLeft: activeStep === 0 ? 'auto' : null
                       }}
                       type="submit"
                       onClick={handleSkip}
                       disabled={disabled}
                       endIcon={<ArrowForwardIcon />}>
-                      Tiếp tục
+                      {activeStep === steps.length - 1
+                        ? 'Hoàn thành'
+                        : 'Tiếp tục'}
                     </Button>
                   </Box>
                 </Box>

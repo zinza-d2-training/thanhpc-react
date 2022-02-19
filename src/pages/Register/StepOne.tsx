@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
 import { Box, Typography, TextField, Button, colors } from '@mui/material';
@@ -8,24 +8,27 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { Label } from '../../components/Label';
-interface Props {
-  handleDisable: any;
-}
+// interface Props {
+//   handleDisable: any;
+// }
 interface IFile {
   file?: File | undefined;
   preview: string;
 }
-export const StepOne = (props: Props) => {
-  const { handleDisable } = props;
+export const StepOne = (props: any) => {
   const { register } = useFormContext();
   const [listImage, setListImage] = useState<Array<IFile>>([]);
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const [imageIsShowed, setImageIsShowed] = useState<any>();
 
   const {
-    formState: { errors, isValid },
+    formState: { errors },
+    handleDisable,
     control
-  } = useFormContext();
+  } = props;
+  const isHaveErrors = useMemo(() => {
+    return !!errors.citizenId || !!errors.password;
+  }, [errors.citizenId, errors.password]);
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -51,8 +54,8 @@ export const StepOne = (props: Props) => {
     setShowModalImage(false);
   };
   useEffect(() => {
-    handleDisable(listImage.length);
-  }, [handleDisable, listImage]);
+    handleDisable(isHaveErrors, listImage.length);
+  }, [isHaveErrors, handleDisable, listImage]);
   return (
     <>
       <ImageDialog
@@ -65,15 +68,15 @@ export const StepOne = (props: Props) => {
           <Label required={true}>Chứng minh nhân dân/Căn cước công dân</Label>
           <Controller
             name="citizenId"
-            // control={control}
+            control={control}
             defaultValue="123456789"
             render={({ field }) => (
               <TextField
                 fullWidth
-                // helperText={
-                //   errors.citizenId?.message ? errors.citizenId?.message : null
-                // }
-                // error={errors.citizenId?.message ? true : false}
+                helperText={
+                  errors.citizenId?.message ? errors.citizenId?.message : null
+                }
+                error={errors.citizenId?.message ? true : false}
                 placeholder="123456789"
                 {...field}
                 sx={{ root: { height: '50px' }, mt: 1 }}
@@ -85,17 +88,17 @@ export const StepOne = (props: Props) => {
           <Label required={true}>Mật khẩu</Label>
           <Controller
             name="password"
-            // control={control}
+            control={control}
             defaultValue="password123"
             render={({ field }) => (
               <TextField
                 fullWidth
                 type="password"
                 placeholder="***********"
-                // helperText={
-                // errors.password?.message ? errors.password?.message : null
-                // }
-                // error={errors.password?.message ? true : false}
+                helperText={
+                  errors.password?.message ? errors.password?.message : null
+                }
+                error={errors.password?.message ? true : false}
                 {...field}
                 sx={{ root: { height: '50px' }, mt: 1 }}
               />

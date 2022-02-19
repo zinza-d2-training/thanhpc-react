@@ -3,7 +3,7 @@ export interface User {
   citizenId: string;
   password: string;
   full_name: string;
-  image: Array<File> | null;
+  image: string | null;
   dob: string;
   gender: string;
   phone_number: string;

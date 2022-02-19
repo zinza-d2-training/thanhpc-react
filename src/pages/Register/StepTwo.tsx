@@ -1,19 +1,36 @@
 import { Box, TextField, MenuItem } from '@mui/material';
+import { useMemo } from 'react';
 import { useEffect } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { Label } from '../../components/Label';
 
 export const StepTwo = (props: any) => {
-  const { handleDisable } = props;
-
   const {
-    formState: { errors, isValid },
+    formState: { errors },
+    handleDisable,
     control
-  } = useFormContext();
+  } = props;
+  const isHaveErrors = useMemo(() => {
+    return (
+      !!errors.citizenId ||
+      !!errors.password ||
+      !!errors.full_name ||
+      !!errors.dob ||
+      !!errors.gender ||
+      !!errors.phone_number
+    );
+  }, [
+    errors.citizenId,
+    errors.password,
+    errors.full_name,
+    errors.dob,
+    errors.gender,
+    errors.phone_number
+  ]);
 
   useEffect(() => {
-    handleDisable(isValid);
-  }, [handleDisable, isValid]);
+    handleDisable(isHaveErrors);
+  }, [handleDisable, isHaveErrors]);
 
   return (
     <>
@@ -41,7 +58,6 @@ export const StepTwo = (props: any) => {
         <Controller
           name="dob"
           control={control}
-          defaultValue="123456789"
           render={({ field }) => (
             <TextField
               fullWidth

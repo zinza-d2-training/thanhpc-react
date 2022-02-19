@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loginImg from '../../images/login.png';
-import { userSchema } from '../../validations/yups/schema';
+import { loginSchema } from '../../validations/yups/schema';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';
@@ -25,7 +25,7 @@ export const Login = () => {
     control,
     handleSubmit
   } = useForm<User>({
-    resolver: yupResolver(userSchema),
+    resolver: yupResolver(loginSchema),
     mode: 'onChange'
   });
   const dispatch = useAppDispatch();
