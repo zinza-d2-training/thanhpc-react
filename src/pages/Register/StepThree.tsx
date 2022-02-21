@@ -29,6 +29,7 @@ export const StepThree = (props: any) => {
     clearErrors,
     handleDisable,
     getValues,
+    setError,
     setValue
   } = props;
 
@@ -38,7 +39,6 @@ export const StepThree = (props: any) => {
   const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
   const [listWard, setListWard] = useState<WardType[]>([]);
   const [provinceId, setProvinceId] = useState<string>('');
-  console.log(provinceId === '');
   const [districtId, setDistrictId] = useState<string>('');
   const [wardId, setWardId] = useState<string>('');
 
@@ -49,18 +49,19 @@ export const StepThree = (props: any) => {
     setAllowClickDistrict(true);
     const listDistrict = getChildArr(e.target.value, listProvince, 'Districts');
     setListDistrict(listDistrict);
+    setListWard([]);
     if (provinceId !== e.target.value) {
+      setError('district', { message: 'Đây là trường bắt buộc!' });
+      setError('ward', { message: 'Đây là trường bắt buộc!' });
       setAllowClickWard(false);
       handleDisable(true);
     }
   };
   const handleChangeDistrict = (e: any) => {
-    console.log(e.target.value);
     setDistrictId(e.target.value);
     setValue('district', e.target.value);
     clearErrors('district');
     const listWard = getChildArr(e.target.value, listDistrict, 'Wards');
-    console.log('listward', listWard);
     setListWard(listWard);
     setAllowClickWard(true);
   };
