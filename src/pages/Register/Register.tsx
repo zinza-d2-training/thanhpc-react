@@ -53,7 +53,9 @@ export const Register = () => {
 
   switch (activeStep) {
     case 0:
-      contentComponent = <StepOne {...methods} handleDisable={handleDisable} />;
+      contentComponent = (
+        <StepOne {...methods} handleDisable={handleDisable} maxImage={2} />
+      );
       break;
     case 1:
       contentComponent = <StepTwo {...methods} handleDisable={handleDisable} />;
@@ -74,7 +76,8 @@ export const Register = () => {
           component="img"
           sx={{
             height: '100vh',
-            width: '100%',
+            width: '50%',
+            position: 'fixed',
             objectFit: 'cover',
             verticalAlign: 'middle'
           }}
@@ -108,7 +111,7 @@ export const Register = () => {
               flexDirection: 'column'
             }}>
             <Stepper
-              sx={{ width: '500px' }}
+              sx={{ width: '500px', my: 2 }}
               alternativeLabel
               activeStep={activeStep}>
               {steps.map((label, index) => {

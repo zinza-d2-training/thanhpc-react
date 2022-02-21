@@ -18,6 +18,7 @@ export const StepOne = (props: any) => {
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const [imageIsShowed, setImageIsShowed] = useState<any>();
 
+  // react form hook lib
   const {
     formState: { errors },
     handleDisable,
@@ -27,17 +28,28 @@ export const StepOne = (props: any) => {
     getValues,
     control
   } = props;
+
+  const { maxImage } = props;
   const isHaveErrors = useMemo(() => {
     return !!errors.citizenId || !!errors.password || !!errors.image;
   }, [errors.citizenId, errors.password, errors.image]);
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      let img = e.target.files[0];
-      const preview = URL.createObjectURL(img);
-      setValue('image', [...getValues('image'), preview]);
+    if (e.target.files) {
+      const listImages = Object.values(e.target.files);
+      const listPreview = [];
+      const listFile: Array<IFile> = [];
+      const count =
+        e.target.files.length < maxImage ? e.target.files.length : maxImage;
+      console.log(count);
+      for (let i = 0; i < count; i++) {
+        let preview = URL.createObjectURL(listImages[i]);
+        listPreview.push(preview);
+        listFile.push({ file: e.target.files[i], preview });
+      }
+      setValue('image', [...listPreview]);
       setListImage((prev: Array<IFile>) => {
-        return [...prev, { file: img, preview }];
+        return [...listFile];
       });
     }
   };
@@ -61,12 +73,12 @@ export const StepOne = (props: any) => {
     setShowModalImage(false);
   };
   useMemo(() => {
-    if (listImage.length < 2 && !errors.image) {
+    if (listImage.length < maxImage && !errors.image) {
       setError('image', { message: 'Vui lòng chọn đúng 2 ảnh' });
     } else {
       clearErrors('image');
     }
-  }, [errors, listImage, setError, clearErrors]);
+  }, [errors, listImage, setError, clearErrors, maxImage]);
   useEffect(() => {
     handleDisable(isHaveErrors, listImage.length);
   }, [
@@ -97,6 +109,7 @@ export const StepOne = (props: any) => {
                 helperText={
                   errors.citizenId?.message ? errors.citizenId?.message : null
                 }
+                autoComplete="on"
                 error={errors.citizenId?.message ? true : false}
                 placeholder="123456789"
                 {...field}
@@ -116,6 +129,7 @@ export const StepOne = (props: any) => {
                 fullWidth
                 type="password"
                 placeholder="***********"
+                autoComplete="on"
                 helperText={
                   errors.password?.message ? errors.password?.message : null
                 }
@@ -136,13 +150,6 @@ export const StepOne = (props: any) => {
               p: 1,
               display: 'flex'
             }}>
-            {listImage.length < 2 && (
-              <FileUpload
-                register={register}
-                onImageChange={onImageChange}
-                validateField="image"
-              />
-            )}
             {listImage.map((image, index) => (
               <Box
                 key={image.preview}
@@ -238,6 +245,13 @@ export const StepOne = (props: any) => {
                 />
               </Box>
             ))}
+            {listImage.length < maxImage && (
+              <FileUpload
+                register={register}
+                onImageChange={onImageChange}
+                validateField="image"
+              />
+            )}
           </Box>
           <Typography sx={{ color: colors.red['600'], mt: 1, ml: 0.5 }}>
             {errors.image ? errors.image.message : null}
