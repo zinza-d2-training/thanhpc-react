@@ -1,5 +1,4 @@
 import { Typography, TypographyProps, Box, colors } from '@mui/material';
-import { FC } from 'react';
 
 interface LabelProps extends TypographyProps {
   required: boolean;

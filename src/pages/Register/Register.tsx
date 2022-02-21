@@ -94,6 +94,8 @@ export const Register = () => {
             sx={{
               mt: 2.75,
               mb: 1.25,
+              '@media(min-height: 768px)': { mt: '150px', mb: 3 },
+              '@media(min-height: 920px)': { mt: '25vh' },
               textAlign: 'center',
               fontWeight: 'bold'
             }}>

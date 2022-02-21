@@ -1,16 +1,13 @@
 import { useEffect, useState, useMemo } from 'react';
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
-import { Box, Typography, TextField, Button, colors } from '@mui/material';
+import { Box, Typography, TextField, colors } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
-// import { SubmitHandler } from 'react-hook-form';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { FileUpload } from '../../components/FileUpload/FileUpload';
 
 import { Label } from '../../components/Label';
-// interface Props {
-//   handleDisable: any;
-// }
 interface IFile {
   file?: File | undefined;
   preview: string;
@@ -24,22 +21,32 @@ export const StepOne = (props: any) => {
   const {
     formState: { errors },
     handleDisable,
+    setError,
+    clearErrors,
+    setValue,
+    getValues,
     control
   } = props;
   const isHaveErrors = useMemo(() => {
-    return !!errors.citizenId || !!errors.password;
-  }, [errors.citizenId, errors.password]);
+    return !!errors.citizenId || !!errors.password || !!errors.image;
+  }, [errors.citizenId, errors.password, errors.image]);
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       let img = e.target.files[0];
       const preview = URL.createObjectURL(img);
+      setValue('image', [...getValues('image'), preview]);
       setListImage((prev: Array<IFile>) => {
         return [...prev, { file: img, preview }];
       });
     }
   };
+
   const handleRemoveImage = (index: number) => {
+    setError('image', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    let listImagePreview = getValues('image');
+    listImagePreview.splice(index, 1);
+    setValue('image', listImagePreview);
     setListImage((prev: Array<IFile>) => {
       let newListImage = [...prev];
       newListImage.splice(index, 1);
@@ -53,9 +60,23 @@ export const StepOne = (props: any) => {
   const onCloseTitleDialog = () => {
     setShowModalImage(false);
   };
+  useMemo(() => {
+    if (listImage.length < 2 && !errors.image) {
+      setError('image', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    } else {
+      clearErrors('image');
+    }
+  }, [errors, listImage, setError, clearErrors]);
   useEffect(() => {
     handleDisable(isHaveErrors, listImage.length);
-  }, [isHaveErrors, handleDisable, listImage]);
+  }, [
+    isHaveErrors,
+    handleDisable,
+    listImage,
+    setError,
+    errors.image,
+    clearErrors
+  ]);
   return (
     <>
       <ImageDialog
@@ -116,45 +137,11 @@ export const StepOne = (props: any) => {
               display: 'flex'
             }}>
             {listImage.length < 2 && (
-              <Typography
-                sx={{
-                  m: 1,
-                  '.image-input': {
-                    display: 'none'
-                  }
-                }}
-                component="label"
-                htmlFor="contained-button-file">
-                <input
-                  // name="image"
-                  // helperText={
-                  //   errors.citizenId?.message ? errors.citizenId?.message : null
-                  // }
-                  // error={errors.citizenId?.message ? true : false}
-                  className="image-input"
-                  {...register('image')}
-                  accept="image/*"
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                  onChange={onImageChange}
-                />
-                <Button
-                  component="span"
-                  variant="outlined"
-                  sx={{
-                    width: '100px',
-                    height: '100px',
-                    background: colors.grey['100'],
-                    border: '1px dashed #D9D9D9',
-                    color: 'rgba(0, 0, 0, 0.87)',
-                    '&:hover': {
-                      border: '1px dashed #1E88E5'
-                    }
-                  }}>
-                  + Upload
-                </Button>
-              </Typography>
+              <FileUpload
+                register={register}
+                onImageChange={onImageChange}
+                validateField="image"
+              />
             )}
             {listImage.map((image, index) => (
               <Box
@@ -252,6 +239,9 @@ export const StepOne = (props: any) => {
               </Box>
             ))}
           </Box>
+          <Typography sx={{ color: colors.red['600'], mt: 1, ml: 0.5 }}>
+            {errors.image ? errors.image.message : null}
+          </Typography>
         </Box>
       </Box>
     </>
