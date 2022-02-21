@@ -15,7 +15,11 @@ export const HeaderDialog = (props: Props) => {
         pl: 3,
         py: 2,
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        width: '80%',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       }}
       {...other}>
       {title}

@@ -34,7 +34,7 @@ export const StepTwo = (props: any) => {
 
   return (
     <>
-      <Box sx={{ mb: 1, minWidth: '450px' }}>
+      <Box sx={{ mb: 2, minWidth: '450px' }}>
         <Label required={true}>Họ và tên</Label>
         <Controller
           name="full_name"
@@ -53,7 +53,7 @@ export const StepTwo = (props: any) => {
           )}
         />
       </Box>
-      <Box sx={{ mb: 1, minWidth: '450px' }}>
+      <Box sx={{ mb: 2, minWidth: '450px' }}>
         <Label required={true}>Ngày sinh</Label>
         <Controller
           name="dob"
@@ -70,7 +70,7 @@ export const StepTwo = (props: any) => {
           )}
         />
       </Box>
-      <Box sx={{ mb: 1, minWidth: '450px' }}>
+      <Box sx={{ mb: 2, minWidth: '450px' }}>
         <Label required={true}>Giới tính</Label>
         <Controller
           name="gender"
@@ -92,7 +92,7 @@ export const StepTwo = (props: any) => {
           )}
         />
       </Box>
-      <Box sx={{ mb: 1, minWidth: '450px' }}>
+      <Box sx={{ mb: 2, minWidth: '450px' }}>
         <Label required={true}>Số điện thoại</Label>
         <Controller
           name="phone_number"

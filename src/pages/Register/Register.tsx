@@ -7,6 +7,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from 'react-router-dom';
 
 import loginImg from '../../images/login.png';
 import { StepOne } from './StepOne';
@@ -30,6 +31,7 @@ export const Register = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
 
   let contentComponent = null;
+  const navigate = useNavigate();
 
   const handleOpenModal = () => setOpen(true);
   const handleCloseModal = () => setOpen(false);
@@ -43,6 +45,9 @@ export const Register = () => {
   };
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+    if (activeStep === 0) {
+      navigate('/home');
+    }
   };
   const handleDisable = (isHaveErrors: boolean, length: number) => {
     if (isHaveErrors || length < 2) {
@@ -53,7 +58,9 @@ export const Register = () => {
 
   switch (activeStep) {
     case 0:
-      contentComponent = <StepOne {...methods} handleDisable={handleDisable} />;
+      contentComponent = (
+        <StepOne {...methods} handleDisable={handleDisable} maxImage={2} />
+      );
       break;
     case 1:
       contentComponent = <StepTwo {...methods} handleDisable={handleDisable} />;
@@ -74,7 +81,8 @@ export const Register = () => {
           component="img"
           sx={{
             height: '100vh',
-            width: '100%',
+            width: '50%',
+            position: 'fixed',
             objectFit: 'cover',
             verticalAlign: 'middle'
           }}
@@ -108,7 +116,7 @@ export const Register = () => {
               flexDirection: 'column'
             }}>
             <Stepper
-              sx={{ width: '500px' }}
+              sx={{ width: '500px', my: 2 }}
               alternativeLabel
               activeStep={activeStep}>
               {steps.map((label, index) => {
@@ -143,7 +151,6 @@ export const Register = () => {
                       onClick={handleBack}
                       sx={{
                         color: 'rgba(0, 0, 0, 0.87)',
-                        display: activeStep === 0 ? 'none' : 'inherit',
                         marginRight:
                           activeStep === steps.length - 1 ? 'auto' : null
                       }}>

@@ -35,7 +35,7 @@ export const registerSchema = yup.object().shape({
     .string()
     .required('Đây là trường bắt buộc!')
     .matches(
-      /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/,
+      /(03|05|07|08|09|84[1|3|5|7|9]|01[2|6|8|9])+([0-9]{8})\b/,
       'Vui lòng nhập đúng định dạng'
     ),
   province: yup.string().required('Đây là trường bắt buộc!'),
