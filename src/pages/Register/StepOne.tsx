@@ -1,4 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
+import { UseFormReturn } from 'react-hook-form';
+
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
 import { Box, Typography, TextField, colors } from '@mui/material';
@@ -8,52 +10,58 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { FileUpload } from '../../components/FileUpload/FileUpload';
 
 import { Label } from '../../components/Label';
+import { UserFormData } from './types';
 interface IFile {
   file?: File | undefined;
   preview: string;
 }
-export const StepOne = (props: any) => {
+interface Props {
+  handleDisable: (isHaveErrors: boolean, length: number) => void;
+  maxImage: number;
+  methods: UseFormReturn<UserFormData, object>;
+}
+export const StepOne = (props: Props) => {
   const { register } = useFormContext();
   const [listImage, setListImage] = useState<Array<IFile>>([]);
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
-  const [imageIsShowed, setImageIsShowed] = useState<any>();
+  const [imageIsShowed, setImageIsShowed] = useState<IFile>();
 
   // react form hook lib
   const {
     formState: { errors },
-    handleDisable,
+
     setError,
     clearErrors,
     setValue,
     getValues,
     control
-  } = props;
+  } = props.methods;
 
-  const { maxImage } = props;
+  const { handleDisable, maxImage } = props;
   const isHaveErrors = useMemo(() => {
-    return !!errors.citizenId || !!errors.password || !!errors.image;
-  }, [errors.citizenId, errors.password, errors.image]);
+    return !!errors.citizenId || !!errors.password || !!errors.images;
+  }, [errors.citizenId, errors.password, errors.images]);
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      console.log(getValues('images'));
       const listImages = Object.values(e.target.files);
       const listPreview = [];
       const listFile: Array<IFile> = [];
       const count =
         e.target.files.length < maxImage ? e.target.files.length : maxImage;
-      console.log(count);
       for (let i = 0; i < count; i++) {
         let preview = URL.createObjectURL(listImages[i]);
         listPreview.push(preview);
         listFile.push({ file: e.target.files[i], preview });
       }
-      if (listPreview.length < maxImage) {
-        setValue('image', [...getValues('image'), ...listFile]);
+      if (listPreview.length < maxImage && getValues('images')) {
+        setValue('images', [...getValues('images'), ...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...prev, ...listFile];
         });
       } else {
-        setValue('image', [...listFile]);
+        setValue('images', [...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...listFile];
         });
@@ -61,17 +69,19 @@ export const StepOne = (props: any) => {
     }
   };
   const handleRemoveImage = (index: number) => {
-    setError('image', { message: 'Vui lòng chọn đúng 2 ảnh' });
-    let listImagePreview = getValues('image');
-    listImagePreview.splice(index, 1);
-    setValue('image', listImagePreview);
+    setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    let listImagePreview = getValues('images');
+    if (listImagePreview !== null) {
+      listImagePreview.splice(index, 1);
+    }
+    setValue('images', listImagePreview);
     setListImage((prev: Array<IFile>) => {
       let newListImage = [...prev];
       newListImage.splice(index, 1);
       return newListImage;
     });
   };
-  const handleShowModalImage = (image: any) => {
+  const handleShowModalImage = (image: IFile) => {
     setImageIsShowed(image);
     setShowModalImage(true);
   };
@@ -79,10 +89,10 @@ export const StepOne = (props: any) => {
     setShowModalImage(false);
   };
   useMemo(() => {
-    if (listImage.length < maxImage && !errors.image) {
-      setError('image', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    if (listImage.length < maxImage && !errors.images) {
+      setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
     } else {
-      clearErrors('image');
+      clearErrors('images');
     }
   }, [errors, listImage, setError, clearErrors, maxImage]);
   useEffect(() => {
@@ -92,12 +102,12 @@ export const StepOne = (props: any) => {
     handleDisable,
     listImage,
     setError,
-    errors.image,
+    errors.images,
     clearErrors
   ]);
   useEffect(() => {
-    if (getValues('image')) {
-      setListImage(getValues('image'));
+    if (getValues('images')) {
+      setListImage(getValues('images'));
     }
   }, [setListImage, getValues]);
   return (
@@ -265,7 +275,7 @@ export const StepOne = (props: any) => {
             )}
           </Box>
           <Typography sx={{ color: colors.red['600'], mt: 1, ml: 0.5 }}>
-            {errors.image ? errors.image.message : null}
+            {errors.images?.message}
           </Typography>
         </Box>
       </Box>

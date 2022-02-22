@@ -29,6 +29,7 @@ export const StepThree = (props: any) => {
     clearErrors,
     handleDisable,
     setError,
+    getValues,
     setValue
   } = props;
 
@@ -37,35 +38,43 @@ export const StepThree = (props: any) => {
   const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
   const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
   const [listWard, setListWard] = useState<WardType[]>([]);
-  const [provinceId, setProvinceId] = useState<string>('');
-  const [districtId, setDistrictId] = useState<string>('');
-  const [wardId, setWardId] = useState<string>('');
+  // const [provinceId, setProvinceId] = useState<string>('');
+  // const [districtId, setDistrictId] = useState<string>('');
+  // const [wardId, setWardId] = useState<string>('');
 
-  const handleChangeProvince = (e: any) => {
-    setProvinceId(e.target.value);
+  const handleChangeProvince = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    // setProvinceId(e.target.value);
+    console.log('getValues', getValues('province'));
+    console.log('new values', e.target.value);
     setValue('province', e.target.value);
     clearErrors('province');
     setAllowClickDistrict(true);
     const listDistrict = getChildArr(e.target.value, listProvince, 'Districts');
     setListDistrict(listDistrict);
     setListWard([]);
-    if (provinceId !== e.target.value) {
+    if (getValues('province') !== e.target.value) {
       setError('district', { message: 'Đây là trường bắt buộc!' });
       setError('ward', { message: 'Đây là trường bắt buộc!' });
       setAllowClickWard(false);
       handleDisable(true);
     }
   };
-  const handleChangeDistrict = (e: any) => {
-    setDistrictId(e.target.value);
+  const handleChangeDistrict = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    // setDistrictId(e.target.value);
     setValue('district', e.target.value);
     clearErrors('district');
     const listWard = getChildArr(e.target.value, listDistrict, 'Wards');
     setListWard(listWard);
     setAllowClickWard(true);
   };
-  const handleChangeWard = (e: any) => {
-    setWardId(e.target.value);
+  const handleChangeWard = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    // setWardId(e.target.value);
     setValue('ward', e.target.value);
     clearErrors('ward');
     handleDisable(false);
@@ -98,7 +107,7 @@ export const StepThree = (props: any) => {
               onChange={(e) => handleChangeProvince(e)}
               select>
               {listProvince.length > 0
-                ? listProvince.map((value) => (
+                ? listProvince.map((value: ProvinceType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}
                     </MenuItem>
@@ -126,8 +135,8 @@ export const StepThree = (props: any) => {
               onChange={(e) => handleChangeDistrict(e)}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              {!!provinceId
-                ? listDistrict.map((value: any) => (
+              {!!getValues('province')
+                ? listDistrict.map((value: DistrictType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}
                     </MenuItem>
@@ -153,8 +162,8 @@ export const StepThree = (props: any) => {
               onChange={(e) => handleChangeWard(e)}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              {!!districtId
-                ? listWard.map((value: any) => (
+              {!!getValues('district')
+                ? listWard.map((value: WardType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}
                     </MenuItem>

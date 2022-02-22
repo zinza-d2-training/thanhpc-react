@@ -1,8 +1,9 @@
 import { Typography, Button, colors } from '@mui/material';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface Props {
-  register: any;
-  onImageChange: any;
+  register: UseFormRegister<FieldValues>;
+  onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   validateField: string;
 }
 

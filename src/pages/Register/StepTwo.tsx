@@ -1,15 +1,22 @@
+import { UseFormReturn } from 'react-hook-form';
 import { Box, TextField, MenuItem } from '@mui/material';
 import { useMemo } from 'react';
 import { useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { Label } from '../../components/Label';
+import { UserFormData } from './types';
 
-export const StepTwo = (props: any) => {
+interface Props {
+  handleDisable: (isHaveErrors: boolean, length?: number) => void;
+  methods: UseFormReturn<UserFormData, object>;
+}
+
+export const StepTwo = (props: Props) => {
   const {
     formState: { errors },
-    handleDisable,
     control
-  } = props;
+  } = props.methods;
+  const { handleDisable } = props;
   const isHaveErrors = useMemo(() => {
     return (
       !!errors.citizenId ||

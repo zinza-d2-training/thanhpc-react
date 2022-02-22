@@ -13,18 +13,18 @@ import loginImg from '../../images/login.png';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, Resolver } from 'react-hook-form';
 import { registerSchema } from '../../validations/yups/schema';
-import { User } from '../../models/User';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
+import { UserFormData } from './types';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
-  const methods = useForm<User>({
-    resolver: yupResolver(registerSchema),
+  const methods = useForm<UserFormData>({
+    resolver: yupResolver(registerSchema) as Resolver<UserFormData>,
     mode: 'onChange'
   });
-  const onSubmit = (data: any) => console.log(data);
+  // const onSubmit = (data: any) => console.log(data);
 
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -49,8 +49,13 @@ export const Register = () => {
       navigate('/home');
     }
   };
-  const handleDisable = (isHaveErrors: boolean, length: number) => {
-    if (isHaveErrors || length < 2) {
+  const handleDisable = (isHaveErrors: boolean, length?: number) => {
+    if (length) {
+      if (length < 2) {
+        return setDisabled(true);
+      }
+    }
+    if (isHaveErrors) {
       return setDisabled(true);
     }
     setDisabled(false);
@@ -59,15 +64,17 @@ export const Register = () => {
   switch (activeStep) {
     case 0:
       contentComponent = (
-        <StepOne {...methods} handleDisable={handleDisable} maxImage={2} />
+        <StepOne methods={methods} handleDisable={handleDisable} maxImage={2} />
       );
       break;
     case 1:
-      contentComponent = <StepTwo {...methods} handleDisable={handleDisable} />;
+      contentComponent = (
+        <StepTwo methods={methods} handleDisable={handleDisable} />
+      );
       break;
     case 2:
       contentComponent = (
-        <StepThree {...methods} handleDisable={handleDisable} />
+        <StepThree methods={methods} handleDisable={handleDisable} />
       );
       break;
     default:
@@ -131,7 +138,7 @@ export const Register = () => {
               <FormProvider {...methods}>
                 <Box
                   component="form"
-                  onSubmit={methods.handleSubmit(onSubmit)}
+                  // onSubmit={methods.handleSubmit(onSubmit)}
                   sx={{
                     width: '450px',
                     display: 'flex',

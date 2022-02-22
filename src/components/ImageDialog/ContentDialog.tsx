@@ -1,9 +1,13 @@
 import DialogContent from '@mui/material/DialogContent';
 import { Box } from '@mui/material';
 
+interface IFile {
+  file?: File | undefined;
+  preview: string;
+}
 interface Props {
   onClose: () => void;
-  image: any;
+  image: IFile | undefined;
 }
 
 export const ContentDialog = (props: Props) => {
@@ -18,8 +22,8 @@ export const ContentDialog = (props: Props) => {
             objectFit: 'contain'
           }}
           component="img"
-          alt={image ? image.file.name : null}
-          src={image.preview}
+          alt={image ? image?.file?.name : null || undefined}
+          src={image?.preview}
         />
       </Box>
     </DialogContent>
