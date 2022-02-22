@@ -22,10 +22,9 @@ const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
   const methods = useForm<UserFormData>({
     resolver: yupResolver(registerSchema) as Resolver<UserFormData>,
-    mode: 'onChange'
+    mode: 'onChange',
+    defaultValues: { provinceId: '', wardId: '', districtId: '' }
   });
-  // const onSubmit = (data: any) => console.log(data);
-
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -50,7 +49,9 @@ export const Register = () => {
     }
   };
   const handleDisable = (isHaveErrors: boolean, length?: number) => {
+    console.log('isHaveErrors', isHaveErrors);
     if (length) {
+      console.log('vvao day');
       if (length < 2) {
         return setDisabled(true);
       }
@@ -167,7 +168,7 @@ export const Register = () => {
                       sx={{
                         marginLeft: activeStep === 0 ? 'auto' : null
                       }}
-                      type="submit"
+                      type="button"
                       onClick={handleSkip}
                       disabled={disabled}
                       endIcon={<ArrowForwardIcon />}>

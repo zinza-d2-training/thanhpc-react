@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { administrativeUnits } from '../../db/administrativeUnits';
 import { Box, TextField, MenuItem } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { Controller, UseFormReturn } from 'react-hook-form';
 
 import { Label } from '../../components/Label';
+import { UserFormData } from './types';
 interface WardType {
   Id?: string;
   Name?: string;
@@ -20,88 +21,89 @@ interface ProvinceType {
   Districts?: DistrictType[];
 }
 const getChildArr = (valueArgs: string, parentArr: any, nameArr: string) => {
-  return parentArr.find((value: any) => value.Id === valueArgs)[nameArr];
+  const unit = parentArr.find((value: any) => value.Id === valueArgs);
+  return unit ? unit[nameArr] : [];
 };
-export const StepThree = (props: any) => {
+
+interface Props {
+  handleDisable: (isHaveErrors: boolean, length?: number) => void;
+  methods: UseFormReturn<UserFormData, object>;
+}
+
+export const StepThree = ({ methods, handleDisable }: Props) => {
+  // using lib
   const {
     control,
     formState: { errors },
-    clearErrors,
-    handleDisable,
-    setError,
     getValues,
-    setValue
-  } = props;
+    setValue,
+    clearErrors,
+    trigger
+  } = methods;
+
+  const provinceId = getValues('provinceId');
+  const districtId = getValues('districtId');
+  const listProvince = administrativeUnits;
+
+  const listDistrict = useMemo(() => {
+    return getChildArr(provinceId, listProvince, 'Districts');
+  }, [provinceId, listProvince]);
+
+  const listWard = useMemo(() => {
+    return getChildArr(districtId, listDistrict, 'Wards');
+  }, [districtId, listDistrict]);
 
   const [allowClickDistrict, setAllowClickDistrict] = useState<boolean>(false);
   const [allowClickWard, setAllowClickWard] = useState<boolean>(false);
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
-  const [listWard, setListWard] = useState<WardType[]>([]);
-  // const [provinceId, setProvinceId] = useState<string>('');
-  // const [districtId, setDistrictId] = useState<string>('');
-  // const [wardId, setWardId] = useState<string>('');
 
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    // setProvinceId(e.target.value);
-    console.log('getValues', getValues('province'));
-    console.log('new values', e.target.value);
-    setValue('province', e.target.value);
-    clearErrors('province');
+    setValue('provinceId', e.target.value);
     setAllowClickDistrict(true);
-    const listDistrict = getChildArr(e.target.value, listProvince, 'Districts');
-    setListDistrict(listDistrict);
-    setListWard([]);
-    if (getValues('province') !== e.target.value) {
-      setError('district', { message: 'Đây là trường bắt buộc!' });
-      setError('ward', { message: 'Đây là trường bắt buộc!' });
+    setValue('districtId', '');
+    if (getValues('provinceId') !== e.target.value) {
       setAllowClickWard(false);
       handleDisable(true);
     }
+    trigger();
   };
+
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    // setDistrictId(e.target.value);
-    setValue('district', e.target.value);
-    clearErrors('district');
-    const listWard = getChildArr(e.target.value, listDistrict, 'Wards');
-    setListWard(listWard);
+    setValue('districtId', e.target.value);
+    setValue('wardId', '');
+    trigger();
     setAllowClickWard(true);
   };
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    // setWardId(e.target.value);
-    setValue('ward', e.target.value);
-    clearErrors('ward');
+    setValue('wardId', e.target.value);
+    clearErrors('wardId');
     handleDisable(false);
+    trigger();
   };
   useEffect(() => {
-    if (errors.province || errors.district || errors.ward) {
+    if (errors.provinceId || errors.districtId || errors.wardId) {
       handleDisable(true);
     }
   }, [errors, handleDisable]);
-  useEffect(() => {
-    setListProvince(administrativeUnits);
-  }, []);
+
   return (
     <>
       <Box sx={{ mb: 1, minWidth: '450px' }}>
         <Label required={true}>Tỉnh/Thành phố</Label>
         <Controller
-          name="province"
+          name="provinceId"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               placeholder="Tỉnh/Thành phố"
               fullWidth
-              helperText={
-                errors.province?.message ? errors.province?.message : null
-              }
-              error={errors.province?.message ? true : false}
+              helperText={error?.message}
+              error={invalid}
               {...field}
               sx={{ root: { height: '50px' }, mt: 1 }}
               onChange={(e) => handleChangeProvince(e)}
@@ -120,22 +122,20 @@ export const StepThree = (props: any) => {
       <Box sx={{ mb: 1, minWidth: '450px' }}>
         <Label required={true}>Quận/Huyện</Label>
         <Controller
-          name="district"
+          name="districtId"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               fullWidth
-              helperText={
-                errors.district?.message ? errors.district?.message : null
-              }
+              helperText={error?.message}
               placeholder="Quận/Huyện"
               disabled={!allowClickDistrict}
-              error={errors.district?.message ? true : false}
+              error={invalid}
               {...field}
               onChange={(e) => handleChangeDistrict(e)}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              {!!getValues('province')
+              {!!getValues('provinceId')
                 ? listDistrict.map((value: DistrictType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}
@@ -149,20 +149,20 @@ export const StepThree = (props: any) => {
       <Box sx={{ mb: 1, minWidth: '450px' }}>
         <Label required={true}>Xã/Phường</Label>
         <Controller
-          name="ward"
+          name="wardId"
           control={control}
-          render={({ field }) => (
+          render={({ field, fieldState: { invalid, error } }) => (
             <TextField
               fullWidth
               disabled={!allowClickWard}
               placeholder="Xã/Phường"
-              helperText={errors.ward?.message ? errors.ward?.message : null}
-              error={errors.ward?.message ? true : false}
+              helperText={error?.message}
+              error={invalid}
               {...field}
               onChange={(e) => handleChangeWard(e)}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              {!!getValues('district')
+              {!!getValues('districtId')
                 ? listWard.map((value: WardType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}
