@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Box, Grid, Typography, TextField, colors } from '@mui/material';
+import { Box, Grid, TextField, colors } from '@mui/material';
 
 import loginImg from '../../images/login.png';
 import { StyledButton } from '../../components/StyledButton';
+import { Label } from '../../components/Label';
 import { useNavigate } from 'react-router-dom';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 
-const ForgotPassword = () => {
+export const ForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [citizenId, setCitizenId] = useState<string>('');
@@ -63,26 +64,10 @@ const ForgotPassword = () => {
               width: '479px'
             }}>
             <Box sx={{ justifyContent: 'center', display: 'flex', mb: 3 }}>
-              <Typography
-                variant="body1"
-                sx={{
-                  position: 'relative',
-                  textAlign: 'center',
-                  width: '80%'
-                }}>
+              <Label required={true}>
                 Để khôi phục mật khẩu, vui lòng nhập đúng số CMND/CCCD bạn đã
                 dùng để đăng ký
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: colors.red['600'],
-                  position: 'absolute',
-                  right: '188px',
-                  top: '228px'
-                }}>
-                (*)
-              </Typography>
+              </Label>
             </Box>
             <Box>
               <TextField
@@ -125,4 +110,3 @@ const ForgotPassword = () => {
     </Grid>
   );
 };
-export default ForgotPassword;
