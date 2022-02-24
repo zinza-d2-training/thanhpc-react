@@ -10,7 +10,7 @@ import {
   MenuItem
 } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-
+import SearchIcon from '@mui/icons-material/Search';
 import { Bar, Line } from 'react-chartjs-2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,6 +21,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { Header } from '../../components/Header/Header';
+import { Footer } from '../../components/Footer/Footer';
+import { StyledTable } from '../../components/StyledTable/StyledTable';
 import userPlusImg from '../../images/user-plus.png';
 import needleImg from '../../images/needle.png';
 import protectImg from '../../images/protect.png';
@@ -30,8 +32,9 @@ import { lowestInjectionRate } from '../../db/lowestInjectionRate';
 import { statisticVaccinationByLocal } from '../../db/statisticVaccinationByLocal';
 import { statisticVaccinationByLocalMore } from '../../db/statisticVaccinationByLocal';
 import { StatisticVaccinationByLocal } from '../../pages/Home/types';
-import { StyledLinearProgress } from '../../components/StyledLinearProgress/StyledLinearProgress';
 import { administrativeUnits } from '../../db/administrativeUnits';
+import { lookUpInjectionSitesByLocation } from '../../db/lookUpInjectionSitesByLocation';
+import { LookUpInjectionSitesByLocation } from '../../pages/Home/types';
 
 import {
   Chart,
@@ -43,6 +46,7 @@ import {
   CategoryScale,
   Title
 } from 'chart.js';
+import { StyledButton } from '../../components';
 
 Chart.register(
   LineController,
@@ -81,9 +85,54 @@ const tableHead = [
   'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
   'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước'
 ];
+const dataAfterLookUpByLocationHeader = [
+  'STT',
+  'Tên điểm tiêm',
+  'Số nhà, tên đường',
+  'Xã/Phường',
+  'Quận/Huyện',
+  'Tỉnh/Thành Phố',
+  'Người đứng đầu cơ sở tiêm chủng',
+  'Số bàn tiêm'
+];
 const getChildArr = (valueArgs: string, parentArr: any, nameArr: string) => {
   const unit = parentArr.find((value: any) => value.Id === valueArgs);
   return unit ? unit[nameArr] : [];
+};
+const getNameById = (id: string, arr: any) => {
+  const name = arr.find((value: any) => value.Id === id)['Name'];
+  return name;
+};
+const getDistrictName = (provinceId: string, districtId: string, arr: any) => {
+  const listDistrict = arr.find((value: any) => value.Id === provinceId)[
+    'Districts'
+  ];
+  if (listDistrict) {
+    return listDistrict.find((value: any) => value.Id === districtId)['Name'];
+  }
+  return null;
+};
+const getWardName = (
+  provinceId: string,
+  districtId: string,
+  wardId: string,
+  arr: any
+) => {
+  const listDistrict = arr.find((value: any) => value.Id === provinceId)[
+    'Districts'
+  ];
+  if (listDistrict) {
+    const listWard = listDistrict.find((value: any) => value.Id === districtId)[
+      'Wards'
+    ];
+    if (listWard) {
+      let wardName =
+        listWard.find((value: any) => value.Id === wardId)['Name'] ||
+        'Không xác định';
+      return wardName;
+    }
+  }
+  return undefined;
 };
 interface Address {
   provinceId: string;
@@ -92,26 +141,24 @@ interface Address {
 }
 
 export const Home = () => {
-  const { control, getValues, setValue, trigger } = useForm<Address>({
+  const { control, getValues, setValue } = useForm<Address>({
     mode: 'onChange',
     defaultValues: {}
   });
 
-  const provinceId = getValues('provinceId');
-  const districtId = getValues('districtId');
   const listProvince = administrativeUnits;
-
-  const listDistrict = useMemo(() => {
-    return getChildArr(provinceId, listProvince, 'Districts');
-  }, [provinceId, listProvince]);
-
-  const listWard = useMemo(() => {
-    return getChildArr(districtId, listDistrict, 'Wards');
-  }, [districtId, listDistrict]);
+  const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
+  const [listWard, setListWard] = useState<WardType[]>([]);
+  const [disableClickDistrict, setDisableClickDistrict] =
+    useState<boolean>(true);
+  const [disableClickWard, setDisableClickWard] = useState<boolean>(true);
 
   const [dataOnTable, setDataOnTable] = useState<StatisticVaccinationByLocal[]>(
     () => statisticVaccinationByLocal
   );
+  const [dataAfterLookUpByLocation, setDataAfterLookUpByLocation] = useState<
+    LookUpInjectionSitesByLocation[]
+  >([]);
 
   const handleLoadMoreVaccinationByLocal = useCallback(() => {
     const newData: StatisticVaccinationByLocal[] =
@@ -119,26 +166,62 @@ export const Home = () => {
     setDataOnTable([...dataOnTable, ...newData]);
   }, [dataOnTable]);
 
-  useEffect(() => {
-    console.log('getValues', getValues());
-  }, [getValues]);
   const handleChangeProvince = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    console.log('getValues', getValues());
     setValue('provinceId', e.target.value);
     setValue('districtId', '');
+    setValue('wardId', '');
+    setListDistrict(getChildArr(e.target.value, listProvince, 'Districts'));
+    setListWard([]);
+    setDisableClickDistrict(false);
+    setDisableClickWard(true);
   };
   const handleChangeDistrict = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     setValue('districtId', e.target.value);
     setValue('wardId', '');
+    setListWard(getChildArr(e.target.value, listDistrict, 'Wards'));
+    setDisableClickWard(false);
   };
   const handleChangeWard = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     setValue('wardId', e.target.value);
+  };
+  const handleSearchLookUp = () => {
+    let newData: LookUpInjectionSitesByLocation[] = [];
+    if (getValues('provinceId')) {
+      newData = lookUpInjectionSitesByLocation.filter(
+        (value) => value.provinceId === getValues('provinceId')
+      );
+      if (getValues('districtId')) {
+        newData = newData.filter(
+          (value) => value.districtId === getValues('districtId')
+        );
+        if (getValues('wardId')) {
+          newData = newData.filter(
+            (value) => value.wardId === getValues('wardId')
+          );
+        }
+      }
+    }
+    newData.forEach((value) => {
+      value.provinceName = getNameById(value.provinceId, administrativeUnits);
+      value.districtName = getDistrictName(
+        value.provinceId,
+        value.districtId,
+        administrativeUnits
+      );
+      value.wardName = getWardName(
+        value.provinceId,
+        value.districtId,
+        value.wardId,
+        administrativeUnits
+      );
+    });
+    setDataAfterLookUpByLocation(newData);
   };
   return (
     <>
@@ -367,67 +450,7 @@ export const Home = () => {
           <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
             Số liệu vắc xin theo địa phương
           </Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  {tableHead.map((value, index) => (
-                    <TableCell key={index}>{value}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dataOnTable.map(
-                  (row: StatisticVaccinationByLocal, index: number) => (
-                    <TableRow
-                      key={index}
-                      sx={{
-                        '&:last-child td, &:last-child th': { border: 0 }
-                      }}>
-                      <TableCell component="th" scope="row">
-                        {index}
-                      </TableCell>
-                      <TableCell>{row.provinceName}</TableCell>
-                      <TableCell>{row.distributionPlan}</TableCell>
-                      <TableCell>{row.actualDistribution}</TableCell>
-                      <TableCell>{row.population}</TableCell>
-                      <TableCell>{row.numberOfInjected}</TableCell>
-                      <TableCell>
-                        <StyledLinearProgress
-                          color="#C65312"
-                          number={row.expectedRate}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <StyledLinearProgress
-                          color="#0593CF"
-                          number={row.distributedRatio}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <StyledLinearProgress
-                          color="#00884F"
-                          number={row.rateOfInjectionOfAtLeastOneDoseOfVaccine}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <StyledLinearProgress
-                          color="#AF8612"
-                          number={row.vaccinationRate}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <StyledLinearProgress
-                          color="#2D2188"
-                          number={row.vaccineDistributionRate}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          <StyledTable dataBody={dataOnTable} dataHead={tableHead} />
           <Stack direction="row" justifyContent="center" py={3}>
             <Box
               component={Button}
@@ -447,6 +470,7 @@ export const Home = () => {
             py: 2,
             mt: 4,
             mx: 4.5,
+            mb: 3.5,
             border: '1px solid rgba(38, 56, 150, 0.14)',
             boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
             borderRadius: '10px'
@@ -455,17 +479,21 @@ export const Home = () => {
             Tra cứu điểm tiêm theo địa bàn
           </Typography>
           <Box sx={{ display: 'flex' }}>
-            <Box sx={{ mb: 1 }}>
+            <Box sx={{ mb: 1, ml: 2 }}>
               <Controller
                 name="provinceId"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
                     placeholder="Tỉnh/Thành phố"
-                    helperText={error?.message}
-                    error={invalid}
                     {...field}
-                    sx={{ mt: 1, minWidth: '300px' }}
+                    sx={{
+                      mt: 1,
+                      minWidth: '300px',
+                      '.MuiSelect-select': {
+                        p: 1
+                      }
+                    }}
                     onChange={(e) => handleChangeProvince(e)}
                     select>
                     {listProvince.length > 0
@@ -479,17 +507,22 @@ export const Home = () => {
                 )}
               />
             </Box>
-            <Box sx={{ mb: 1 }}>
+            <Box sx={{ mb: 1, ml: 2 }}>
               <Controller
                 name="districtId"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
-                    placeholder="Tỉnh/Thành phố"
-                    helperText={error?.message}
-                    error={invalid}
+                    placeholder="Quận/huyện"
                     {...field}
-                    sx={{ mt: 1, minWidth: '300px' }}
+                    disabled={disableClickDistrict}
+                    sx={{
+                      mt: 1,
+                      minWidth: '300px',
+                      '.MuiSelect-select': {
+                        p: 1
+                      }
+                    }}
                     onChange={(e) => handleChangeDistrict(e)}
                     select>
                     {listDistrict.length > 0
@@ -503,17 +536,22 @@ export const Home = () => {
                 )}
               />
             </Box>
-            <Box sx={{ mb: 1 }}>
+            <Box sx={{ mb: 1, ml: 2 }}>
               <Controller
                 name="wardId"
                 control={control}
                 render={({ field, fieldState: { invalid, error } }) => (
                   <TextField
-                    placeholder="Tỉnh/Thành phố"
-                    helperText={error?.message}
-                    error={invalid}
+                    placeholder="Xã/Phường"
+                    disabled={disableClickWard}
                     {...field}
-                    sx={{ mt: 1, minWidth: '300px' }}
+                    sx={{
+                      mt: 1,
+                      minWidth: '300px',
+                      '.MuiSelect-select': {
+                        p: 1
+                      }
+                    }}
                     onChange={(e) => handleChangeWard(e)}
                     select>
                     {listWard.length > 0
@@ -527,9 +565,64 @@ export const Home = () => {
                 )}
               />
             </Box>
+            <Box sx={{ ml: 2, display: 'flex', alignItems: 'center' }}>
+              <StyledButton
+                startIcon={<SearchIcon />}
+                sx={{
+                  color: '#fff',
+                  background: colors.indigo['700'],
+                  '&:hover': {
+                    color: '#fff',
+                    background: colors.indigo['700']
+                  }
+                }}
+                onClick={handleSearchLookUp}>
+                Tìm kiếm
+              </StyledButton>
+            </Box>
           </Box>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  {dataAfterLookUpByLocationHeader.map((value, index) => (
+                    <TableCell key={index}>{value}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {dataAfterLookUpByLocation.length > 0 ? (
+                  dataAfterLookUpByLocation.map(
+                    (row: LookUpInjectionSitesByLocation, index: number) => (
+                      <TableRow
+                        key={index}
+                        sx={{
+                          '&:last-child td, &:last-child th': { border: 0 }
+                        }}>
+                        <TableCell component="th" scope="row">
+                          {index}
+                        </TableCell>
+                        <TableCell>{row.locationName}</TableCell>
+                        <TableCell>{row.streetName}</TableCell>
+                        <TableCell>{row.wardName}</TableCell>
+                        <TableCell>{row.districtName}</TableCell>
+                        <TableCell>{row.provinceName}</TableCell>
+                        <TableCell>{row.manager}</TableCell>
+                        <TableCell>{row.numberOfInjectionTables}</TableCell>
+                      </TableRow>
+                    )
+                  )
+                ) : (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    Không có dữ liệu
+                  </Box>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </Box>
+      <Footer />
     </>
   );
 };

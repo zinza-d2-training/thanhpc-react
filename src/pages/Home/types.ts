@@ -25,8 +25,11 @@ export interface LookUpInjectionSitesByLocation {
   locationName: string;
   streetName: string;
   wardId: string;
+  wardName?: string;
   districtId: string;
+  districtName?: string;
   provinceId: string;
+  provinceName?: string;
   manager: string;
   numberOfInjectionTables: number;
 }

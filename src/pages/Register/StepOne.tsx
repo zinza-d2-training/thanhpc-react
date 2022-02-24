@@ -44,7 +44,6 @@ export const StepOne = (props: Props) => {
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      console.log(getValues('images'));
       const listImages = Object.values(e.target.files);
       const listPreview = [];
       const listFile: Array<IFile> = [];

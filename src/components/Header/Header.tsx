@@ -13,7 +13,6 @@ const defaultStyle = {
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  console.log(anchorEl);
   const handleOpenMenu = (e: {
     currentTarget: SetStateAction<HTMLElement | null>;
   }) => {
