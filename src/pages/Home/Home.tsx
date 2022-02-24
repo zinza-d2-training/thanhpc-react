@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, ChangeEvent, useEffect } from 'react';
+import { useState, useCallback, ChangeEvent } from 'react';
 import {
   Box,
   Grid,
@@ -342,7 +342,7 @@ export const Home = () => {
         </Box>
         <Box sx={{ marginTop: '46px', mx: 4.5 }}>
           <Grid container spacing={3}>
-            <Grid xs={6}>
+            <Grid item={true} xs={6}>
               <Box
                 sx={{
                   ml: 3,
@@ -388,11 +388,9 @@ export const Home = () => {
               </Box>
             </Grid>
 
-            <Grid xs={6}>
+            <Grid item={true} xs={6}>
               <Box
                 sx={{
-                  // py: 2,
-                  // ml: 1,
                   ml: 3,
                   mr: 2,
                   py: 2,
@@ -591,32 +589,28 @@ export const Home = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {dataAfterLookUpByLocation.length > 0 ? (
-                  dataAfterLookUpByLocation.map(
-                    (row: LookUpInjectionSitesByLocation, index: number) => (
-                      <TableRow
-                        key={index}
-                        sx={{
-                          '&:last-child td, &:last-child th': { border: 0 }
-                        }}>
-                        <TableCell component="th" scope="row">
-                          {index}
-                        </TableCell>
-                        <TableCell>{row.locationName}</TableCell>
-                        <TableCell>{row.streetName}</TableCell>
-                        <TableCell>{row.wardName}</TableCell>
-                        <TableCell>{row.districtName}</TableCell>
-                        <TableCell>{row.provinceName}</TableCell>
-                        <TableCell>{row.manager}</TableCell>
-                        <TableCell>{row.numberOfInjectionTables}</TableCell>
-                      </TableRow>
+                {dataAfterLookUpByLocation.length > 0
+                  ? dataAfterLookUpByLocation.map(
+                      (row: LookUpInjectionSitesByLocation, index: number) => (
+                        <TableRow
+                          key={index}
+                          sx={{
+                            '&:last-child td, &:last-child th': { border: 0 }
+                          }}>
+                          <TableCell component="th" scope="row">
+                            {index}
+                          </TableCell>
+                          <TableCell>{row.locationName}</TableCell>
+                          <TableCell>{row.streetName}</TableCell>
+                          <TableCell>{row.wardName}</TableCell>
+                          <TableCell>{row.districtName}</TableCell>
+                          <TableCell>{row.provinceName}</TableCell>
+                          <TableCell>{row.manager}</TableCell>
+                          <TableCell>{row.numberOfInjectionTables}</TableCell>
+                        </TableRow>
+                      )
                     )
-                  )
-                ) : (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    Không có dữ liệu
-                  </Box>
-                )}
+                  : 'Không có dữ liệu'}
               </TableBody>
             </Table>
           </TableContainer>
