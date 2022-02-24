@@ -1,5 +1,16 @@
-import { useMemo } from 'react';
-import { Box, Grid, Typography, colors } from '@mui/material';
+import { useMemo, useState, useCallback, ChangeEvent, useEffect } from 'react';
+import {
+  Box,
+  Grid,
+  Typography,
+  colors,
+  Stack,
+  Button,
+  TextField,
+  MenuItem
+} from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+
 import { Bar, Line } from 'react-chartjs-2';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,7 +28,10 @@ import { injectionDataByDay } from '../../db/injectionDataByDay';
 import { highestInjectionRate } from '../../db/highestInjectionRate';
 import { lowestInjectionRate } from '../../db/lowestInjectionRate';
 import { statisticVaccinationByLocal } from '../../db/statisticVaccinationByLocal';
+import { statisticVaccinationByLocalMore } from '../../db/statisticVaccinationByLocal';
 import { StatisticVaccinationByLocal } from '../../pages/Home/types';
+import { StyledLinearProgress } from '../../components/StyledLinearProgress/StyledLinearProgress';
+import { administrativeUnits } from '../../db/administrativeUnits';
 
 import {
   Chart,
@@ -39,27 +53,93 @@ Chart.register(
   CategoryScale,
   Title
 );
+interface WardType {
+  Id?: string;
+  Name?: string;
+  Level?: string;
+}
+interface DistrictType {
+  Id?: string;
+  Name?: string;
+  Wards?: WardType[];
+}
+interface ProvinceType {
+  Id?: string;
+  Name?: string;
+  Districts?: DistrictType[];
+}
+const tableHead = [
+  'STT',
+  'Tỉnh/Thành phố',
+  'Dự kiến KH phân bổ',
+  'Phân bổ thực tế',
+  'Dân số >= 18 tuổi',
+  'Số liều đã tiêm',
+  'Tỷ lệ dự kiến phân bổ theo kế hoạch/ dân số (>= 18 tuổi)',
+  'Tỷ lệ đã phân bổ/ dân số (>= 18 tuổi)',
+  'Tỷ lệ đã tiêm ít nhất 1 mũi/ dân số (>= 18 tuổi)',
+  'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
+  'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước'
+];
+const getChildArr = (valueArgs: string, parentArr: any, nameArr: string) => {
+  const unit = parentArr.find((value: any) => value.Id === valueArgs);
+  return unit ? unit[nameArr] : [];
+};
+interface Address {
+  provinceId: string;
+  districtId: string;
+  wardId: string;
+}
 
 export const Home = () => {
-  const tableContent = useMemo(
-    () => [...statisticVaccinationByLocal],
-    [statisticVaccinationByLocal]
-  );
-  console.log(tableContent);
-  const tableHead = [
-    'STT',
-    'Tỉnh/Thành phố',
-    'Dự kiến KH phân bổ',
-    'Phân bổ thực tế',
-    'Dân số >= 18 tuổi',
-    'Số liều đã tiêm',
-    'Tỷ lệ dự kiến phân bổ theo kế hoạch/ dân số (>= 18 tuổi)',
-    'Tỷ lệ đã phân bổ/ dân số (>= 18 tuổi)',
-    'Tỷ lệ đã tiêm ít nhất 1 mũi/ dân số (>= 18 tuổi)',
-    'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
-    'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước'
-  ];
+  const { control, getValues, setValue, trigger } = useForm<Address>({
+    mode: 'onChange',
+    defaultValues: {}
+  });
 
+  const provinceId = getValues('provinceId');
+  const districtId = getValues('districtId');
+  const listProvince = administrativeUnits;
+
+  const listDistrict = useMemo(() => {
+    return getChildArr(provinceId, listProvince, 'Districts');
+  }, [provinceId, listProvince]);
+
+  const listWard = useMemo(() => {
+    return getChildArr(districtId, listDistrict, 'Wards');
+  }, [districtId, listDistrict]);
+
+  const [dataOnTable, setDataOnTable] = useState<StatisticVaccinationByLocal[]>(
+    () => statisticVaccinationByLocal
+  );
+
+  const handleLoadMoreVaccinationByLocal = useCallback(() => {
+    const newData: StatisticVaccinationByLocal[] =
+      statisticVaccinationByLocalMore;
+    setDataOnTable([...dataOnTable, ...newData]);
+  }, [dataOnTable]);
+
+  useEffect(() => {
+    console.log('getValues', getValues());
+  }, [getValues]);
+  const handleChangeProvince = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    console.log('getValues', getValues());
+    setValue('provinceId', e.target.value);
+    setValue('districtId', '');
+  };
+  const handleChangeDistrict = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue('districtId', e.target.value);
+    setValue('wardId', '');
+  };
+  const handleChangeWard = (
+    e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue('wardId', e.target.value);
+  };
   return (
     <>
       <Header />
@@ -67,7 +147,7 @@ export const Home = () => {
         <Box sx={{ background: '#F7FBFE', py: 2, px: 4.5, mt: 4.1 }}>
           <Box sx={{ background: '#fff' }}>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item={true} xs={4}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -92,7 +172,7 @@ export const Home = () => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item={true} xs={4}>
                 <Box
                   sx={{
                     display: 'flex',
@@ -117,7 +197,7 @@ export const Home = () => {
                   </Box>
                 </Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item={true} xs={4}>
                 <Box
                   sx={{
                     display: 'flex'
@@ -291,13 +371,13 @@ export const Home = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  {tableHead.map((value) => (
-                    <TableCell>{value}</TableCell>
+                  {tableHead.map((value, index) => (
+                    <TableCell key={index}>{value}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {tableContent.map(
+                {dataOnTable.map(
                   (row: StatisticVaccinationByLocal, index: number) => (
                     <TableRow
                       key={index}
@@ -312,19 +392,142 @@ export const Home = () => {
                       <TableCell>{row.actualDistribution}</TableCell>
                       <TableCell>{row.population}</TableCell>
                       <TableCell>{row.numberOfInjected}</TableCell>
-                      <TableCell>{row.expectedRate}</TableCell>
-                      <TableCell>{row.distributedRatio}</TableCell>
                       <TableCell>
-                        {row.rateOfInjectionOfAtLeastOneDoseOfVaccine}
+                        <StyledLinearProgress
+                          color="#C65312"
+                          number={row.expectedRate}
+                        />
                       </TableCell>
-                      <TableCell>{row.vaccinationRate}</TableCell>
-                      <TableCell>{row.vaccineDistributionRate}</TableCell>
+                      <TableCell>
+                        <StyledLinearProgress
+                          color="#0593CF"
+                          number={row.distributedRatio}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <StyledLinearProgress
+                          color="#00884F"
+                          number={row.rateOfInjectionOfAtLeastOneDoseOfVaccine}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <StyledLinearProgress
+                          color="#AF8612"
+                          number={row.vaccinationRate}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <StyledLinearProgress
+                          color="#2D2188"
+                          number={row.vaccineDistributionRate}
+                        />
+                      </TableCell>
                     </TableRow>
                   )
                 )}
               </TableBody>
             </Table>
           </TableContainer>
+          <Stack direction="row" justifyContent="center" py={3}>
+            <Box
+              component={Button}
+              sx={{
+                color: colors.indigo[700],
+                textTransform: 'unset',
+                fontSize: '18px',
+                fontWeight: '400'
+              }}
+              onClick={handleLoadMoreVaccinationByLocal}>
+              Xem thêm
+            </Box>
+          </Stack>
+        </Box>
+        <Box
+          sx={{
+            py: 2,
+            mt: 4,
+            mx: 4.5,
+            border: '1px solid rgba(38, 56, 150, 0.14)',
+            boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
+            borderRadius: '10px'
+          }}>
+          <Typography variant="h6" sx={{ ml: 2 }}>
+            Tra cứu điểm tiêm theo địa bàn
+          </Typography>
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ mb: 1 }}>
+              <Controller
+                name="provinceId"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    placeholder="Tỉnh/Thành phố"
+                    helperText={error?.message}
+                    error={invalid}
+                    {...field}
+                    sx={{ mt: 1, minWidth: '300px' }}
+                    onChange={(e) => handleChangeProvince(e)}
+                    select>
+                    {listProvince.length > 0
+                      ? listProvince.map((value: ProvinceType) => (
+                          <MenuItem value={value.Id} key={value.Id}>
+                            {value.Name}
+                          </MenuItem>
+                        ))
+                      : null}
+                  </TextField>
+                )}
+              />
+            </Box>
+            <Box sx={{ mb: 1 }}>
+              <Controller
+                name="districtId"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    placeholder="Tỉnh/Thành phố"
+                    helperText={error?.message}
+                    error={invalid}
+                    {...field}
+                    sx={{ mt: 1, minWidth: '300px' }}
+                    onChange={(e) => handleChangeDistrict(e)}
+                    select>
+                    {listDistrict.length > 0
+                      ? listDistrict.map((value: DistrictType) => (
+                          <MenuItem value={value.Id} key={value.Id}>
+                            {value.Name}
+                          </MenuItem>
+                        ))
+                      : null}
+                  </TextField>
+                )}
+              />
+            </Box>
+            <Box sx={{ mb: 1 }}>
+              <Controller
+                name="wardId"
+                control={control}
+                render={({ field, fieldState: { invalid, error } }) => (
+                  <TextField
+                    placeholder="Tỉnh/Thành phố"
+                    helperText={error?.message}
+                    error={invalid}
+                    {...field}
+                    sx={{ mt: 1, minWidth: '300px' }}
+                    onChange={(e) => handleChangeWard(e)}
+                    select>
+                    {listWard.length > 0
+                      ? listWard.map((value: WardType) => (
+                          <MenuItem value={value.Id} key={value.Id}>
+                            {value.Name}
+                          </MenuItem>
+                        ))
+                      : null}
+                  </TextField>
+                )}
+              />
+            </Box>
+          </Box>
         </Box>
       </Box>
     </>

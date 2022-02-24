@@ -21,3 +21,12 @@ export interface StatisticVaccinationByLocal {
   vaccinationRate: number;
   vaccineDistributionRate: number;
 }
+export interface LookUpInjectionSitesByLocation {
+  locationName: string;
+  streetName: string;
+  wardId: string;
+  districtId: string;
+  provinceId: string;
+  manager: string;
+  numberOfInjectionTables: number;
+}
