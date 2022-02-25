@@ -1,4 +1,4 @@
-import { useState, useCallback, ChangeEvent } from 'react';
+import { useState, useCallback, ChangeEvent, useEffect } from 'react';
 import {
   Box,
   Grid,
@@ -223,6 +223,23 @@ export const Home = () => {
     });
     setDataAfterLookUpByLocation(newData);
   };
+  useEffect(() => {
+    lookUpInjectionSitesByLocation.forEach((value) => {
+      value.provinceName = getNameById(value.provinceId, administrativeUnits);
+      value.districtName = getDistrictName(
+        value.provinceId,
+        value.districtId,
+        administrativeUnits
+      );
+      value.wardName = getWardName(
+        value.provinceId,
+        value.districtId,
+        value.wardId,
+        administrativeUnits
+      );
+    });
+    setDataAfterLookUpByLocation(lookUpInjectionSitesByLocation);
+  }, []);
   return (
     <>
       <Header />
