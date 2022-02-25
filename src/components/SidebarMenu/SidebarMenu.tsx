@@ -15,7 +15,7 @@ interface Props {
   handleCloseMenu: () => void;
 }
 
-export const StyledMenu = (props: Props) => {
+export const SidebarMenu = (props: Props) => {
   const { open, anchorEl, handleCloseMenu } = props;
 
   return (

@@ -4,7 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import headerImg from '../../images/header.png';
 import { StyledButton } from '../StyledButton';
-import { StyledMenu } from '../StyledMenu/Menu';
+import { SidebarMenu } from '../SidebarMenu/SidebarMenu';
 
 const defaultStyle = {
   color: '#fff',
@@ -57,7 +57,7 @@ export const Header = () => {
             <KeyboardArrowDownIcon sx={{ ...defaultStyle }} />
           </Box>
 
-          <StyledMenu
+          <SidebarMenu
             open={open}
             anchorEl={anchorEl}
             handleCloseMenu={handleCloseMenu}
