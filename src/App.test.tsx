@@ -1,10 +1,9 @@
 import { ThemeProvider } from '@emotion/react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './store';
 import theme from './theme';
-import App from './App';
 
 test('renders learn react link', () => {
   render(
