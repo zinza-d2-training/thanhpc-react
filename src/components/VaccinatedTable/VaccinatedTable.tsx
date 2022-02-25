@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { StyledLinearProgress } from '../StyledLinearProgress/StyledLinearProgress';
+import { colors } from '@mui/material';
 
 interface Props {
   dataHead: unknown[];
@@ -31,7 +32,8 @@ export const VaccinatedTable = (props: Props) => {
             <TableRow
               key={index}
               sx={{
-                '&:last-child td, &:last-child th': { border: 0 }
+                '&:last-child td, &:last-child th': { border: 0 },
+                background: index % 2 === 0 ? colors.grey['100'] : null
               }}>
               <TableCell component="th" scope="row">
                 {index}

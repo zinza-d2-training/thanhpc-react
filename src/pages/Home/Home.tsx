@@ -255,7 +255,8 @@ export const Home = () => {
               background: '#fff',
 
               mx: 4.5,
-              '@media(min-width: 1536px)': { mx: '282px' }
+              px: 4,
+              '@media(min-width: 1536px)': { mx: '250px' }
             }}>
             <Grid container>
               <Grid item={true} xs={4}>
@@ -338,8 +339,9 @@ export const Home = () => {
           sx={{
             py: 2,
             mt: 4,
+            px: 4,
             mx: 4.5,
-            '@media(min-width: 1536px)': { mx: '282px' },
+            '@media(min-width: 1536px)': { mx: '250px' },
             border: '1px solid rgba(38, 56, 150, 0.14)',
             boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
             borderRadius: '10px'
@@ -358,6 +360,7 @@ export const Home = () => {
                     label: 'Đã tiêm',
                     data: injectionDataByDay.map(({ amount }) => amount),
                     fill: false,
+                    backgroundColor: colors.indigo[700],
                     borderColor: colors.indigo['700'],
                     tension: 0.1,
                     pointBackgroundColor: colors.red['400'],
@@ -366,6 +369,7 @@ export const Home = () => {
                   }
                 ]
               }}
+              height={60}
             />
           </Box>
         </Box>
@@ -373,14 +377,14 @@ export const Home = () => {
           sx={{
             marginTop: '46px',
             mx: 4.5,
-            '@media(min-width: 1536px)': { mx: '282px' }
+            '@media(min-width: 1536px)': { mx: '250px' }
           }}>
           <Grid container>
             <Grid item={true} xs={6}>
               <Box
                 sx={{
                   mr: 2,
-                  minHeight: '800px',
+                  minHeight: '700px',
                   py: 2,
                   border: '1px solid rgba(38, 56, 150, 0.14)',
                   boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
@@ -413,7 +417,15 @@ export const Home = () => {
                     height={300}
                   />
                 </Box>
-                <Box sx={{ mx: 5, mt: 0.5, pb: 3, height: '30px' }}>
+                <Box
+                  sx={{
+                    mx: 5,
+                    mt: 0.5,
+                    pb: 3,
+                    height: '30px',
+                    display: 'flex',
+                    justifyContent: 'center'
+                  }}>
                   <Box component="b">Ghi chú:</Box>
                   <Box component="i">
                     Số mũi tiêm thực tế có thể nhiều hơn số liều vắc xin phân bổ
@@ -430,7 +442,7 @@ export const Home = () => {
                   border: '1px solid rgba(38, 56, 150, 0.14)',
                   boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
                   borderRadius: '10px',
-                  minHeight: '800px'
+                  minHeight: '700px'
                 }}>
                 <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
                   10 địa phương có tỷ lệ tiêm Thấp nhất
@@ -459,7 +471,13 @@ export const Home = () => {
                     height={300}
                   />
                 </Box>
-                <Box sx={{ mx: 5, mt: 0.5, pb: 3, height: '30px' }}>
+                <Box
+                  sx={{
+                    mx: 5,
+                    mt: 0.5,
+                    pb: 3,
+                    height: '30px'
+                  }}>
                   <Box component="b">Ghi chú:</Box>
                   <Box component="i">
                     Tỷ lệ tiêm tại một số tỉnh có thể thấp do chưa nhận đủ vắc
@@ -474,8 +492,9 @@ export const Home = () => {
           sx={{
             py: 2,
             mt: 4,
+            px: 4,
             mx: 4.5,
-            '@media(min-width: 1536px)': { mx: '282px' },
+            '@media(min-width: 1536px)': { mx: '250px' },
             border: '1px solid rgba(38, 56, 150, 0.14)',
             boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
             borderRadius: '10px'
@@ -501,8 +520,9 @@ export const Home = () => {
         <Box
           sx={{
             pt: 2,
+            px: 4,
             mt: 4,
-            '@media(min-width: 1536px)': { mx: '282px' },
+            '@media(min-width: 1536px)': { mx: '250px' },
             mx: 4.5,
             mb: 3.5,
             border: '1px solid rgba(38, 56, 150, 0.14)',
@@ -631,7 +651,10 @@ export const Home = () => {
                         <TableRow
                           key={index}
                           sx={{
-                            '&:last-child td, &:last-child th': { border: 0 }
+                            '&:last-child td, &:last-child th': { border: 0 },
+                            height: '63px',
+                            background:
+                              index % 2 === 0 ? colors.grey['100'] : null
                           }}>
                           <TableCell component="th" scope="row">
                             {index}
