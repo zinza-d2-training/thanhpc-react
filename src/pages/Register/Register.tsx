@@ -49,9 +49,7 @@ export const Register = () => {
     }
   };
   const handleDisable = (isHaveErrors: boolean, length?: number) => {
-    console.log('isHaveErrors', isHaveErrors);
     if (length) {
-      console.log('vvao day');
       if (length < 2) {
         return setDisabled(true);
       }
