@@ -15,7 +15,9 @@ interface Props {
 export const VaccinatedTable = (props: Props) => {
   const { dataHead, dataBody } = props;
   return (
-    <TableContainer component={Paper} sx={{ maxHeight: '850px' }}>
+    <TableContainer
+      component={Paper}
+      sx={{ maxHeight: '850px', boxShadow: 'none' }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

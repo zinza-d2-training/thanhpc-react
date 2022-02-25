@@ -244,8 +244,19 @@ export const Home = () => {
     <>
       <Header />
       <Box>
-        <Box sx={{ background: '#F7FBFE', py: 2, px: 4.5, mt: '120px' }}>
-          <Box sx={{ background: '#fff' }}>
+        <Box
+          sx={{
+            background: '#F7FBFE',
+            py: 2,
+            mt: '120px'
+          }}>
+          <Box
+            sx={{
+              background: '#fff',
+
+              mx: 4.5,
+              '@media(min-width: 1536px)': { mx: '282px' }
+            }}>
             <Grid container>
               <Grid item={true} xs={4}>
                 <Box
@@ -328,6 +339,7 @@ export const Home = () => {
             py: 2,
             mt: 4,
             mx: 4.5,
+            '@media(min-width: 1536px)': { mx: '282px' },
             border: '1px solid rgba(38, 56, 150, 0.14)',
             boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
             borderRadius: '10px'
@@ -357,12 +369,18 @@ export const Home = () => {
             />
           </Box>
         </Box>
-        <Box sx={{ marginTop: '46px', mx: 4.5 }}>
+        <Box
+          sx={{
+            marginTop: '46px',
+            mx: 4.5,
+            '@media(min-width: 1536px)': { mx: '282px' }
+          }}>
           <Grid container>
             <Grid item={true} xs={6}>
               <Box
                 sx={{
                   mr: 2,
+                  minHeight: '800px',
                   py: 2,
                   border: '1px solid rgba(38, 56, 150, 0.14)',
                   boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
@@ -411,7 +429,8 @@ export const Home = () => {
                   py: 2,
                   border: '1px solid rgba(38, 56, 150, 0.14)',
                   boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
-                  borderRadius: '10px'
+                  borderRadius: '10px',
+                  minHeight: '800px'
                 }}>
                 <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
                   10 địa phương có tỷ lệ tiêm Thấp nhất
@@ -456,6 +475,7 @@ export const Home = () => {
             py: 2,
             mt: 4,
             mx: 4.5,
+            '@media(min-width: 1536px)': { mx: '282px' },
             border: '1px solid rgba(38, 56, 150, 0.14)',
             boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
             borderRadius: '10px'
@@ -480,8 +500,9 @@ export const Home = () => {
         </Box>
         <Box
           sx={{
-            py: 2,
+            pt: 2,
             mt: 4,
+            '@media(min-width: 1536px)': { mx: '282px' },
             mx: 4.5,
             mb: 3.5,
             border: '1px solid rgba(38, 56, 150, 0.14)',
