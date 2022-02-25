@@ -27,7 +27,9 @@ export const Header = () => {
       sx={{
         height: '80px',
         width: '100%',
-        display: 'fixed',
+        position: 'fixed',
+        top: '0px',
+        display: 'flex',
         background:
           'linear-gradient(90deg, #ED1B23 0%, #2E3091 52.08%, #253494 100%)'
       }}>

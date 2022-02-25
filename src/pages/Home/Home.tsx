@@ -244,7 +244,7 @@ export const Home = () => {
     <>
       <Header />
       <Box>
-        <Box sx={{ background: '#F7FBFE', py: 2, px: 4.5, mt: 4.1 }}>
+        <Box sx={{ background: '#F7FBFE', py: 2, px: 4.5, mt: '120px' }}>
           <Box sx={{ background: '#fff' }}>
             <Grid container>
               <Grid item={true} xs={4}>
@@ -358,11 +358,10 @@ export const Home = () => {
           </Box>
         </Box>
         <Box sx={{ marginTop: '46px', mx: 4.5 }}>
-          <Grid container spacing={3}>
+          <Grid container>
             <Grid item={true} xs={6}>
               <Box
                 sx={{
-                  ml: 3,
                   mr: 2,
                   py: 2,
                   border: '1px solid rgba(38, 56, 150, 0.14)',
@@ -409,7 +408,6 @@ export const Home = () => {
               <Box
                 sx={{
                   ml: 3,
-                  mr: 2,
                   py: 2,
                   border: '1px solid rgba(38, 56, 150, 0.14)',
                   boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
