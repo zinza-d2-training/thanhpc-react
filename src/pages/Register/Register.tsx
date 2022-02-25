@@ -45,7 +45,7 @@ export const Register = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
     if (activeStep === 0) {
-      navigate('/home');
+      navigate('/');
     }
   };
   const handleDisable = (isHaveErrors: boolean, length?: number) => {

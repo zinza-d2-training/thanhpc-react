@@ -635,7 +635,7 @@ export const Home = () => {
               </StyledButton>
             </Box>
           </Box>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ boxShadow: 'none' }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
