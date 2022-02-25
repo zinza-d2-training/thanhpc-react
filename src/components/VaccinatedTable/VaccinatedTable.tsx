@@ -12,7 +12,7 @@ interface Props {
   dataHead: unknown[];
   dataBody: unknown[];
 }
-export const StyledTable = (props: Props) => {
+export const VaccinatedTable = (props: Props) => {
   const { dataHead, dataBody } = props;
   return (
     <TableContainer component={Paper}>

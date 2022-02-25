@@ -22,7 +22,7 @@ import Paper from '@mui/material/Paper';
 
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
-import { StyledTable } from '../../components/StyledTable/StyledTable';
+import { VaccinatedTable } from '../../components/VaccinatedTable/VaccinatedTable';
 import userPlusImg from '../../images/user-plus.png';
 import needleImg from '../../images/needle.png';
 import protectImg from '../../images/protect.png';
@@ -448,7 +448,7 @@ export const Home = () => {
           <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
             Số liệu vắc xin theo địa phương
           </Typography>
-          <StyledTable dataBody={dataOnTable} dataHead={tableHead} />
+          <VaccinatedTable dataBody={dataOnTable} dataHead={tableHead} />
           <Stack direction="row" justifyContent="center" py={3}>
             <Box
               component={Button}
