@@ -635,12 +635,14 @@ export const Home = () => {
               </StyledButton>
             </Box>
           </Box>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ boxShadow: 'none' }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   {dataAfterLookUpByLocationHeader.map((value, index) => (
-                    <TableCell key={index}>{value}</TableCell>
+                    <TableCell align="center" key={index}>
+                      {value}
+                    </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
@@ -656,16 +658,24 @@ export const Home = () => {
                             background:
                               index % 2 === 0 ? colors.grey['100'] : null
                           }}>
-                          <TableCell component="th" scope="row">
+                          <TableCell align="center" component="th" scope="row">
                             {index}
                           </TableCell>
-                          <TableCell>{row.locationName}</TableCell>
-                          <TableCell>{row.streetName}</TableCell>
-                          <TableCell>{row.wardName}</TableCell>
-                          <TableCell>{row.districtName}</TableCell>
-                          <TableCell>{row.provinceName}</TableCell>
-                          <TableCell>{row.manager}</TableCell>
-                          <TableCell>{row.numberOfInjectionTables}</TableCell>
+                          <TableCell align="center">
+                            {row.locationName}
+                          </TableCell>
+                          <TableCell align="center">{row.streetName}</TableCell>
+                          <TableCell align="center">{row.wardName}</TableCell>
+                          <TableCell align="center">
+                            {row.districtName}
+                          </TableCell>
+                          <TableCell align="center">
+                            {row.provinceName}
+                          </TableCell>
+                          <TableCell align="center">{row.manager}</TableCell>
+                          <TableCell align="center">
+                            {row.numberOfInjectionTables}
+                          </TableCell>
                         </TableRow>
                       )
                     )

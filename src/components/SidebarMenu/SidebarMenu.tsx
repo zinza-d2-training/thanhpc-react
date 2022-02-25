@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Link } from 'react-router-dom';
 
 interface Props {
   open: boolean;
@@ -67,9 +68,12 @@ export const SidebarMenu = (props: Props) => {
             />
           </Box>
           <Box>
-            <Typography onClick={handleCloseMenu} variant="body2">
-              Tra cứu chứng nhận tiêm
-            </Typography>
+            <Link to="/vaccine-certificate">
+              <Typography onClick={handleCloseMenu} variant="body2">
+                Tra cứu chứng nhận tiêm
+              </Typography>
+            </Link>
+
             <Typography onClick={handleCloseMenu} sx={{ fontSize: '12px' }}>
               Cập nhật nhanh và chính xác nhất
             </Typography>
@@ -119,9 +123,11 @@ export const SidebarMenu = (props: Props) => {
             />
           </Box>
           <Box>
-            <Typography onClick={handleCloseMenu} variant="body2">
-              Tra cứu kết quả đăng ký
-            </Typography>
+            <Link to="/injection-registration">
+              <Typography onClick={handleCloseMenu} variant="body2">
+                Tra cứu kết quả đăng ký
+              </Typography>
+            </Link>
             <Typography onClick={handleCloseMenu} sx={{ fontSize: '12px' }}>
               Cập nhật nhanh và chính xác nhất
             </Typography>

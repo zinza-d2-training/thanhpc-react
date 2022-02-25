@@ -36,7 +36,11 @@ export const ForgotPassword = () => {
 
   return (
     <Grid container>
-      <OTPInputDialog open={open} onClose={handleCloseModal} />
+      <OTPInputDialog
+        open={open}
+        onClose={handleCloseModal}
+        onConfirm={handleCloseModal}
+      />
       <Grid item xs={6}>
         <Box
           component="img"
