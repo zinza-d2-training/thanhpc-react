@@ -4,13 +4,12 @@ import {
   Typography,
   colors,
   Stack,
-  Button,
   Link,
   TextField,
   Container,
   MenuItem
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -38,67 +37,12 @@ import headerImg from '../../images/header.png';
 import qrImg from '../../images/qr.png';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 
-interface OptionGender {
-  name: string;
-  value: string;
-}
-interface InputField {
-  fieldName: string;
-  required: boolean;
-  fieldType: string;
-  nameProperty: string;
-  options?: OptionGender[];
-}
-// const inputFields: InputField[] = [
-//   {
-//     fieldName: 'Họ và tên',
-//     required: true,
-//     fieldType: 'text',
-//     nameProperty: 'full_name'
-//   },
-//   {
-//     fieldName: 'Ngày sinh',
-//     required: true,
-//     fieldType: 'date',
-//     nameProperty: 'dob'
-//   },
-//   {
-//     fieldName: 'Giới tính',
-//     required: true,
-//     fieldType: 'select',
-//     nameProperty: 'gender',
-//     options: [
-//       { name: 'Nam', value: 'male' },
-//       { name: 'Nữ', value: 'female' }
-//     ]
-//   },
-//   {
-//     fieldName: 'Số điện thoại',
-//     required: true,
-//     fieldType: 'text',
-//     nameProperty: 'phone_number'
-//   },
-//   {
-//     fieldName: 'Số CMND/CCCD',
-//     required: false,
-//     fieldType: 'text',
-//     nameProperty: 'citizenId'
-//   },
-//   {
-//     fieldName: 'Số thẻ BHYT',
-//     required: false,
-//     fieldType: 'text',
-//     nameProperty: 'healthInsuranceCardNumber'
-//   }
-// ];
 export const VaccineCertificate = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const {
     formState: { errors },
-    getValues,
     handleSubmit,
-    watch,
     control
   } = useForm<LookUpCertificate>({
     resolver: yupResolver(vaccineCertificateSchema),
