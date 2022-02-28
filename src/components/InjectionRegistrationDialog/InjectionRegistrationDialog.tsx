@@ -44,7 +44,8 @@ export const InjectionRegistrationDialog = (props: Props) => {
         boxShadow:
           '0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)',
         borderRadius: 1
-      }}>
+      }}
+      maxWidth="md">
       <DialogTitle
         sx={{
           pl: 3,
@@ -69,7 +70,7 @@ export const InjectionRegistrationDialog = (props: Props) => {
       <DialogContent>
         <Stack direction="column" spacing={2}>
           <Typography variant="h6">Thông tin cá nhân</Typography>
-          <Stack direction="row" spacing={3}>
+          <Stack direction="row" spacing={15}>
             <Stack spacing={1}>
               <Typography>Họ và tên</Typography>
               <Typography sx={{ fontWeight: '500' }}>
