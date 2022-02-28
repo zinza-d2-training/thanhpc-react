@@ -40,11 +40,7 @@ import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 export const VaccineCertificate = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
-  const {
-    formState: { errors },
-    handleSubmit,
-    control
-  } = useForm<LookUpCertificate>({
+  const { handleSubmit, reset, control } = useForm<LookUpCertificate>({
     resolver: yupResolver(vaccineCertificateSchema),
     mode: 'onChange',
     defaultValues: {
@@ -57,11 +53,14 @@ export const VaccineCertificate = () => {
     }
   });
   const handleCloseModal = () => setOpen(false);
-  const handleSubmitForm: SubmitHandler<LookUpCertificate> = (
-    data: LookUpCertificate
-  ) => {
-    console.log('data', data);
-    setOpen(true);
+  const handleSubmitForm: SubmitHandler<LookUpCertificate> = () =>
+    // data: LookUpCertificate
+    {
+      // console.log('data', data);
+      setOpen(true);
+    };
+  const handleReset = () => {
+    reset();
   };
   const handleConfirmModal = () => {
     setOpen(false);
@@ -92,7 +91,10 @@ export const VaccineCertificate = () => {
       </Box>
       <Box sx={{ mb: 3 }}>
         <Container maxWidth="xl">
-          <Box component="form" onSubmit={handleSubmit(handleSubmitForm)}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(handleSubmitForm)}
+            onReset={handleReset}>
             <Grid container spacing={2}>
               <Grid item xs={2} xl={2}>
                 <Box sx={{}}>
@@ -100,15 +102,11 @@ export const VaccineCertificate = () => {
                   <Controller
                     name="full_name"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
-                        helperText={
-                          errors.full_name?.message
-                            ? errors.full_name?.message
-                            : null
-                        }
-                        error={errors.full_name?.message ? true : false}
+                        helperText={error?.message}
+                        error={invalid}
                         placeholder="Họ và tên"
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
@@ -123,13 +121,11 @@ export const VaccineCertificate = () => {
                   <Controller
                     name="dob"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
-                        helperText={
-                          errors.dob?.message ? errors.dob?.message : null
-                        }
-                        error={errors.dob?.message ? true : false}
+                        helperText={error?.message}
+                        error={invalid}
                         type="date"
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
@@ -144,13 +140,11 @@ export const VaccineCertificate = () => {
                   <Controller
                     name="gender"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
-                        helperText={
-                          errors.gender?.message ? errors.gender?.message : null
-                        }
-                        error={errors.gender?.message ? true : false}
+                        helperText={error?.message}
+                        error={invalid}
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
                         select>
@@ -167,15 +161,11 @@ export const VaccineCertificate = () => {
                   <Controller
                     name="phone_number"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
-                        helperText={
-                          errors.phone_number?.message
-                            ? errors.phone_number?.message
-                            : null
-                        }
-                        error={errors.phone_number?.message ? true : false}
+                        helperText={error?.message}
+                        error={invalid}
                         placeholder="Số điện thoại"
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
@@ -190,7 +180,7 @@ export const VaccineCertificate = () => {
                   <Controller
                     name="citizenId"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
                         placeholder="Số CMND/CCCD"
@@ -207,7 +197,7 @@ export const VaccineCertificate = () => {
                   <Controller
                     name="healthInsuranceCardNumber"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
                         placeholder="Số thẻ BHYT"
