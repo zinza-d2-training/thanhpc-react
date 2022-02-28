@@ -14,7 +14,7 @@ import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { useForm, FormProvider, Resolver } from 'react-hook-form';
-import { registerSchema } from '../../validations/yups/schema';
+import { registerSchema } from './schema';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 import { UserFormData } from './types';
 
@@ -45,7 +45,7 @@ export const Register = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
     if (activeStep === 0) {
-      navigate('/home');
+      navigate('/');
     }
   };
   const handleDisable = (isHaveErrors: boolean, length?: number) => {
@@ -81,7 +81,11 @@ export const Register = () => {
   }
   return (
     <Grid container>
-      <OTPInputDialog open={open} onClose={handleCloseModal} />
+      <OTPInputDialog
+        open={open}
+        onClose={handleCloseModal}
+        onConfirm={handleCloseModal}
+      />
       <Grid item xs={6}>
         <Box
           component="img"

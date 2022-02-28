@@ -5,16 +5,17 @@ import { Dialog, Divider } from '@mui/material';
 
 interface Props {
   onClose: () => void;
+  onConfirm: () => void;
   open: boolean;
 }
 
 export const OTPInputDialog = (props: Props) => {
-  const { onClose, open } = props;
+  const { onClose, open, onConfirm } = props;
   return (
     <Dialog open={open} hideBackdrop>
       <HeaderDialog onClose={onClose} title="Xác thực OTP" />
       <Divider />
-      <ContentDialog onClose={onClose} />
+      <ContentDialog onClose={onClose} onConfirm={onConfirm} />
     </Dialog>
   );
 };
