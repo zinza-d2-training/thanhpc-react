@@ -6,6 +6,7 @@ import { Home } from './pages/Home/Home';
 import { User } from './pages/User/User';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { Register } from './pages/Register/Register';
+import { InjectionRegistration } from './pages/InjectionRegistration/InjectionRegistration';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           <Routes>
             <Route path="/forgot-password" element={<ForgotPassword />}></Route>
             <Route path="/" element={<Home />}></Route>
+            <Route
+              path="/injection-registration"
+              element={<InjectionRegistration />}></Route>
             <Route path="/user" element={<User />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
