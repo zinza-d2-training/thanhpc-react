@@ -36,7 +36,7 @@ import {
   IInjectionRegistrationResult,
   Status
 } from './types';
-import { injectionRegistrationSchema } from '../../validations/yups/schema';
+import { injectionRegistrationSchema } from './schema';
 import { injectionRegistrationResult } from '../../db/injectionRegistration';
 
 export const InjectionRegistration = () => {

@@ -9,10 +9,11 @@ import { StyledButton } from '../StyledButton/index';
 
 interface Props {
   onClose: () => void;
+  onConfirm: () => void;
 }
 
 export const ContentDialog = (props: Props) => {
-  const { onClose } = props;
+  const { onClose, onConfirm } = props;
   const [otp, setOtp] = useState<string>('');
   const [isShowResendOtp, setIsShowResendOtp] = useState<boolean>(false);
   const { time, setTime } = useClock({ hours: 0, minutes: 2, seconds: 0 });
@@ -134,7 +135,7 @@ export const ContentDialog = (props: Props) => {
           }}
           variant="contained"
           disabled={disabled}
-          onClick={onClose}>
+          onClick={onConfirm}>
           Xác Nhận
         </StyledButton>
       </Box>

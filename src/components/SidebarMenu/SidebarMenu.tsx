@@ -68,7 +68,7 @@ export const SidebarMenu = (props: Props) => {
             />
           </Box>
           <Box>
-            <Link to="/vaccine-certificate">
+            <Link to="/vaccine-certificate" style={{ textDecoration: 'none' }}>
               <Typography onClick={handleCloseMenu} variant="body2">
                 Tra cứu chứng nhận tiêm
               </Typography>
@@ -122,7 +122,9 @@ export const SidebarMenu = (props: Props) => {
             />
           </Box>
           <Box>
-            <Link to="/injection-registration">
+            <Link
+              to="/injection-registration"
+              style={{ textDecoration: 'none' }}>
               <Typography onClick={handleCloseMenu} variant="body2">
                 Tra cứu kết quả đăng ký
               </Typography>
