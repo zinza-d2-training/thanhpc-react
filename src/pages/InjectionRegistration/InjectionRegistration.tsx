@@ -227,7 +227,6 @@ export const InjectionRegistration = () => {
                             label="Đăng ký thành công"
                             variant="outlined"
                             sx={{
-                              background: colors.indigo['50'],
                               border: `1px solid ${colors.blue['500']}`,
                               color: colors.blue['500']
                             }}
@@ -237,7 +236,6 @@ export const InjectionRegistration = () => {
                             label="Đăng ký thất bại"
                             variant="outlined"
                             sx={{
-                              background: colors.indigo['50'],
                               border: `1px solid ${colors.red['500']}`,
                               color: colors.red['500']
                             }}
