@@ -8,6 +8,7 @@ import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { Register } from './pages/Register/Register';
 import { VaccineCertificate } from './pages/VaccineCertificate/VaccineCertificate';
 import { InjectionRegistration } from './pages/InjectionRegistration/InjectionRegistration';
+import { Documentation } from './pages/Documentation/Documentation';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/user" element={<User />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
+            <Route path="/documentation" element={<Documentation />}></Route>
           </Routes>
         </BrowserRouter>
       </Layout>
