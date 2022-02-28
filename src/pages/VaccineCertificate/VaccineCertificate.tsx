@@ -81,7 +81,6 @@ export const VaccineCertificate = () => {
             mt: '112px',
             mb: '40px',
             height: '64px',
-            width: '100vw',
             background: colors.grey['100'],
             display: 'flex',
             alignItems: 'center'

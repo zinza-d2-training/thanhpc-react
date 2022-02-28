@@ -79,9 +79,11 @@ export const Header = () => {
                 handleCloseMenu={handleCloseMenu}
               />
             </Box>
-            <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
-              Tài liệu
-            </Typography>
+            <Link to="/documentation" style={{ textDecoration: 'none' }}>
+              <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
+                Tài liệu
+              </Typography>
+            </Link>
             <Link to="/login" style={{ textDecoration: 'none' }}>
               <StyledButton
                 sx={{
