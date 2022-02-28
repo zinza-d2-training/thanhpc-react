@@ -73,7 +73,6 @@ export const SidebarMenu = (props: Props) => {
                 Tra cứu chứng nhận tiêm
               </Typography>
             </Link>
-
             <Typography onClick={handleCloseMenu} sx={{ fontSize: '12px' }}>
               Cập nhật nhanh và chính xác nhất
             </Typography>
