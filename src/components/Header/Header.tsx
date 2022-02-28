@@ -82,7 +82,7 @@ export const Header = () => {
             <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
               Tài liệu
             </Typography>
-            <Link to="/login">
+            <Link to="/login" style={{ textDecoration: 'none' }}>
               <StyledButton
                 sx={{
                   color: colors.indigo['700'],

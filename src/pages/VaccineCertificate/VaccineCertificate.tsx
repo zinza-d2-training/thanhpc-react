@@ -30,7 +30,7 @@ import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
 import { LookUpCertificate } from './types';
 import { IVaccinate } from './types';
-import { vaccineCertificateSchema } from '../../validations/yups/schema';
+import { vaccineCertificateSchema } from './schema';
 import { StyledButton } from '../../components';
 import { lookUpCertificateResult } from '../../db/lookUpCertificateResult';
 import headerImg from '../../images/header.png';

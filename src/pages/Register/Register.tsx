@@ -14,7 +14,7 @@ import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { useForm, FormProvider, Resolver } from 'react-hook-form';
-import { registerSchema } from '../../validations/yups/schema';
+import { registerSchema } from './schema';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 import { UserFormData } from './types';
 
