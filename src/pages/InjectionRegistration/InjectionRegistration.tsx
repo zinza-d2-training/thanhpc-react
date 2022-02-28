@@ -114,15 +114,12 @@ export const InjectionRegistration = () => {
                   <Controller
                     name="citizenId"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
-                        helperText={
-                          errors.citizenId?.message
-                            ? errors.citizenId?.message
-                            : null
-                        }
-                        error={errors.citizenId?.message ? true : false}
+                        size="small"
+                        helperText={error?.message}
+                        error={invalid}
                         placeholder="Số CMND/CCCD/Mã định danh công dân"
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
@@ -137,15 +134,12 @@ export const InjectionRegistration = () => {
                   <Controller
                     name="phone_number"
                     control={control}
-                    render={({ field }) => (
+                    render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         fullWidth
-                        helperText={
-                          errors.phone_number?.message
-                            ? errors.phone_number?.message
-                            : null
-                        }
-                        error={errors.phone_number?.message ? true : false}
+                        size="small"
+                        helperText={error?.message}
+                        error={invalid}
                         placeholder="Số điện thoại"
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
