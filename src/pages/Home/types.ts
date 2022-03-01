@@ -33,3 +33,18 @@ export interface LookUpInjectionSitesByLocation {
   manager: string;
   numberOfInjectionTables: number;
 }
+export interface WardType {
+  Id?: string;
+  Name?: string;
+  Level?: string;
+}
+export interface DistrictType {
+  Id?: string;
+  Name?: string;
+  Wards?: WardType[];
+}
+export interface ProvinceType {
+  Id?: string;
+  Name?: string;
+  Districts?: DistrictType[];
+}

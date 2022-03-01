@@ -27,10 +27,10 @@ function App() {
             <Route
               path="/injection-registration"
               element={<InjectionRegistration />}></Route>
-            <Route path="/user" element={<User />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/documentation" element={<Documentation />}></Route>
+            <Route path="/user" element={<User />}></Route>
           </Routes>
         </BrowserRouter>
       </Layout>
