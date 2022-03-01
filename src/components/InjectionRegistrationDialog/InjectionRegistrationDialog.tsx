@@ -34,7 +34,6 @@ const getProcessStatus = (listStatus: any) => {
 
 export const InjectionRegistrationDialog = (props: Props) => {
   const { open, onClose, data } = props;
-  console.log('data?.dob', data?.dob.getDate()?.toString());
   const steps = getProcessStatus(Process);
   const activeStep = steps.findIndex((step) => step === data?.process);
   return (

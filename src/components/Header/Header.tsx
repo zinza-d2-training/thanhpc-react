@@ -29,7 +29,7 @@ export const Header = () => {
         height: '80px',
         width: '100%',
         position: 'fixed',
-        zIndex: 1,
+        zIndex: 1000,
         top: '0px',
         display: 'flex',
         background:

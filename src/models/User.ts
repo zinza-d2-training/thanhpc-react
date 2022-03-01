@@ -1,11 +1,14 @@
 export interface User {
-  id: number;
+  id: string;
   citizenId: string;
-  password: string;
-  full_name: string;
-  dob: string;
-  gender: string;
   phone_number: string;
+  full_name: string;
+  dob: Date;
+  gender: string;
+  provinceId: string;
+  districtId: string;
+  wardId: string;
+  password: string;
 }
 export type UserInsertInput = Pick<
   User,
