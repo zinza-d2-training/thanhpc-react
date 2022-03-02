@@ -5,7 +5,7 @@ export const injectionRegistrationResult: IInjectionRegistrationResult[] = [
   {
     id: 'huv123vax',
     full_name: 'Phạm Công Thành',
-    dob: new Date('2000-23-10'),
+    dob: new Date('2000-10-23'),
     gender: 'male',
     phone_number: '0986249793',
     citizenId: '123456789',
