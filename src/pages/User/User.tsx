@@ -289,8 +289,8 @@ export const User = () => {
                   onChange={handleChange}
                   sx={{
                     height: '64px',
-                    '.css-jpln7h-MuiTabs-scroller': {
-                      display: 'flex'
+                    '.MuiTabs-scroller': {
+                      display: 'flex !important'
                     }
                   }}
                   TabIndicatorProps={{
