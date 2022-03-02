@@ -38,13 +38,16 @@ import { useInfoSchema } from './schema';
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 import { StyledButton } from '../../components/StyledButton';
 
-import { FileUploadImage,IFile } from '../../components/FileUploadImage/FileUploadImage';
+import {
+  FileUploadImage,
+  IFile
+} from '../../components/FileUploadImage/FileUploadImage';
 import {
   getProvinceName,
   getDistrictName,
   getWardName,
   getChildArr
-} from './functional';
+} from './functions';
 import { administrativeUnits } from '../../db/administrativeUnits';
 
 const useStyle = {
@@ -620,8 +623,8 @@ export const User = () => {
                                             getValues('provinceId'),
                                             getValues('districtId'),
                                             listProvince
-                                          )
-                                        : ''
+                                          ) || undefined
+                                        : undefined
                                     }
                                     render={({
                                       field,
