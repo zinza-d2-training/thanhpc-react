@@ -14,7 +14,7 @@ import {
   Typography
 } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm, SubmitHandler, Controller, Resolver } from 'react-hook-form';
+import { useForm, Controller, Resolver } from 'react-hook-form';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppSelector } from '../../store/hooks';
@@ -83,7 +83,6 @@ export const User = () => {
     setError,
     clearErrors,
     setValue,
-    handleSubmit,
     trigger,
     getValues,
     control
