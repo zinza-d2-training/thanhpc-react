@@ -6,7 +6,6 @@ import {
   Container,
   TextField,
   colors,
-  Tabs,
   Grid,
   MenuItem,
   Tab,
@@ -14,6 +13,9 @@ import {
   Typography
 } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import { useForm, Controller, Resolver } from 'react-hook-form';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -21,7 +23,6 @@ import { useAppSelector } from '../../store/hooks';
 import { loginSelector } from '../../features/login/loginSlice';
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
-import { TabPanel } from '../../components/TabPanel/TabPanel';
 import { ConfirmInjection } from '../../components/ConfirmInjection/ConfirmInjection';
 import { lookUpCertificateResult } from '../../db/lookUpCertificateResult';
 import { TableInjectionRegistrationResult } from '../../components/TableInjectionRegistrationResult/TableInjectionRegistrationResult';
@@ -279,576 +280,605 @@ export const User = () => {
       />
       <Header />
       <Box sx={{ minHeight: '500px', mt: '80px' }}>
-        <Box sx={{ boxShadow: '0px 1px 8px rgba(0, 0, 0, 0.1)' }}>
-          <Container maxWidth="xl">
-            <Box sx={{ color: '#6E6D7A', cursor: 'pointer' }}>
-              <Tabs
-                value={activeTab}
-                onChange={handleChange}
-                sx={{
-                  height: '64px',
-                  '.css-jpln7h-MuiTabs-scroller': {
-                    display: 'flex'
-                  }
-                }}
-                TabIndicatorProps={{
-                  style: {
-                    backgroundColor: '#333'
-                  }
-                }}
-                aria-label="basic tabs example">
-                {headerTabs.map((tab, index) => (
-                  <Tab
-                    key={index}
-                    label={tab}
-                    sx={activeTab === index ? useStyle : null}
-                  />
-                ))}
-              </Tabs>
-            </Box>
-          </Container>
-        </Box>
-        <Box sx={{ marginTop: '48px' }}>
-          <Container maxWidth="xl">
-            <TabPanel value={activeTab} index={0}>
-              <ConfirmInjection data={lookUpCertificateResult} />
-            </TabPanel>
-            <TabPanel value={activeTab} index={1}>
-              <InjectionRegistrationDialog
-                open={open}
-                onClose={onCloseDialog}
-                data={dataToDialog}
-              />
-              <TableInjectionRegistrationResult
-                data={dataInjectionRegistration}
-                handleShowInfo={handleShowInfo}
-              />
-            </TabPanel>
-            <TabPanel value={activeTab} index={2}>
-              <Box component="form">
-                <Stack direction="column" spacing={3}>
-                  <Stack direction="column" spacing={2}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                        Mã số định danh
-                      </Typography>
-                      <IconButton onClick={() => setDisableCitizendId(false)}>
-                        <EditIcon />
-                      </IconButton>
-                    </Box>
-                    <Box>
-                      <Box sx={{ ml: 2 }}>
-                        <Stack direction="column" spacing={3}>
-                          <Grid container spacing={2}>
-                            <Grid item xs={3}>
-                              <Stack direction="column" spacing={1}>
-                                <Typography component="label" variant="body1">
-                                  Số CMND/CCCD/Mã định danh
-                                </Typography>
-                                <Controller
-                                  name="citizenId"
-                                  control={control}
-                                  defaultValue="123456789"
-                                  render={({
-                                    field,
-                                    fieldState: { invalid, error }
-                                  }) => (
-                                    <TextField
-                                      size="small"
-                                      disabled={disableCitizendId}
-                                      helperText={error?.message}
-                                      error={invalid}
-                                      placeholder="123456789"
-                                      {...field}
-                                    />
-                                  )}
-                                />
-                              </Stack>
-                            </Grid>
-                          </Grid>
-                          {!disableCitizendId && (
-                            <FileUploadImage
-                              onImageChange={onImageChange}
-                              listImage={listImage}
-                              handleRemoveImage={handleRemoveImage}
-                              handleShowModalImage={handleShowModalImage}
-                              maxImage={maxImage}
-                              error={errors.images?.message}
-                            />
-                          )}
-                          {!disableCitizendId && (
-                            <Stack direction="row" spacing={2}>
-                              <StyledButton
-                                size="small"
-                                variant="outlined"
-                                sx={{
-                                  color: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}
-                                onClick={handleCancelCitizenId}>
-                                Hủy Bỏ
-                              </StyledButton>
-                              <StyledButton
-                                size="small"
-                                variant="contained"
-                                disabled={!!errors.citizenId || !!errors.images}
-                                sx={{
-                                  background: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}
-                                onClick={handleSubmitCitizenId}>
-                                Lưu
-                              </StyledButton>
-                            </Stack>
-                          )}
-                        </Stack>
-                      </Box>
-                    </Box>
-                  </Stack>
-                  <Stack direction="column" spacing={2}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                        Số điện thoại
-                      </Typography>
-                      <IconButton onClick={() => setDisablePhoneNumber(false)}>
-                        <EditIcon />
-                      </IconButton>
-                    </Box>
-                    <Box>
-                      <Box sx={{ ml: 2 }}>
-                        <Stack direction="column" spacing={3}>
-                          <Stack direction="column" spacing={2}>
-                            <Grid container spacing={2}>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Số điện thoại
-                                  </Typography>
-                                  <Controller
-                                    name="phone_number"
-                                    control={control}
-                                    defaultValue="098624979"
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={disablePhoneNumber}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        placeholder="123456789"
-                                        {...field}
-                                      />
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                            </Grid>
-                          </Stack>
-                          {!disablePhoneNumber && (
-                            <Stack direction="row" spacing={2}>
-                              <StyledButton
-                                size="small"
-                                variant="outlined"
-                                onClick={handleCancelPhoneNumber}
-                                sx={{
-                                  color: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}>
-                                Hủy Bỏ
-                              </StyledButton>
-                              <StyledButton
-                                size="small"
-                                variant="contained"
-                                disabled={!!errors.phone_number}
-                                sx={{
-                                  background: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}
-                                onClick={handleSubmitPhoneNumber}>
-                                Lưu
-                              </StyledButton>
-                            </Stack>
-                          )}
-                        </Stack>
-                      </Box>
-                    </Box>
-                  </Stack>
-                  <Stack direction="column" spacing={2}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                        Thông tin cá nhân
-                      </Typography>
-                      <IconButton onClick={() => setDisablePersonalInfo(false)}>
-                        <EditIcon />
-                      </IconButton>
-                    </Box>
-                    <Box>
-                      <Box sx={{ ml: 2 }}>
-                        <Stack direction="column" spacing={3}>
-                          <Stack direction="column" spacing={2}>
-                            <Grid container spacing={2}>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Họ và tên
-                                  </Typography>
-                                  <Controller
-                                    name="full_name"
-                                    control={control}
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        defaultValue={getValues('full_name')}
-                                        disabled={disablePersonalInfo}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        {...field}
-                                      />
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Ngày sinh
-                                  </Typography>
-                                  <Controller
-                                    name="dob"
-                                    control={control}
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        type="date"
-                                        defaultValue={getValues('dob')}
-                                        size="small"
-                                        disabled={disablePersonalInfo}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        {...field}
-                                      />
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Giới tính
-                                  </Typography>
-                                  <Controller
-                                    name="gender"
-                                    defaultValue="male"
-                                    control={control}
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={disablePersonalInfo}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        {...field}
-                                        select>
-                                        <MenuItem value="male">Nam</MenuItem>
-                                        <MenuItem value="female">Nữ</MenuItem>
-                                      </TextField>
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                              <Grid item xs={3}></Grid>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Tỉnh/Thành phố
-                                  </Typography>
-                                  <Controller
-                                    name="provinceId"
-                                    control={control}
-                                    defaultValue="098624979"
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={disablePersonalInfo}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        defaultValue={getProvinceName(
-                                          getValues('provinceId'),
-                                          listProvince
-                                        )}
-                                        {...field}
-                                        onChange={(e) =>
-                                          handleChangeProvince(e)
-                                        }
-                                        select>
-                                        {listProvince.length > 0
-                                          ? listProvince.map(
-                                              (value: ProvinceType) => (
-                                                <MenuItem
-                                                  value={value.Id}
-                                                  key={value.Id}>
-                                                  {value.Name}
-                                                </MenuItem>
-                                              )
-                                            )
-                                          : null}
-                                      </TextField>
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Quận/Huyện
-                                  </Typography>
-                                  <Controller
-                                    name="districtId"
-                                    control={control}
-                                    defaultValue={
-                                      getValues('districtId')
-                                        ? getDistrictName(
-                                            getValues('provinceId'),
-                                            getValues('districtId'),
-                                            listProvince
-                                          ) || undefined
-                                        : undefined
-                                    }
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={
-                                          disablePersonalInfo ||
-                                          !allowClickDistrict
-                                        }
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        {...field}
-                                        onChange={(e) =>
-                                          handleChangeDistrict(e)
-                                        }
-                                        select>
-                                        {listDistrict.length > 0
-                                          ? listDistrict.map(
-                                              (value: DistrictType) => (
-                                                <MenuItem
-                                                  value={value.Id}
-                                                  key={value.Id}>
-                                                  {value.Name}
-                                                </MenuItem>
-                                              )
-                                            )
-                                          : null}
-                                      </TextField>
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Phường/Xã
-                                  </Typography>
-                                  <Controller
-                                    name="wardId"
-                                    control={control}
-                                    defaultValue={
-                                      getValues('wardId')
-                                        ? getWardName(
-                                            getValues('provinceId'),
-                                            getValues('districtId'),
-                                            getValues('wardId'),
-                                            listProvince
-                                          )
-                                        : ''
-                                    }
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={
-                                          disablePersonalInfo || !allowClickWard
-                                        }
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        {...field}
-                                        onChange={(e) => handleChangeWard(e)}
-                                        select>
-                                        {listWard.length > 0
-                                          ? listWard.map((value: WardType) => (
-                                              <MenuItem
-                                                value={value.Id}
-                                                key={value.Id}>
-                                                {value.Name}
-                                              </MenuItem>
-                                            ))
-                                          : null}
-                                      </TextField>
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                              <Grid item xs={3}></Grid>
-                            </Grid>
-                          </Stack>
-                          {!disablePersonalInfo && (
-                            <Stack direction="row" spacing={2}>
-                              <StyledButton
-                                size="small"
-                                variant="outlined"
-                                onClick={handleCancelPersonalInfo}
-                                sx={{
-                                  color: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}>
-                                Hủy Bỏ
-                              </StyledButton>
-                              <StyledButton
-                                size="small"
-                                variant="contained"
-                                disabled={
-                                  !!errors.full_name ||
-                                  !!errors.dob ||
-                                  !!errors.gender ||
-                                  !!errors.provinceId ||
-                                  !!errors.districtId ||
-                                  !!errors.wardId
-                                }
-                                sx={{
-                                  background: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}
-                                onClick={handleSubmitPersonalInfo}>
-                                Lưu
-                              </StyledButton>
-                            </Stack>
-                          )}
-                        </Stack>
-                      </Box>
-                    </Box>
-                  </Stack>
-                  <Stack direction="column" spacing={2}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                        Mật khẩu
-                      </Typography>
-                      <IconButton onClick={() => setDisablePassword(false)}>
-                        <EditIcon />
-                      </IconButton>
-                    </Box>
-                    <Box>
-                      <Box sx={{ ml: 2 }}>
-                        <Stack direction="column" spacing={3}>
-                          <Stack direction="column" spacing={2}>
-                            <Grid container>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Mật khẩu mới
-                                  </Typography>
-                                  <Controller
-                                    name="new_password"
-                                    control={control}
-                                    defaultValue="098624979"
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={disablePassword}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        placeholder="123456789"
-                                        {...field}
-                                      />
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                            </Grid>
-
-                            <Grid container>
-                              <Grid item xs={3}>
-                                <Stack direction="column" spacing={1}>
-                                  <Typography component="label" variant="body1">
-                                    Xác nhận lại mật khẩu
-                                  </Typography>
-                                  <Controller
-                                    name="confirm_password"
-                                    control={control}
-                                    defaultValue="098624979"
-                                    render={({
-                                      field,
-                                      fieldState: { invalid, error }
-                                    }) => (
-                                      <TextField
-                                        size="small"
-                                        disabled={disablePassword}
-                                        helperText={error?.message}
-                                        error={invalid}
-                                        placeholder="123456789"
-                                        {...field}
-                                      />
-                                    )}
-                                  />
-                                </Stack>
-                              </Grid>
-                            </Grid>
-                          </Stack>
-                          {!disablePassword && (
-                            <Stack direction="row" spacing={2}>
-                              <StyledButton
-                                size="small"
-                                variant="outlined"
-                                onClick={handleCancelPassword}
-                                sx={{
-                                  color: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}>
-                                Hủy Bỏ
-                              </StyledButton>
-                              <StyledButton
-                                size="small"
-                                variant="contained"
-                                disabled={
-                                  !!errors.password || !!errors.confirm_password
-                                }
-                                sx={{
-                                  background: colors.indigo['700'],
-                                  padding: '6px 16px !important'
-                                }}
-                                onClick={handleSubmitPassword}>
-                                Lưu
-                              </StyledButton>
-                            </Stack>
-                          )}
-                        </Stack>
-                      </Box>
-                    </Box>
-                  </Stack>
-                </Stack>
+        <TabContext value={activeTab.toString()}>
+          <Box sx={{ boxShadow: '0px 1px 8px rgba(0, 0, 0, 0.1)' }}>
+            <Container maxWidth="xl">
+              <Box sx={{ color: '#6E6D7A', cursor: 'pointer' }}>
+                <TabList
+                  value={activeTab}
+                  onChange={handleChange}
+                  sx={{
+                    height: '64px',
+                    '.css-jpln7h-MuiTabs-scroller': {
+                      display: 'flex'
+                    }
+                  }}
+                  TabIndicatorProps={{
+                    style: {
+                      backgroundColor: '#333'
+                    }
+                  }}
+                  aria-label="basic tabs example">
+                  {headerTabs.map((tab, index) => (
+                    <Tab
+                      key={index}
+                      value={index.toString()}
+                      label={tab}
+                      sx={activeTab === index ? useStyle : null}
+                    />
+                  ))}
+                </TabList>
               </Box>
-            </TabPanel>
-          </Container>
-        </Box>
+            </Container>
+          </Box>
+          <Box sx={{ marginTop: '48px' }}>
+            <Container maxWidth="xl">
+              <TabPanel value="0">
+                <ConfirmInjection data={lookUpCertificateResult} />
+              </TabPanel>
+              <TabPanel value="1">
+                <InjectionRegistrationDialog
+                  open={open}
+                  onClose={onCloseDialog}
+                  data={dataToDialog}
+                />
+                <TableInjectionRegistrationResult
+                  data={dataInjectionRegistration}
+                  handleShowInfo={handleShowInfo}
+                />
+              </TabPanel>
+              <TabPanel value="2">
+                <Box component="form">
+                  <Stack direction="column" spacing={3}>
+                    <Stack direction="column" spacing={2}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="body1" sx={{ fontWeight: '500' }}>
+                          Mã số định danh
+                        </Typography>
+                        <IconButton onClick={() => setDisableCitizendId(false)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Box>
+                      <Box>
+                        <Box sx={{ ml: 2 }}>
+                          <Stack direction="column" spacing={3}>
+                            <Grid container spacing={2}>
+                              <Grid item xs={3}>
+                                <Stack direction="column" spacing={1}>
+                                  <Typography component="label" variant="body1">
+                                    Số CMND/CCCD/Mã định danh
+                                  </Typography>
+                                  <Controller
+                                    name="citizenId"
+                                    control={control}
+                                    defaultValue="123456789"
+                                    render={({
+                                      field,
+                                      fieldState: { invalid, error }
+                                    }) => (
+                                      <TextField
+                                        size="small"
+                                        disabled={disableCitizendId}
+                                        helperText={error?.message}
+                                        error={invalid}
+                                        placeholder="123456789"
+                                        {...field}
+                                      />
+                                    )}
+                                  />
+                                </Stack>
+                              </Grid>
+                            </Grid>
+                            {!disableCitizendId && (
+                              <FileUploadImage
+                                onImageChange={onImageChange}
+                                listImage={listImage}
+                                handleRemoveImage={handleRemoveImage}
+                                handleShowModalImage={handleShowModalImage}
+                                maxImage={maxImage}
+                                error={errors.images?.message}
+                              />
+                            )}
+                            {!disableCitizendId && (
+                              <Stack direction="row" spacing={2}>
+                                <StyledButton
+                                  size="small"
+                                  variant="outlined"
+                                  sx={{
+                                    color: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}
+                                  onClick={handleCancelCitizenId}>
+                                  Hủy Bỏ
+                                </StyledButton>
+                                <StyledButton
+                                  size="small"
+                                  variant="contained"
+                                  disabled={
+                                    !!errors.citizenId || !!errors.images
+                                  }
+                                  sx={{
+                                    background: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}
+                                  onClick={handleSubmitCitizenId}>
+                                  Lưu
+                                </StyledButton>
+                              </Stack>
+                            )}
+                          </Stack>
+                        </Box>
+                      </Box>
+                    </Stack>
+                    <Stack direction="column" spacing={2}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="body1" sx={{ fontWeight: '500' }}>
+                          Số điện thoại
+                        </Typography>
+                        <IconButton
+                          onClick={() => setDisablePhoneNumber(false)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Box>
+                      <Box>
+                        <Box sx={{ ml: 2 }}>
+                          <Stack direction="column" spacing={3}>
+                            <Stack direction="column" spacing={2}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Số điện thoại
+                                    </Typography>
+                                    <Controller
+                                      name="phone_number"
+                                      control={control}
+                                      defaultValue="098624979"
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={disablePhoneNumber}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          placeholder="123456789"
+                                          {...field}
+                                        />
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                              </Grid>
+                            </Stack>
+                            {!disablePhoneNumber && (
+                              <Stack direction="row" spacing={2}>
+                                <StyledButton
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={handleCancelPhoneNumber}
+                                  sx={{
+                                    color: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}>
+                                  Hủy Bỏ
+                                </StyledButton>
+                                <StyledButton
+                                  size="small"
+                                  variant="contained"
+                                  disabled={!!errors.phone_number}
+                                  sx={{
+                                    background: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}
+                                  onClick={handleSubmitPhoneNumber}>
+                                  Lưu
+                                </StyledButton>
+                              </Stack>
+                            )}
+                          </Stack>
+                        </Box>
+                      </Box>
+                    </Stack>
+                    <Stack direction="column" spacing={2}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="body1" sx={{ fontWeight: '500' }}>
+                          Thông tin cá nhân
+                        </Typography>
+                        <IconButton
+                          onClick={() => setDisablePersonalInfo(false)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Box>
+                      <Box>
+                        <Box sx={{ ml: 2 }}>
+                          <Stack direction="column" spacing={3}>
+                            <Stack direction="column" spacing={2}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Họ và tên
+                                    </Typography>
+                                    <Controller
+                                      name="full_name"
+                                      control={control}
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          defaultValue={getValues('full_name')}
+                                          disabled={disablePersonalInfo}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          {...field}
+                                        />
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Ngày sinh
+                                    </Typography>
+                                    <Controller
+                                      name="dob"
+                                      control={control}
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          type="date"
+                                          defaultValue={getValues('dob')}
+                                          size="small"
+                                          disabled={disablePersonalInfo}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          {...field}
+                                        />
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Giới tính
+                                    </Typography>
+                                    <Controller
+                                      name="gender"
+                                      defaultValue="male"
+                                      control={control}
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={disablePersonalInfo}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          {...field}
+                                          select>
+                                          <MenuItem value="male">Nam</MenuItem>
+                                          <MenuItem value="female">Nữ</MenuItem>
+                                        </TextField>
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={3}></Grid>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Tỉnh/Thành phố
+                                    </Typography>
+                                    <Controller
+                                      name="provinceId"
+                                      control={control}
+                                      defaultValue="098624979"
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={disablePersonalInfo}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          defaultValue={getProvinceName(
+                                            getValues('provinceId'),
+                                            listProvince
+                                          )}
+                                          {...field}
+                                          onChange={(e) =>
+                                            handleChangeProvince(e)
+                                          }
+                                          select>
+                                          {listProvince.length > 0
+                                            ? listProvince.map(
+                                                (value: ProvinceType) => (
+                                                  <MenuItem
+                                                    value={value.Id}
+                                                    key={value.Id}>
+                                                    {value.Name}
+                                                  </MenuItem>
+                                                )
+                                              )
+                                            : null}
+                                        </TextField>
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Quận/Huyện
+                                    </Typography>
+                                    <Controller
+                                      name="districtId"
+                                      control={control}
+                                      defaultValue={
+                                        getValues('districtId')
+                                          ? getDistrictName(
+                                              getValues('provinceId'),
+                                              getValues('districtId'),
+                                              listProvince
+                                            ) || undefined
+                                          : undefined
+                                      }
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={
+                                            disablePersonalInfo ||
+                                            !allowClickDistrict
+                                          }
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          {...field}
+                                          onChange={(e) =>
+                                            handleChangeDistrict(e)
+                                          }
+                                          select>
+                                          {listDistrict.length > 0
+                                            ? listDistrict.map(
+                                                (value: DistrictType) => (
+                                                  <MenuItem
+                                                    value={value.Id}
+                                                    key={value.Id}>
+                                                    {value.Name}
+                                                  </MenuItem>
+                                                )
+                                              )
+                                            : null}
+                                        </TextField>
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Phường/Xã
+                                    </Typography>
+                                    <Controller
+                                      name="wardId"
+                                      control={control}
+                                      defaultValue={
+                                        getValues('wardId')
+                                          ? getWardName(
+                                              getValues('provinceId'),
+                                              getValues('districtId'),
+                                              getValues('wardId'),
+                                              listProvince
+                                            )
+                                          : ''
+                                      }
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={
+                                            disablePersonalInfo ||
+                                            !allowClickWard
+                                          }
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          {...field}
+                                          onChange={(e) => handleChangeWard(e)}
+                                          select>
+                                          {listWard.length > 0
+                                            ? listWard.map(
+                                                (value: WardType) => (
+                                                  <MenuItem
+                                                    value={value.Id}
+                                                    key={value.Id}>
+                                                    {value.Name}
+                                                  </MenuItem>
+                                                )
+                                              )
+                                            : null}
+                                        </TextField>
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={3}></Grid>
+                              </Grid>
+                            </Stack>
+                            {!disablePersonalInfo && (
+                              <Stack direction="row" spacing={2}>
+                                <StyledButton
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={handleCancelPersonalInfo}
+                                  sx={{
+                                    color: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}>
+                                  Hủy Bỏ
+                                </StyledButton>
+                                <StyledButton
+                                  size="small"
+                                  variant="contained"
+                                  disabled={
+                                    !!errors.full_name ||
+                                    !!errors.dob ||
+                                    !!errors.gender ||
+                                    !!errors.provinceId ||
+                                    !!errors.districtId ||
+                                    !!errors.wardId
+                                  }
+                                  sx={{
+                                    background: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}
+                                  onClick={handleSubmitPersonalInfo}>
+                                  Lưu
+                                </StyledButton>
+                              </Stack>
+                            )}
+                          </Stack>
+                        </Box>
+                      </Box>
+                    </Stack>
+                    <Stack direction="column" spacing={2}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography variant="body1" sx={{ fontWeight: '500' }}>
+                          Mật khẩu
+                        </Typography>
+                        <IconButton onClick={() => setDisablePassword(false)}>
+                          <EditIcon />
+                        </IconButton>
+                      </Box>
+                      <Box>
+                        <Box sx={{ ml: 2 }}>
+                          <Stack direction="column" spacing={3}>
+                            <Stack direction="column" spacing={2}>
+                              <Grid container>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Mật khẩu mới
+                                    </Typography>
+                                    <Controller
+                                      name="new_password"
+                                      control={control}
+                                      defaultValue="098624979"
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={disablePassword}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          placeholder="123456789"
+                                          {...field}
+                                        />
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                              </Grid>
+
+                              <Grid container>
+                                <Grid item xs={3}>
+                                  <Stack direction="column" spacing={1}>
+                                    <Typography
+                                      component="label"
+                                      variant="body1">
+                                      Xác nhận lại mật khẩu
+                                    </Typography>
+                                    <Controller
+                                      name="confirm_password"
+                                      control={control}
+                                      defaultValue="098624979"
+                                      render={({
+                                        field,
+                                        fieldState: { invalid, error }
+                                      }) => (
+                                        <TextField
+                                          size="small"
+                                          disabled={disablePassword}
+                                          helperText={error?.message}
+                                          error={invalid}
+                                          placeholder="123456789"
+                                          {...field}
+                                        />
+                                      )}
+                                    />
+                                  </Stack>
+                                </Grid>
+                              </Grid>
+                            </Stack>
+                            {!disablePassword && (
+                              <Stack direction="row" spacing={2}>
+                                <StyledButton
+                                  size="small"
+                                  variant="outlined"
+                                  onClick={handleCancelPassword}
+                                  sx={{
+                                    color: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}>
+                                  Hủy Bỏ
+                                </StyledButton>
+                                <StyledButton
+                                  size="small"
+                                  variant="contained"
+                                  disabled={
+                                    !!errors.password ||
+                                    !!errors.confirm_password
+                                  }
+                                  sx={{
+                                    background: colors.indigo['700'],
+                                    padding: '6px 16px !important'
+                                  }}
+                                  onClick={handleSubmitPassword}>
+                                  Lưu
+                                </StyledButton>
+                              </Stack>
+                            )}
+                          </Stack>
+                        </Box>
+                      </Box>
+                    </Stack>
+                  </Stack>
+                </Box>
+              </TabPanel>
+            </Container>
+          </Box>
+        </TabContext>
       </Box>
       <Footer />
     </>
