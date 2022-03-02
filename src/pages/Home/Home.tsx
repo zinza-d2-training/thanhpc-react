@@ -34,12 +34,8 @@ import { statisticVaccinationByLocalMore } from '../../db/statisticVaccinationBy
 import { StatisticVaccinationByLocal } from '../../pages/Home/types';
 import { administrativeUnits } from '../../db/administrativeUnits';
 import { lookUpInjectionSitesByLocation } from '../../db/lookUpInjectionSitesByLocation';
-import {
-  LookUpInjectionSitesByLocation,
-  WardType,
-  DistrictType,
-  ProvinceType
-} from '../../pages/Home/types';
+import { LookUpInjectionSitesByLocation } from '../../pages/Home/types';
+import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
 
 import {
   Chart,
