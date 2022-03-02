@@ -146,7 +146,6 @@ export const User = () => {
         break;
     }
   }, [activeTab, tabLocation]);
-  useEffect(() => {}, []);
   // handle file image upload
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -567,7 +566,6 @@ export const User = () => {
                                   />
                                 </Stack>
                               </Grid>
-
                               <Grid item xs={3}></Grid>
                               <Grid item xs={3}>
                                 <Stack direction="column" spacing={1}>
