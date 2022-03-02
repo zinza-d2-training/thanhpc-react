@@ -1,7 +1,7 @@
 import { LookUpCertificateResult } from '../pages/VaccineCertificate/types';
 export const lookUpCertificateResult: LookUpCertificateResult = {
   full_name: 'Phạm Công Thành',
-  dob: new Date('10/23/2000'),
+  dob: new Date('2000-10-23'),
   gender: 'male',
   phone_number: '0986249793',
   citizenId: '184415207',

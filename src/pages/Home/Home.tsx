@@ -35,6 +35,7 @@ import { StatisticVaccinationByLocal } from '../../pages/Home/types';
 import { administrativeUnits } from '../../db/administrativeUnits';
 import { lookUpInjectionSitesByLocation } from '../../db/lookUpInjectionSitesByLocation';
 import { LookUpInjectionSitesByLocation } from '../../pages/Home/types';
+import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
 
 import {
   Chart,
@@ -57,21 +58,7 @@ Chart.register(
   CategoryScale,
   Title
 );
-interface WardType {
-  Id?: string;
-  Name?: string;
-  Level?: string;
-}
-interface DistrictType {
-  Id?: string;
-  Name?: string;
-  Wards?: WardType[];
-}
-interface ProvinceType {
-  Id?: string;
-  Name?: string;
-  Districts?: DistrictType[];
-}
+
 const tableHead = [
   'STT',
   'Tỉnh/Thành phố',

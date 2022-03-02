@@ -5,5 +5,5 @@ export const StyledButton = (props: ButtonProps) => {
     borderRadius: '8px 8px 8px 0',
     padding: '6px 32px'
   };
-  return <Button {...props} sx={{ ...props.sx, ...useStyle }} />;
+  return <Button {...props} sx={{ ...useStyle, ...props.sx }} />;
 };
