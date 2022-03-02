@@ -1,27 +1,20 @@
-import { SetStateAction, useState } from 'react';
 import { Box, colors, Typography, Container } from '@mui/material';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
+import { loginSelector } from '../../features/login/loginSlice';
+import { useAppSelector } from '../../store/hooks';
 import headerImg from '../../images/header.png';
 import { StyledButton } from '../StyledButton';
 import { SidebarMenu } from '../SidebarMenu/SidebarMenu';
+import { SidebarUserMenu } from '../SidebarUserMenu/SidebarUserMenu';
 import { Link } from 'react-router-dom';
 
 const defaultStyle = {
   color: '#fff',
   cursor: 'pointer'
 };
+
 export const Header = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleOpenMenu = (e: {
-    currentTarget: SetStateAction<HTMLElement | null>;
-  }) => {
-    setAnchorEl(e.currentTarget);
-  };
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  };
+  const loginSelectorResult = useAppSelector(loginSelector);
 
   return (
     <Box
@@ -61,43 +54,33 @@ export const Header = () => {
               Đăng ký tiêm
             </Typography>
             <Box>
-              <Box
-                onMouseOver={handleOpenMenu}
-                sx={{
-                  display: 'inline-flex',
-                  position: 'relative'
-                }}>
-                <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
-                  Tra cứu
-                </Typography>
-                <KeyboardArrowDownIcon sx={{ ...defaultStyle }} />
-              </Box>
-
-              <SidebarMenu
-                open={open}
-                anchorEl={anchorEl}
-                handleCloseMenu={handleCloseMenu}
-              />
+              <SidebarMenu />
             </Box>
             <Link to="/documentation" style={{ textDecoration: 'none' }}>
               <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
                 Tài liệu
               </Typography>
             </Link>
-            <Link to="/login" style={{ textDecoration: 'none' }}>
-              <StyledButton
-                sx={{
-                  color: colors.indigo['700'],
-                  background: '#fff',
-                  '&:hover': {
-                    color: colors.indigo['700'],
-                    background: '#fff'
-                  },
-                  ml: 3
-                }}
-                children="Đăng nhập"
+            {loginSelectorResult.response?.data?.user.full_name ? (
+              <SidebarUserMenu
+                fullName={loginSelectorResult.response?.data?.user.full_name}
               />
-            </Link>
+            ) : (
+              <Link to="/login" style={{ textDecoration: 'none' }}>
+                <StyledButton
+                  sx={{
+                    color: colors.indigo['700'],
+                    background: '#fff',
+                    '&:hover': {
+                      color: colors.indigo['700'],
+                      background: '#fff'
+                    },
+                    ml: 3
+                  }}
+                  children="Đăng nhập"
+                />
+              </Link>
+            )}
           </Box>
         </Box>
       </Container>
