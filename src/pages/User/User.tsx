@@ -38,7 +38,7 @@ import { useInfoSchema } from './schema';
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 import { StyledButton } from '../../components/StyledButton';
 
-import { FileUploadImage } from '../../components/FileUploadImage/FileUploadImage';
+import { FileUploadImage,IFile } from '../../components/FileUploadImage/FileUploadImage';
 import {
   getProvinceName,
   getDistrictName,
@@ -50,10 +50,7 @@ import { administrativeUnits } from '../../db/administrativeUnits';
 const useStyle = {
   color: '#333 !important'
 };
-interface IFile {
-  file?: File | undefined;
-  preview: string;
-}
+
 const maxImage = 2;
 export const User = () => {
   const loginSelectorResult = useAppSelector(loginSelector);

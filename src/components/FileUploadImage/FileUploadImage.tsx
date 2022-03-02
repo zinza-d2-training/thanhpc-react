@@ -4,7 +4,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { Label } from '../Label';
 
-interface IFile {
+export interface IFile {
   file?: File | undefined;
   preview: string;
 }

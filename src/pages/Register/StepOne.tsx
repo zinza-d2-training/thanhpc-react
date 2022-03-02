@@ -5,15 +5,14 @@ import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
 import { Box, TextField } from '@mui/material';
 import { Controller } from 'react-hook-form';
-import { FileUploadImage } from '../../components/FileUploadImage/FileUploadImage';
+import {
+  FileUploadImage,
+  IFile
+} from '../../components/FileUploadImage/FileUploadImage';
 
 import { Label } from '../../components/Label';
 import { UserFormData } from './types';
 
-interface IFile {
-  file?: File | undefined;
-  preview: string;
-}
 interface Props {
   handleDisable: (isHaveErrors: boolean, length: number) => void;
   maxImage: number;
