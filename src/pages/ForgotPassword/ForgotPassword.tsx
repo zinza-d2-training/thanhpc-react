@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, Grid, TextField, colors } from '@mui/material';
+import { Trans } from 'react-i18next';
 
 import loginImg from '../../images/login.png';
 import { StyledButton } from '../../components/StyledButton';
@@ -69,8 +70,10 @@ export const ForgotPassword = () => {
             }}>
             <Box sx={{ justifyContent: 'center', display: 'flex', mb: 3 }}>
               <Label required={true}>
-                Để khôi phục mật khẩu, vui lòng nhập đúng số CMND/CCCD bạn đã
-                dùng để đăng ký
+                <Trans>
+                  Để khôi phục mật khẩu, vui lòng nhập đúng số CMND/CCCD bạn đã
+                  dùng để đăng ký
+                </Trans>
               </Label>
             </Box>
             <Box>
@@ -92,7 +95,7 @@ export const ForgotPassword = () => {
                   mr: 1
                 }}
                 onClick={handleBackToLogin}>
-                Quay lại
+                <Trans>Quay lại</Trans>
               </StyledButton>
               <StyledButton
                 sx={{
@@ -105,7 +108,7 @@ export const ForgotPassword = () => {
                 variant="contained"
                 onClick={handleOpenModal}
                 disabled={disabled}>
-                Gửi
+                <Trans>Gửi</Trans>
               </StyledButton>
             </Box>
           </Box>

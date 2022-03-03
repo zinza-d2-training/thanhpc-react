@@ -8,6 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { Trans } from 'react-i18next';
 
 import loginImg from '../../images/login.png';
 import { StepOne } from './StepOne';
@@ -117,7 +118,7 @@ export const Register = () => {
               textAlign: 'center',
               fontWeight: 'bold'
             }}>
-            Đăng ký tài khoản
+            <Trans>Đăng ký tài khoản</Trans>
           </Typography>
           <Box
             sx={{
@@ -164,7 +165,7 @@ export const Register = () => {
                         marginRight:
                           activeStep === steps.length - 1 ? 'auto' : null
                       }}>
-                      Quay lại
+                      <Trans>Quay lại</Trans>
                     </Button>
                     <Button
                       sx={{
@@ -174,9 +175,11 @@ export const Register = () => {
                       onClick={handleSkip}
                       disabled={disabled}
                       endIcon={<ArrowForwardIcon />}>
-                      {activeStep === steps.length - 1
-                        ? 'Hoàn thành'
-                        : 'Tiếp tục'}
+                      <Trans>
+                        {activeStep === steps.length - 1
+                          ? 'Hoàn thành'
+                          : 'Tiếp tục'}
+                      </Trans>
                     </Button>
                   </Box>
                 </Box>
