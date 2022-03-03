@@ -1,6 +1,7 @@
 import { Typography, Button, colors, Box } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { Trans } from 'react-i18next';
 
 import { Label } from '../Label';
 
@@ -172,7 +173,7 @@ export const FileUploadImage = (props: Props) => {
         )}
       </Box>
       <Typography sx={{ color: colors.red['600'], mt: 1, ml: 0.5 }}>
-        {error}
+        <Trans>{error}</Trans>
       </Typography>
     </Box>
   );

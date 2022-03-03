@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Trans } from 'react-i18next';
 
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
@@ -15,7 +16,7 @@ import { Footer } from '../../components/Footer/Footer';
 const documents = [
   {
     id: 'document_id-sdfsdf',
-    label: 'Giới thiệu nền tảng quản lý tiêm chủng vắc xin phòng Covid-1',
+    label: 'Giới thiệu nền tảng quản lý tiêm chủng vắc xin phòng Covid-19',
     linkDocument:
       'https://tiemchungcovid19.gov.vn/assets/portal/document/Gi%E1%BB%9Bi_thi%E1%BB%87u_n%E1%BB%81n_t%E1%BA%A3ng_qu%E1%BA%A3n_l%C3%BD_ti%C3%AAm_ch%E1%BB%A7ng_v%E1%BA%AFc_xin_ph%C3%B2ng_Covid_-_19.pdf'
   },
@@ -91,7 +92,11 @@ export const Documentation = () => {
           }}>
           <Container maxWidth="xl">
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="h5">Tài liệu</Typography>
+              <Trans>
+                <Typography variant="h5">
+                  <Trans>Tài liệu</Trans>
+                </Typography>
+              </Trans>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Stack direction="row" spacing={1}>
                   <LinkV6
@@ -100,10 +105,12 @@ export const Documentation = () => {
                       textDecoration: 'none',
                       color: colors.red['600']
                     }}>
-                    Trang chủ
+                    <Trans>Trang chủ</Trans>
                   </LinkV6>
                   <Typography variant="body2">/</Typography>
-                  <Typography variant="body2">Tài liệu</Typography>
+                  <Typography variant="body2">
+                    <Trans>Tài liệu</Trans>
+                  </Typography>
                 </Stack>
               </Box>
             </Box>
@@ -116,9 +123,15 @@ export const Documentation = () => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">STT</TableCell>
-                  <TableCell>Tên tài liệu </TableCell>
-                  <TableCell align="center">Thao tác</TableCell>
+                  <TableCell align="center">
+                    <Trans>STT</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Tên tài liệu</Trans>
+                  </TableCell>
+                  <TableCell align="center">
+                    <Trans>Thao tác</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -134,7 +147,9 @@ export const Documentation = () => {
                     <TableCell component="th" scope="row" align="center">
                       {index + 1}
                     </TableCell>
-                    <TableCell>{row.label}</TableCell>
+                    <TableCell>
+                      <Trans>{row.label}</Trans>
+                    </TableCell>
                     <TableCell
                       sx={{ display: 'flex', justifyContent: 'center' }}>
                       <Link
@@ -145,7 +160,7 @@ export const Documentation = () => {
                         <Typography
                           variant="body1"
                           sx={{ color: colors.red['500'] }}>
-                          Tải về
+                          <Trans>Tải về</Trans>
                         </Typography>
                       </Link>
                     </TableCell>

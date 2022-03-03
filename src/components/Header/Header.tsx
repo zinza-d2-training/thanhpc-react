@@ -1,12 +1,18 @@
-import { Box, colors, Typography, Container } from '@mui/material';
+import { useEffect, useCallback } from 'react';
+import { Box, colors, Typography, Container, Stack } from '@mui/material';
 
 import { loginSelector } from '../../features/login/loginSlice';
-import { useAppSelector } from '../../store/hooks';
+import {
+  i18nextSelector,
+  changeLanguage
+} from '../../features/i18next/i18nextSlice';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import headerImg from '../../images/header.png';
 import { StyledButton } from '../StyledButton';
 import { SidebarMenu } from '../SidebarMenu/SidebarMenu';
 import { SidebarUserMenu } from '../SidebarUserMenu/SidebarUserMenu';
 import { Link } from 'react-router-dom';
+import { Trans } from 'react-i18next';
 
 const defaultStyle = {
   color: '#fff',
@@ -15,6 +21,20 @@ const defaultStyle = {
 
 export const Header = () => {
   const loginSelectorResult = useAppSelector(loginSelector);
+  const i18nextSelectorResult = useAppSelector(i18nextSelector);
+  const { language } = i18nextSelectorResult;
+  const dispatch = useAppDispatch();
+
+  const handleChangeVN = useCallback(() => {
+    dispatch(changeLanguage('vn'));
+  }, [dispatch]);
+  const handleChangeEnglish = useCallback(() => {
+    dispatch(changeLanguage('en'));
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(language);
+  }, [language]);
 
   return (
     <Box
@@ -33,54 +53,73 @@ export const Header = () => {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box component="img" src={headerImg} />
             <Typography variant="h6" sx={{ ...defaultStyle, ml: 2 }}>
-              CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
+              <Trans>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</Trans>
             </Typography>
           </Box>
           <Box
             sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
-            <Link to="/">
-              <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
-                Trang chủ
-              </Typography>
-            </Link>
-            <Typography
-              variant="body1"
-              sx={{
-                ...defaultStyle,
-                ml: 3,
-                outline: 'none',
-                textDecoration: 'none'
-              }}>
-              Đăng ký tiêm
-            </Typography>
-            <Box>
-              <SidebarMenu />
-            </Box>
-            <Link to="/documentation" style={{ textDecoration: 'none' }}>
-              <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
-                Tài liệu
-              </Typography>
-            </Link>
-            {loginSelectorResult.response?.data?.user.full_name ? (
-              <SidebarUserMenu
-                fullName={loginSelectorResult.response?.data?.user.full_name}
-              />
-            ) : (
-              <Link to="/login" style={{ textDecoration: 'none' }}>
-                <StyledButton
-                  sx={{
-                    color: colors.indigo['700'],
-                    background: '#fff',
-                    '&:hover': {
-                      color: colors.indigo['700'],
-                      background: '#fff'
-                    },
-                    ml: 3
-                  }}
-                  children="Đăng nhập"
-                />
+            <Stack direction="row" spacing={2} sx={{ alignItems: 'center' }}>
+              <Link to="/">
+                <Typography variant="body1" sx={{ ...defaultStyle }}>
+                  <Trans>Trang chủ</Trans>
+                </Typography>
               </Link>
-            )}
+              <Typography
+                variant="body1"
+                sx={{
+                  ...defaultStyle,
+                  outline: 'none',
+                  textDecoration: 'none'
+                }}>
+                <Trans>Đăng ký tiêm</Trans>
+              </Typography>
+              <Box>
+                <SidebarMenu />
+              </Box>
+              <Link to="/documentation" style={{ textDecoration: 'none' }}>
+                <Typography variant="body1" sx={{ ...defaultStyle }}>
+                  <Trans>Tài liệu</Trans>
+                </Typography>
+              </Link>
+              {loginSelectorResult.response?.data?.user.full_name ? (
+                <SidebarUserMenu
+                  fullName={loginSelectorResult.response?.data?.user.full_name}
+                />
+              ) : (
+                <Link to="/login" style={{ textDecoration: 'none' }}>
+                  <StyledButton
+                    sx={{
+                      color: colors.indigo['700'],
+                      background: '#fff',
+                      '&:hover': {
+                        color: colors.indigo['700'],
+                        background: '#fff'
+                      }
+                    }}
+                    children={<Trans>Đăng nhập</Trans>}
+                  />
+                </Link>
+              )}
+              <Stack direction="row" spacing={1} sx={{ color: '#fff' }}>
+                <Typography
+                  sx={{
+                    cursor: 'pointer',
+                    textDecoration: language === 'vn' ? 'underline' : 'none'
+                  }}
+                  onClick={handleChangeVN}>
+                  VN
+                </Typography>
+                <Typography>|</Typography>
+                <Typography
+                  sx={{
+                    textDecoration: language === 'en' ? 'underline' : 'none',
+                    cursor: 'pointer'
+                  }}
+                  onClick={handleChangeEnglish}>
+                  EN
+                </Typography>
+              </Stack>
+            </Stack>
           </Box>
         </Box>
       </Container>
