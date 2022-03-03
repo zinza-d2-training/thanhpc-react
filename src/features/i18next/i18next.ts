@@ -238,7 +238,12 @@ const translationEn = {
   'Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký':
     'Verification code will be sent by text message to your registered phone number',
   'Nếu bạn không nhận được tin nhắn, xin vui lòng thử lại sau:':
-    'If you do not receive the message, please try again later:'
+    'If you do not receive the message, please try again later:',
+  'Số chứng minh nhân dân/Căn cước công dân không hợp lệ!':
+    'Invalid ID/Citizen ID number!',
+  'Vui lòng nhập đúng định dạng!': 'Please enter the correct format!',
+  'Họ và tên không bao gồm số': 'First and last name do not include number',
+  'Mật khẩu phải có ít nhất 8 ký tự!': 'Password must be at least 8 characters!'
 };
 
 i18n.use(initReactI18next).init({

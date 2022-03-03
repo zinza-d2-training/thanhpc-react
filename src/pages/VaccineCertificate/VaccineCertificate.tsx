@@ -98,7 +98,9 @@ export const VaccineCertificate = () => {
                         <TextField
                           size="small"
                           fullWidth
-                          helperText={error?.message}
+                          helperText={
+                            error?.message ? t(`${error?.message}`) : null
+                          }
                           error={invalid}
                           placeholder={t('Họ và tên')}
                           {...field}
@@ -118,7 +120,9 @@ export const VaccineCertificate = () => {
                         <TextField
                           size="small"
                           fullWidth
-                          helperText={error?.message}
+                          helperText={
+                            error?.message ? t(`${error?.message}`) : null
+                          }
                           error={invalid}
                           type="date"
                           {...field}
@@ -138,7 +142,9 @@ export const VaccineCertificate = () => {
                         <TextField
                           size="small"
                           fullWidth
-                          helperText={error?.message}
+                          helperText={
+                            error?.message ? t(`${error?.message}`) : null
+                          }
                           error={invalid}
                           {...field}
                           sx={{ root: { height: '50px' }, mt: 1 }}
@@ -160,7 +166,9 @@ export const VaccineCertificate = () => {
                         <TextField
                           size="small"
                           fullWidth
-                          helperText={error?.message}
+                          helperText={
+                            error?.message ? t(`${error?.message}`) : null
+                          }
                           error={invalid}
                           placeholder={t('Số điện thoại')}
                           {...field}

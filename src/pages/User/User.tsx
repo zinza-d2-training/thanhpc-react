@@ -17,7 +17,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useForm, Controller, Resolver } from 'react-hook-form';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppSelector } from '../../store/hooks';
@@ -58,6 +58,7 @@ const useStyle = {
 
 const maxImage = 2;
 export const User = () => {
+  const { t } = useTranslation();
   const loginSelectorResult = useAppSelector(loginSelector);
   const [activeTab, setActiveTab] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
@@ -304,7 +305,7 @@ export const User = () => {
                     <Tab
                       key={index}
                       value={index.toString()}
-                      label={tab}
+                      label={t(`${tab}`)}
                       sx={activeTab === index ? useStyle : null}
                     />
                   ))}
@@ -360,7 +361,11 @@ export const User = () => {
                                       <TextField
                                         size="small"
                                         disabled={disableCitizendId}
-                                        helperText={error?.message}
+                                        helperText={
+                                          error?.message
+                                            ? t(`${error?.message}`)
+                                            : null
+                                        }
                                         error={invalid}
                                         placeholder="123456789"
                                         {...field}
@@ -444,7 +449,11 @@ export const User = () => {
                                         <TextField
                                           size="small"
                                           disabled={disablePhoneNumber}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           placeholder="123456789"
                                           {...field}
@@ -517,7 +526,11 @@ export const User = () => {
                                           size="small"
                                           defaultValue={getValues('full_name')}
                                           disabled={disablePersonalInfo}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           {...field}
                                         />
@@ -544,7 +557,11 @@ export const User = () => {
                                           defaultValue={getValues('dob')}
                                           size="small"
                                           disabled={disablePersonalInfo}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           {...field}
                                         />
@@ -570,7 +587,11 @@ export const User = () => {
                                         <TextField
                                           size="small"
                                           disabled={disablePersonalInfo}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           {...field}
                                           select>
@@ -604,7 +625,11 @@ export const User = () => {
                                         <TextField
                                           size="small"
                                           disabled={disablePersonalInfo}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           defaultValue={getProvinceName(
                                             getValues('provinceId'),
@@ -660,7 +685,11 @@ export const User = () => {
                                             disablePersonalInfo ||
                                             !allowClickDistrict
                                           }
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           {...field}
                                           onChange={(e) =>
@@ -713,7 +742,11 @@ export const User = () => {
                                             disablePersonalInfo ||
                                             !allowClickWard
                                           }
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           {...field}
                                           onChange={(e) => handleChangeWard(e)}
@@ -805,7 +838,11 @@ export const User = () => {
                                         <TextField
                                           size="small"
                                           disabled={disablePassword}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           placeholder="123456789"
                                           {...field}
@@ -835,7 +872,11 @@ export const User = () => {
                                         <TextField
                                           size="small"
                                           disabled={disablePassword}
-                                          helperText={error?.message}
+                                          helperText={
+                                            error?.message
+                                              ? t(`${error?.message}`)
+                                              : null
+                                          }
                                           error={invalid}
                                           placeholder="123456789"
                                           {...field}

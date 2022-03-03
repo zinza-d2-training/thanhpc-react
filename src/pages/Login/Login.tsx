@@ -12,7 +12,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Trans } from 'react-i18next';
 
 import loginImg from '../../images/login.png';
 import { loginSchema } from './schema';
@@ -81,12 +80,12 @@ export const Login = () => {
                 '@media(min-height: 768px)': { mt: '150px' },
                 '@media(min-height: 920px)': { mt: '25vh' }
               }}>
-              <Trans>Đăng nhập vào tài khoản</Trans>
+              Đăng nhập vào tài khoản
             </Typography>
             <Box>
               <Box sx={{ mb: 2 }}>
                 <Typography component="label" variant="body1">
-                  <Trans>Chứng minh nhân dân/Căn cước công dân</Trans>
+                  Chứng minh nhân dân/Căn cước công dân
                 </Typography>
                 <Controller
                   name="citizenId"
@@ -110,7 +109,7 @@ export const Login = () => {
               </Box>
               <Box>
                 <Typography component="label" variant="body1">
-                  <Trans>Mật khẩu</Trans>
+                  Mật khẩu
                 </Typography>
                 <Controller
                   name="password"
@@ -158,12 +157,12 @@ export const Login = () => {
                       <CircularProgress size={20} />
                     )
                   }>
-                  <Trans>Đăng nhập</Trans>
+                  Đăng nhập
                 </Button>
               </Box>
               <Box>
                 <Typography my={3}>
-                  <Trans>Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký !</Trans>
+                  Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký !
                 </Typography>
                 <Button
                   fullWidth
@@ -179,7 +178,7 @@ export const Login = () => {
                     border: 1
                   }}
                   type="submit">
-                  <Trans>Đăng ký</Trans>
+                  Đăng ký
                 </Button>
               </Box>
             </Box>

@@ -84,7 +84,9 @@ export const InjectionRegistration = () => {
           alignItems: 'center'
         }}>
         <Container maxWidth="xl">
-          <Typography variant="h5">Tra cứu đăng ký tiêm</Typography>
+          <Typography variant="h5">
+            <Trans>Tra cứu đăng ký tiêm</Trans>
+          </Typography>
         </Container>
       </Box>
       <Container maxWidth="xl">
@@ -107,7 +109,9 @@ export const InjectionRegistration = () => {
                       <TextField
                         fullWidth
                         size="small"
-                        helperText={error?.message}
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
                         placeholder={t('Số CMND/CCCD/Mã định danh công dân')}
                         {...field}
@@ -129,7 +133,9 @@ export const InjectionRegistration = () => {
                       <TextField
                         fullWidth
                         size="small"
-                        helperText={error?.message}
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
                         placeholder={t('Số điện thoại')}
                         {...field}

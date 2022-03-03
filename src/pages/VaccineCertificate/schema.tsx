@@ -12,7 +12,7 @@ export const vaccineCertificateSchema = yup.object().shape({
     .required('Đây là trường bắt buộc!')
     .matches(
       /(03|05|07|08|09|84[1|3|5|7|9]|01[2|6|8|9])+([0-9]{8})\b/,
-      'Vui lòng nhập đúng định dạng'
+      'Vui lòng nhập đúng định dạng!'
     ),
   citizenId: yup.string(),
   healthInsuranceCardNumber: yup.string()
