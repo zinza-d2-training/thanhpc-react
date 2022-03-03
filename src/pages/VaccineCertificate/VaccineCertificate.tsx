@@ -14,6 +14,7 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import CachedIcon from '@mui/icons-material/Cached';
 import SearchIcon from '@mui/icons-material/Search';
+import { useTranslation, Trans } from 'react-i18next';
 
 import { Label } from '../../components/Label';
 import { Header } from '../../components/Header/Header';
@@ -26,6 +27,7 @@ import { lookUpCertificateResult } from '../../db/lookUpCertificateResult';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 
 export const VaccineCertificate = () => {
+  const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
   const [showInfo, setShowInfo] = useState<boolean>(false);
   const { handleSubmit, reset, control } = useForm<LookUpCertificate>({
@@ -74,7 +76,9 @@ export const VaccineCertificate = () => {
             alignItems: 'center'
           }}>
           <Container maxWidth="xl">
-            <Typography variant="h5">Tra cứu chứng nhận tiêm</Typography>
+            <Typography variant="h5">
+              <Trans>Tra cứu chứng nhận tiêm</Trans>
+            </Typography>
           </Container>
         </Box>
         <Box sx={{ mb: 3 }}>
@@ -139,8 +143,8 @@ export const VaccineCertificate = () => {
                           {...field}
                           sx={{ root: { height: '50px' }, mt: 1 }}
                           select>
-                          <MenuItem value="male">Nam</MenuItem>
-                          <MenuItem value="female">Nữ</MenuItem>
+                          <MenuItem value="male">{t('Nam')}</MenuItem>
+                          <MenuItem value="female">{t('Nữ')}</MenuItem>
                         </TextField>
                       )}
                     />
@@ -158,7 +162,7 @@ export const VaccineCertificate = () => {
                           fullWidth
                           helperText={error?.message}
                           error={invalid}
-                          placeholder="Số điện thoại"
+                          placeholder={t('Số điện thoại')}
                           {...field}
                           sx={{ root: { height: '50px' }, mt: 1 }}
                         />
@@ -176,7 +180,7 @@ export const VaccineCertificate = () => {
                         <TextField
                           size="small"
                           fullWidth
-                          placeholder="Số CMND/CCCD"
+                          placeholder={t('Số CMND/CCCD')}
                           {...field}
                           sx={{ root: { height: '50px' }, mt: 1 }}
                         />
@@ -194,7 +198,7 @@ export const VaccineCertificate = () => {
                         <TextField
                           size="small"
                           fullWidth
-                          placeholder="Số thẻ BHYT"
+                          placeholder={t('Số thẻ BHYT')}
                           {...field}
                           sx={{ root: { height: '50px' }, mt: 1 }}
                         />
@@ -206,10 +210,12 @@ export const VaccineCertificate = () => {
               <Box sx={{ color: colors.red['600'], mt: 3 }}>
                 <Box component="b">Ghi chú:</Box>{' '}
                 <Box component="i">
-                  Nếu bạn đã tiêm nhưng chưa được ghi nhận, hãy liên hệ với cơ
-                  sở tiêm và đề nghị cập nhật thông tin lên Nền tảng tiêm chủng
-                  để có thể nhận được Chứng nhận tiêm hoặc phản ánh thông tin
-                  mũi tiêm{' '}
+                  <Trans>
+                    Nếu bạn đã tiêm nhưng chưa được ghi nhận, hãy liên hệ với cơ
+                    sở tiêm và đề nghị cập nhật thông tin lên Nền tảng tiêm
+                    chủng để có thể nhận được Chứng nhận tiêm hoặc phản ánh
+                    thông tin mũi tiêm
+                  </Trans>{' '}
                   <Link
                     sx={{
                       color: colors.red[600],
@@ -217,7 +223,7 @@ export const VaccineCertificate = () => {
                       fontWeight: 'bold',
                       textDecorationColor: colors.red[600]
                     }}>
-                    tại đây
+                    <Trans>tại đây</Trans>
                   </Link>
                 </Box>
               </Box>
@@ -232,14 +238,14 @@ export const VaccineCertificate = () => {
                   sx={{ color: colors.indigo['700'] }}
                   startIcon={<CachedIcon />}
                   type="reset">
-                  Nhập lại
+                  <Trans>Nhập lại</Trans>
                 </StyledButton>
                 <StyledButton
                   variant="contained"
                   startIcon={<SearchIcon />}
                   sx={{ backgroundColor: colors.indigo['700'] }}
                   type="submit">
-                  Tra cứu
+                  <Trans>Tra cứu</Trans>
                 </StyledButton>
               </Stack>
             </Box>

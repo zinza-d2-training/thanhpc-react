@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './features/i18next/i18next';
 
 import './index.css';
 import App from './App';
@@ -13,11 +15,13 @@ import { store, persistor } from './store';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </PersistGate>
+      <I18nextProvider i18n={i18n}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </PersistGate>
+      </I18nextProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

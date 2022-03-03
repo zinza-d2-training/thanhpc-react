@@ -5,9 +5,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { colors } from '@mui/material';
+import { Trans } from 'react-i18next';
 
 import { StyledLinearProgress } from '../StyledLinearProgress/StyledLinearProgress';
-import { colors } from '@mui/material';
 
 interface Props {
   dataHead: unknown[];
@@ -23,7 +24,9 @@ export const VaccinatedTable = (props: Props) => {
         <TableHead>
           <TableRow>
             {dataHead.map((value: any, index: number) => (
-              <TableCell key={index}>{value}</TableCell>
+              <TableCell key={index}>
+                <Trans>{value}</Trans>
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>

@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { SetStateAction } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Trans } from 'react-i18next';
 
 const defaultStyle = {
   color: '#fff',
@@ -37,8 +38,8 @@ export const SidebarMenu = () => {
           position: 'relative',
           cursor: 'pointer'
         }}>
-        <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
-          Tra cứu
+        <Typography variant="body1" sx={{ ...defaultStyle }}>
+          <Trans>Tra cứu</Trans>
         </Typography>
         <KeyboardArrowDownIcon sx={{ ...defaultStyle }} />
       </Box>
@@ -93,11 +94,11 @@ export const SidebarMenu = () => {
                 to="/vaccine-certificate"
                 style={{ textDecoration: 'none' }}>
                 <Typography onClick={handleCloseMenu} variant="body2">
-                  Tra cứu chứng nhận tiêm
+                  <Trans>Tra cứu chứng nhận tiêm</Trans>
                 </Typography>
               </Link>
               <Typography onClick={handleCloseMenu} sx={{ fontSize: '12px' }}>
-                Cập nhật nhanh và chính xác nhất
+                <Trans>Cập nhật nhanh và chính xác nhất</Trans>
               </Typography>
             </Box>
             <Box>
@@ -148,11 +149,11 @@ export const SidebarMenu = () => {
                 to="/injection-registration"
                 style={{ textDecoration: 'none' }}>
                 <Typography onClick={handleCloseMenu} variant="body2">
-                  Tra cứu kết quả đăng ký
+                  <Trans>Tra cứu kết quả đăng ký</Trans>
                 </Typography>
               </Link>
               <Typography onClick={handleCloseMenu} sx={{ fontSize: '12px' }}>
-                Cập nhật nhanh và chính xác nhất
+                <Trans>Cập nhật nhanh và chính xác nhất</Trans>
               </Typography>
             </Box>
             <Box>

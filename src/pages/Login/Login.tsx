@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Trans } from 'react-i18next';
 
 import loginImg from '../../images/login.png';
 import { loginSchema } from './schema';
@@ -49,7 +50,8 @@ export const Login = () => {
           component="img"
           sx={{
             height: '100vh',
-            width: '100%',
+            width: '50%',
+            position: 'fixed',
             objectFit: 'cover',
             verticalAlign: 'middle'
           }}
@@ -79,12 +81,12 @@ export const Login = () => {
                 '@media(min-height: 768px)': { mt: '150px' },
                 '@media(min-height: 920px)': { mt: '25vh' }
               }}>
-              Đăng nhập vào tài khoản
+              <Trans>Đăng nhập vào tài khoản</Trans>
             </Typography>
             <Box>
               <Box sx={{ mb: 2 }}>
                 <Typography component="label" variant="body1">
-                  Chứng minh nhân dân/Căn cước công dân
+                  <Trans>Chứng minh nhân dân/Căn cước công dân</Trans>
                 </Typography>
                 <Controller
                   name="citizenId"
@@ -108,7 +110,7 @@ export const Login = () => {
               </Box>
               <Box>
                 <Typography component="label" variant="body1">
-                  Mật khẩu
+                  <Trans>Mật khẩu</Trans>
                 </Typography>
                 <Controller
                   name="password"
@@ -156,12 +158,12 @@ export const Login = () => {
                       <CircularProgress size={20} />
                     )
                   }>
-                  Đăng nhập
+                  <Trans>Đăng nhập</Trans>
                 </Button>
               </Box>
               <Box>
                 <Typography my={3}>
-                  Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký !
+                  <Trans>Hoặc đăng ký tài khoản, nếu bạn chưa đăng ký !</Trans>
                 </Typography>
                 <Button
                   fullWidth
@@ -177,7 +179,7 @@ export const Login = () => {
                     border: 1
                   }}
                   type="submit">
-                  Đăng ký
+                  <Trans>Đăng ký</Trans>
                 </Button>
               </Box>
             </Box>

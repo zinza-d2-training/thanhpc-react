@@ -1,6 +1,7 @@
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import { Trans } from 'react-i18next';
 
 interface Props {
   onClose: () => void;
@@ -18,7 +19,7 @@ export const HeaderDialog = (props: Props) => {
         justifyContent: 'space-between'
       }}
       {...other}>
-      {title}
+      <Trans>{title}</Trans>
       <IconButton
         aria-label="close"
         onClick={onClose}

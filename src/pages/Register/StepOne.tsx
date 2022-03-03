@@ -1,10 +1,11 @@
 import { useEffect, useState, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
+import { Box, TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
 
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
-import { Box, TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
 import {
   FileUploadImage,
   IFile
@@ -19,6 +20,7 @@ interface Props {
   methods: UseFormReturn<UserFormData, object>;
 }
 export const StepOne = (props: Props) => {
+  const { t } = useTranslation();
   const [listImage, setListImage] = useState<Array<IFile>>([]);
   const [showModalImage, setShowModalImage] = useState<boolean>(false);
   const [imageIsShowed, setImageIsShowed] = useState<IFile>();
@@ -115,7 +117,9 @@ export const StepOne = (props: Props) => {
       />
       <Box>
         <Box sx={{ mb: 2 }}>
-          <Label required={true}>Chứng minh nhân dân/Căn cước công dân</Label>
+          <Label required={true}>
+            <Trans>Chứng minh nhân dân/Căn cước công dân</Trans>
+          </Label>
           <Controller
             name="citizenId"
             control={control}
@@ -136,7 +140,7 @@ export const StepOne = (props: Props) => {
           />
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Label required={true}>Mật khẩu</Label>
+          <Label required={true}></Label>
           <Controller
             name="password"
             control={control}
@@ -158,7 +162,7 @@ export const StepOne = (props: Props) => {
           />
         </Box>
         <FileUploadImage
-          title="Ảnh chụp CMND/CCCD 2 mặt"
+          title={t('Ảnh chụp CMND/CCCD 2 mặt')}
           onImageChange={onImageChange}
           listImage={listImage}
           handleRemoveImage={handleRemoveImage}

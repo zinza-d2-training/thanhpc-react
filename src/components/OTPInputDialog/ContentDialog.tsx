@@ -2,6 +2,7 @@ import { Box, Typography, colors } from '@mui/material';
 import OtpInput from 'react-otp-input';
 import DialogContent from '@mui/material/DialogContent';
 import { useEffect, useState } from 'react';
+import { Trans } from 'react-i18next';
 
 import { useClock } from '../../hooks/useClock';
 import forgotPasswordImg from '../../images/forgot-password.png';
@@ -61,7 +62,9 @@ export const ContentDialog = (props: Props) => {
       </Box>
       <Box>
         <Typography sx={{ px: 16, textAlign: 'center' }}>
-          Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
+          <Trans>
+            Mã xác minh sẽ được gửi bằng tin nhắn đến SĐT bạn đăng ký
+          </Trans>
         </Typography>
       </Box>
       <Box sx={{ px: 16, mt: 4, display: 'flex', justifyContent: 'center' }}>
@@ -91,7 +94,9 @@ export const ContentDialog = (props: Props) => {
       </Box>
       <Box sx={{ mt: 4.5, display: 'flex', justifyContent: 'center' }}>
         <Typography sx={{ color: colors.blueGrey['400'] }}>
-          Nếu bạn không nhận được tin nhắn, xin vui lòng thử lại sau:
+          <Trans>
+            Nếu bạn không nhận được tin nhắn, xin vui lòng thử lại sau:
+          </Trans>
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
@@ -109,7 +114,7 @@ export const ContentDialog = (props: Props) => {
                 color: colors.blue['800']
               }
             }}>
-            Gửi lại mã OTP?
+            <Trans>Gửi lại mã OTP?</Trans>
           </Typography>
         </Box>
       )}
@@ -123,7 +128,7 @@ export const ContentDialog = (props: Props) => {
             mr: 1
           }}
           onClick={onClose}>
-          Hủy Bỏ
+          <Trans>Hủy Bỏ</Trans>
         </StyledButton>
         <StyledButton
           sx={{
@@ -136,7 +141,7 @@ export const ContentDialog = (props: Props) => {
           variant="contained"
           disabled={disabled}
           onClick={onConfirm}>
-          Xác Nhận
+          <Trans>Xác Nhận</Trans>
         </StyledButton>
       </Box>
     </DialogContent>

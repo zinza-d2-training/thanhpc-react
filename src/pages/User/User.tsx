@@ -17,6 +17,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useForm, Controller, Resolver } from 'react-hook-form';
+import { Trans } from 'react-i18next';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { useAppSelector } from '../../store/hooks';
@@ -333,7 +334,7 @@ export const User = () => {
                     <Stack direction="column" spacing={2}>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                          Mã số định danh
+                          <Trans>Mã số định danh</Trans>
                         </Typography>
                         <IconButton onClick={() => setDisableCitizendId(false)}>
                           <EditIcon />
@@ -346,7 +347,7 @@ export const User = () => {
                               <Grid item xs={3}>
                                 <Stack direction="column" spacing={1}>
                                   <Typography component="label" variant="body1">
-                                    Số CMND/CCCD/Mã định danh
+                                    <Trans>Số CMND/CCCD/Mã định danh</Trans>
                                   </Typography>
                                   <Controller
                                     name="citizenId"
@@ -389,7 +390,7 @@ export const User = () => {
                                     padding: '6px 16px !important'
                                   }}
                                   onClick={handleCancelCitizenId}>
-                                  Hủy Bỏ
+                                  <Trans>Hủy Bỏ</Trans>
                                 </StyledButton>
                                 <StyledButton
                                   size="small"
@@ -402,7 +403,7 @@ export const User = () => {
                                     padding: '6px 16px !important'
                                   }}
                                   onClick={handleSubmitCitizenId}>
-                                  Lưu
+                                  <Trans>Lưu</Trans>
                                 </StyledButton>
                               </Stack>
                             )}
@@ -413,7 +414,7 @@ export const User = () => {
                     <Stack direction="column" spacing={2}>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                          Số điện thoại
+                          <Trans>Số điện thoại</Trans>
                         </Typography>
                         <IconButton
                           onClick={() => setDisablePhoneNumber(false)}>
@@ -430,7 +431,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Số điện thoại
+                                      <Trans>Số điện thoại</Trans>
                                     </Typography>
                                     <Controller
                                       name="phone_number"
@@ -464,7 +465,7 @@ export const User = () => {
                                     color: colors.indigo['700'],
                                     padding: '6px 16px !important'
                                   }}>
-                                  Hủy Bỏ
+                                  <Trans>Hủy Bỏ</Trans>
                                 </StyledButton>
                                 <StyledButton
                                   size="small"
@@ -475,7 +476,7 @@ export const User = () => {
                                     padding: '6px 16px !important'
                                   }}
                                   onClick={handleSubmitPhoneNumber}>
-                                  Lưu
+                                  <Trans>Lưu</Trans>
                                 </StyledButton>
                               </Stack>
                             )}
@@ -486,7 +487,7 @@ export const User = () => {
                     <Stack direction="column" spacing={2}>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                          Thông tin cá nhân
+                          <Trans>Thông tin cá nhân</Trans>
                         </Typography>
                         <IconButton
                           onClick={() => setDisablePersonalInfo(false)}>
@@ -503,7 +504,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Họ và tên
+                                      <Trans>Họ và tên</Trans>
                                     </Typography>
                                     <Controller
                                       name="full_name"
@@ -529,7 +530,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Ngày sinh
+                                      <Trans>Ngày sinh</Trans>
                                     </Typography>
                                     <Controller
                                       name="dob"
@@ -556,7 +557,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Giới tính
+                                      <Trans>Giới tính</Trans>
                                     </Typography>
                                     <Controller
                                       name="gender"
@@ -573,8 +574,12 @@ export const User = () => {
                                           error={invalid}
                                           {...field}
                                           select>
-                                          <MenuItem value="male">Nam</MenuItem>
-                                          <MenuItem value="female">Nữ</MenuItem>
+                                          <MenuItem value="male">
+                                            <Trans>Nam</Trans>
+                                          </MenuItem>
+                                          <MenuItem value="female">
+                                            <Trans>Nữ</Trans>
+                                          </MenuItem>
                                         </TextField>
                                       )}
                                     />
@@ -586,7 +591,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Tỉnh/Thành phố
+                                      <Trans>Tỉnh/Thành phố</Trans>
                                     </Typography>
                                     <Controller
                                       name="provinceId"
@@ -631,7 +636,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Quận/Huyện
+                                      <Trans>Quận/Huyện</Trans>
                                     </Typography>
                                     <Controller
                                       name="districtId"
@@ -683,7 +688,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Phường/Xã
+                                      <Trans>Phường/Xã</Trans>
                                     </Typography>
                                     <Controller
                                       name="wardId"
@@ -742,7 +747,7 @@ export const User = () => {
                                     color: colors.indigo['700'],
                                     padding: '6px 16px !important'
                                   }}>
-                                  Hủy Bỏ
+                                  <Trans>Hủy Bỏ</Trans>
                                 </StyledButton>
                                 <StyledButton
                                   size="small"
@@ -760,7 +765,7 @@ export const User = () => {
                                     padding: '6px 16px !important'
                                   }}
                                   onClick={handleSubmitPersonalInfo}>
-                                  Lưu
+                                  <Trans>Lưu</Trans>
                                 </StyledButton>
                               </Stack>
                             )}
@@ -771,7 +776,7 @@ export const User = () => {
                     <Stack direction="column" spacing={2}>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                          Mật khẩu
+                          <Trans>Mật khẩu</Trans>
                         </Typography>
                         <IconButton onClick={() => setDisablePassword(false)}>
                           <EditIcon />
@@ -787,7 +792,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Mật khẩu mới
+                                      <Trans>Mật khẩu mới</Trans>
                                     </Typography>
                                     <Controller
                                       name="new_password"
@@ -817,7 +822,7 @@ export const User = () => {
                                     <Typography
                                       component="label"
                                       variant="body1">
-                                      Xác nhận lại mật khẩu
+                                      <Trans>Xác nhận lại mật khẩu</Trans>
                                     </Typography>
                                     <Controller
                                       name="confirm_password"
@@ -851,7 +856,7 @@ export const User = () => {
                                     color: colors.indigo['700'],
                                     padding: '6px 16px !important'
                                   }}>
-                                  Hủy Bỏ
+                                  <Trans>Hủy Bỏ</Trans>
                                 </StyledButton>
                                 <StyledButton
                                   size="small"
@@ -865,7 +870,7 @@ export const User = () => {
                                     padding: '6px 16px !important'
                                   }}
                                   onClick={handleSubmitPassword}>
-                                  Lưu
+                                  <Trans>Lưu</Trans>
                                 </StyledButton>
                               </Stack>
                             )}

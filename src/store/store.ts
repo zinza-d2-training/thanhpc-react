@@ -9,15 +9,17 @@ import {
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // store
 import { loginReducer } from '../features/login/loginSlice';
+import { i18nextReducer } from '../features/i18next/i18nextSlice';
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['login']
+  whitelist: ['login', 'i18next']
 };
 
 const rootReducer = combineReducers({
-  login: loginReducer
+  login: loginReducer,
+  i18next: i18nextReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

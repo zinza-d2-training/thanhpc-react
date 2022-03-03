@@ -2,6 +2,7 @@ import { Box, Container, Stack, Typography } from '@mui/material';
 import { StyledButton } from '../StyledButton';
 import logoImg from '../../images/logo.png';
 import confirmImg from '../../images/confirm.png';
+import { Trans } from 'react-i18next';
 
 export const Footer = () => {
   return (
@@ -16,11 +17,13 @@ export const Footer = () => {
         <Stack direction="row" justifyContent="space-between">
           <Box>
             <Typography variant="body2">
-              © Bản quyền thuộc TRUNG TÂM CÔNG NGHỆ PHÒNG, CHỐNG DỊCH COVID-19
-              QUỐC GIA'
+              <Trans>
+                © Bản quyền thuộc TRUNG TÂM CÔNG NGHỆ PHÒNG, CHỐNG DỊCH COVID-19
+                QUỐC GIA
+              </Trans>
             </Typography>
             <Typography variant="body2" mt="4px">
-              Phát triển bởi{' '}
+              <Trans>Phát triển bởi</Trans>{' '}
               <Box component="span" sx={{ color: '#f00' }}>
                 Viettel
               </Box>
@@ -29,14 +32,16 @@ export const Footer = () => {
           </Box>
           <Box>
             <Typography variant="body2" align="right">
-              Tải sổ sức khỏe điện tử để đăng ký tiêm và nhận giấy chứng nhận
-              tiêm
+              <Trans>
+                Tải sổ sức khỏe điện tử để đăng ký tiêm và nhận giấy chứng nhận
+                tiêm
+              </Trans>
             </Typography>
             <Stack direction="row" spacing={2} mt={2}>
               <StyledButton
                 variant="outlined"
                 sx={{ color: '#fff', borderColor: '#fff' }}>
-                App tiêm di động (Cho HCM)
+                <Trans>App tiêm di động (Cho HCM)</Trans>
               </StyledButton>
               <StyledButton
                 variant="outlined"
