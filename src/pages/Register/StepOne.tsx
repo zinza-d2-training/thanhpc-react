@@ -1,10 +1,10 @@
 import { useEffect, useState, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
+import { Box, TextField } from '@mui/material';
+import { Controller } from 'react-hook-form';
 
 import { ImageDialog } from '../../components/ImageDialog/ImageDialog';
 
-import { Box, TextField } from '@mui/material';
-import { Controller } from 'react-hook-form';
 import {
   FileUploadImage,
   IFile
@@ -136,7 +136,7 @@ export const StepOne = (props: Props) => {
           />
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Label required={true}>Mật khẩu</Label>
+          <Label required={true}></Label>
           <Controller
             name="password"
             control={control}

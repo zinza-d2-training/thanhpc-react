@@ -49,7 +49,8 @@ export const Login = () => {
           component="img"
           sx={{
             height: '100vh',
-            width: '100%',
+            width: '50%',
+            position: 'fixed',
             objectFit: 'cover',
             verticalAlign: 'middle'
           }}

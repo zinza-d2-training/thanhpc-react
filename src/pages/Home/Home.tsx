@@ -19,6 +19,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
@@ -128,6 +130,7 @@ interface Address {
 }
 
 export const Home = () => {
+  const { t } = useTranslation();
   const { control, getValues, setValue } = useForm<Address>({
     mode: 'onChange',
     defaultValues: {}
@@ -260,12 +263,12 @@ export const Home = () => {
                   />
                   <Box sx={{ my: 3.5 }}>
                     <Typography sx={{ fontWeight: '700', fontSize: '16px' }}>
-                      Đối tượng đăng ký tiêm
+                      <Trans>Đối tượng đăng ký tiêm</Trans>
                     </Typography>
                     <Typography sx={{ fontWeight: '500', fontSize: '28px' }}>
                       11,203,873{' '}
                       <Box component="i" fontSize="14px">
-                        (lượt)
+                        <Trans>(lượt)</Trans>
                       </Box>
                     </Typography>
                   </Box>
@@ -285,12 +288,12 @@ export const Home = () => {
                   />
                   <Box sx={{ my: 3.5 }}>
                     <Typography sx={{ fontWeight: '700', fontSize: '16px' }}>
-                      Số mũi tiêm hôm qua
+                      <Trans>Số mũi tiêm hôm qua</Trans>
                     </Typography>
                     <Typography sx={{ fontWeight: '500', fontSize: '28px' }}>
                       1,762,119{' '}
                       <Box component="i" fontSize="14px">
-                        (mũi)
+                        <Trans>(mũi)</Trans>
                       </Box>
                     </Typography>
                   </Box>
@@ -308,12 +311,12 @@ export const Home = () => {
                   />
                   <Box sx={{ my: 3.5 }}>
                     <Typography sx={{ fontWeight: '700', fontSize: '16px' }}>
-                      Số mũi tiêm toàn quốc
+                      <Trans>Số mũi tiêm toàn quốc</Trans>
                     </Typography>
                     <Typography sx={{ fontWeight: '500', fontSize: '28px' }}>
                       22,203,153{' '}
                       <Box component="i" fontSize="14px">
-                        (mũi)
+                        <Trans>(mũi)</Trans>
                       </Box>
                     </Typography>
                   </Box>
@@ -334,7 +337,7 @@ export const Home = () => {
             borderRadius: '10px'
           }}>
           <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
-            Dữ liệu tiêm theo ngày
+            <Trans>Dữ liệu tiêm theo ngày</Trans>
           </Typography>
           <Box sx={{ mx: 2 }}>
             <Line
@@ -344,7 +347,7 @@ export const Home = () => {
                 ),
                 datasets: [
                   {
-                    label: 'Đã tiêm',
+                    label: t('Đã tiêm'),
                     data: injectionDataByDay.map(({ amount }) => amount),
                     fill: false,
                     backgroundColor: colors.indigo[700],
@@ -378,7 +381,7 @@ export const Home = () => {
                   borderRadius: '10px'
                 }}>
                 <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
-                  10 địa phương có tỷ lệ tiêm cao nhất
+                  <Trans>10 địa phương có tỷ lệ tiêm cao nhất</Trans>
                 </Typography>
                 <Box sx={{ mx: 5, mt: 0.5 }}>
                   <Bar
@@ -413,9 +416,14 @@ export const Home = () => {
                     display: 'flex',
                     justifyContent: 'center'
                   }}>
-                  <Box component="b">Ghi chú:</Box>
+                  <Box component="b">
+                    <Trans>Ghi chú</Trans>:
+                  </Box>
                   <Box component="i">
-                    Số mũi tiêm thực tế có thể nhiều hơn số liều vắc xin phân bổ
+                    <Trans>
+                      Số mũi tiêm thực tế có thể nhiều hơn số liều vắc xin phân
+                      bổ
+                    </Trans>
                   </Box>
                 </Box>
               </Box>
@@ -432,7 +440,7 @@ export const Home = () => {
                   minHeight: '700px'
                 }}>
                 <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
-                  10 địa phương có tỷ lệ tiêm Thấp nhất
+                  <Trans>10 địa phương có tỷ lệ tiêm Thấp nhất</Trans>
                 </Typography>
                 <Box sx={{ mx: 5, mt: 0.5 }}>
                   <Bar
@@ -465,10 +473,14 @@ export const Home = () => {
                     pb: 3,
                     height: '30px'
                   }}>
-                  <Box component="b">Ghi chú:</Box>
+                  <Box component="b">
+                    <Trans>Ghi chú</Trans>:
+                  </Box>
                   <Box component="i">
-                    Tỷ lệ tiêm tại một số tỉnh có thể thấp do chưa nhận đủ vắc
-                    xin theo quyết định phân bổ
+                    <Trans>
+                      Tỷ lệ tiêm tại một số tỉnh có thể thấp do chưa nhận đủ vắc
+                      xin theo quyết định phân bổ
+                    </Trans>
                   </Box>
                 </Box>
               </Box>
@@ -487,7 +499,7 @@ export const Home = () => {
             borderRadius: '10px'
           }}>
           <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
-            Số liệu vắc xin theo địa phương
+            <Trans>Số liệu vắc xin theo địa phương</Trans>
           </Typography>
           <VaccinatedTable dataBody={dataOnTable} dataHead={tableHead} />
           <Stack direction="row" justifyContent="center" py={3}>
@@ -500,7 +512,7 @@ export const Home = () => {
                 fontWeight: '400'
               }}
               onClick={handleLoadMoreVaccinationByLocal}>
-              Xem thêm
+              <Trans>Xem thêm</Trans>
             </Box>
           </Stack>
         </Box>
@@ -517,7 +529,7 @@ export const Home = () => {
             borderRadius: '10px'
           }}>
           <Typography variant="h6" sx={{ ml: 2 }}>
-            Tra cứu điểm tiêm theo địa bàn
+            <Trans>Tra cứu điểm tiêm theo địa bàn</Trans>
           </Typography>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ mb: 1, ml: 2 }}>
@@ -618,7 +630,7 @@ export const Home = () => {
                   }
                 }}
                 onClick={handleSearchLookUp}>
-                Tìm kiếm
+                <Trans>Tìm kiếm</Trans>
               </StyledButton>
             </Box>
           </Box>
@@ -628,7 +640,7 @@ export const Home = () => {
                 <TableRow>
                   {dataAfterLookUpByLocationHeader.map((value, index) => (
                     <TableCell align="center" key={index}>
-                      {value}
+                      <Trans>{value}</Trans>
                     </TableCell>
                   ))}
                 </TableRow>
@@ -666,7 +678,7 @@ export const Home = () => {
                         </TableRow>
                       )
                     )
-                  : 'Không có dữ liệu'}
+                  : t('Không có dữ liệu')}
               </TableBody>
             </Table>
           </TableContainer>

@@ -9,6 +9,7 @@ import { Box, Grid, Typography, colors, Stack } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import FeaturedVideoIcon from '@mui/icons-material/FeaturedVideo';
+import { Trans } from 'react-i18next';
 
 import qrImg from '../../images/qr.png';
 import headerImg from '../../images/header.png';
@@ -30,15 +31,15 @@ export const ConfirmInjection = (props: Props) => {
           sx={{
             alignItems: 'center'
           }}>
-          <Typography variant="body1">
-            CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+          <Typography variant="body1" sx={{ textTransform: 'uppercase' }}>
+            <Trans>Cộng hòa xã hội chủ nghĩa Việt Nam</Trans>
           </Typography>
           <Typography
             variant="body1"
             sx={{
               fontWeight: '500'
             }}>
-            Độc lập - Tự do - Hạnh phúc
+            <Trans>Độc lập - Tự do - Hạnh phúc</Trans>
           </Typography>
         </Stack>
         <Box>
@@ -51,15 +52,18 @@ export const ConfirmInjection = (props: Props) => {
             <Typography
               variant="h5"
               sx={{
-                fontWeight: '500'
+                fontWeight: '500',
+                textTransform: 'uppercase'
               }}>
-              CHỨNG NHẬN TIÊM CHỦNG COVID-19
+              <Trans>Chứng nhận tiêm chủng covid-19</Trans>
             </Typography>
           </Box>
           <Grid container rowSpacing={2}>
             <Grid item={true} xs={4}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Họ và tên</Typography>
+                <Typography variant="body1">
+                  <Trans>Họ và tên</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.full_name}
                 </Typography>
@@ -67,7 +71,9 @@ export const ConfirmInjection = (props: Props) => {
             </Grid>
             <Grid item={true} xs={4}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Ngày sinh</Typography>
+                <Typography variant="body1">
+                  <Trans>Ngày sinh</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.dob.toLocaleDateString()}
                 </Typography>
@@ -75,7 +81,9 @@ export const ConfirmInjection = (props: Props) => {
             </Grid>
             <Grid item={true} xs={4}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Số CMND/CCCD</Typography>
+                <Typography variant="body1">
+                  <Trans>Số CMND/CCCD</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.citizenId}
                 </Typography>
@@ -83,7 +91,9 @@ export const ConfirmInjection = (props: Props) => {
             </Grid>
             <Grid item={true} xs={4}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Số thẻ BHYT</Typography>
+                <Typography variant="body1">
+                  <Trans>Số thẻ BHYT</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.healthInsuranceCardNumber}
                 </Typography>
@@ -91,7 +101,9 @@ export const ConfirmInjection = (props: Props) => {
             </Grid>
             <Grid item={true} xs={4}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Số điện thoại</Typography>
+                <Typography variant="body1">
+                  <Trans>Số điện thoại</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.phone_number}
                 </Typography>
@@ -99,7 +111,9 @@ export const ConfirmInjection = (props: Props) => {
             </Grid>
             <Grid item={true} xs={12}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Địa chỉ</Typography>
+                <Typography variant="body1">
+                  <Trans>Địa chỉ</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.address}
                 </Typography>
@@ -107,11 +121,15 @@ export const ConfirmInjection = (props: Props) => {
             </Grid>
             <Grid item={true} xs={12}>
               <Stack direction="column" spacing={1}>
-                <Typography variant="body1">Kết luận</Typography>
+                <Typography variant="body1">
+                  <Trans>Kết luận</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                  {data.vaccines.length > 0
-                    ? 'Đã được tiêm phòng vắc xin phòng bệnh Covid-19'
-                    : 'Chưa được tiêm phòng vắc xin phòng bệnh Covid-19'}
+                  <Trans>
+                    {data.vaccines.length > 0
+                      ? 'Đã được tiêm phòng vắc xin phòng bệnh Covid-19'
+                      : 'Chưa được tiêm phòng vắc xin phòng bệnh Covid-19'}
+                  </Trans>
                 </Typography>
               </Stack>
             </Grid>
@@ -122,11 +140,21 @@ export const ConfirmInjection = (props: Props) => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                   <TableHead>
                     <TableRow sx={{ background: colors.grey['100'] }}>
-                      <TableCell align="center">Mũi số</TableCell>
-                      <TableCell align="center">Thời gian tiêm</TableCell>
-                      <TableCell align="center">Tên vắc xin</TableCell>
-                      <TableCell align="center">Số lô</TableCell>
-                      <TableCell align="center">Nơi tiêm</TableCell>
+                      <TableCell align="center">
+                        <Trans>Mũi số</Trans>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Trans>Thời gian tiêm</Trans>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Trans>Tên vắc xin</Trans>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Trans>Số lô</Trans>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Trans>Nơi tiêm</Trans>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -186,8 +214,10 @@ export const ConfirmInjection = (props: Props) => {
               mt: 3
             }}
           />
-          <Typography variant="h5" sx={{ color: '#fff' }}>
-            ĐÃ TIÊM {data.vaccines.length} MŨI VẮC XIN
+          <Typography
+            variant="h5"
+            sx={{ color: '#fff', textTransform: 'uppercase' }}>
+            <Trans>Đã tiêm {data.vaccines.length.toString()} mũi Vaccine</Trans>
           </Typography>
           <Box
             component="img"
@@ -215,19 +245,25 @@ export const ConfirmInjection = (props: Props) => {
             </Stack>
             <Stack direction="column" spacing={2}>
               <Stack>
-                <Typography variant="body1">Họ và tên</Typography>
+                <Typography variant="body1">
+                  <Trans>Họ và tên</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.full_name}
                 </Typography>
               </Stack>
               <Stack>
-                <Typography variant="body1">Ngày sinh</Typography>
+                <Typography variant="body1">
+                  <Trans>Ngày sinh</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.dob.toLocaleDateString()}
                 </Typography>
               </Stack>
               <Stack>
-                <Typography variant="body1">Số CMND/CCCD</Typography>
+                <Typography variant="body1">
+                  <Trans>Số CMND/CCCD</Trans>
+                </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
                   {data.citizenId}
                 </Typography>

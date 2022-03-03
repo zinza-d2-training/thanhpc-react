@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import { Trans } from 'react-i18next';
 
 import {
   IInjectionRegistrationResult,
@@ -52,7 +53,7 @@ export const InjectionRegistrationDialog = (props: Props) => {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-        Theo dõi lịch sử đăng ký tiêm
+        <Trans>Theo dõi lịch sử đăng ký tiêm</Trans>
         <IconButton
           aria-label="close"
           onClick={onClose}
@@ -68,38 +69,52 @@ export const InjectionRegistrationDialog = (props: Props) => {
       <Divider />
       <DialogContent>
         <Stack direction="column" spacing={2}>
-          <Typography variant="h6">Thông tin cá nhân</Typography>
+          <Typography variant="h6">
+            <Trans>Thông tin cá nhân</Trans>
+          </Typography>
           <Stack direction="row" spacing={15}>
             <Stack spacing={1}>
-              <Typography>Họ và tên</Typography>
+              <Typography>
+                <Trans>Họ và tên</Trans>
+              </Typography>
               <Typography sx={{ fontWeight: '500' }}>
                 {data?.full_name}
               </Typography>
             </Stack>
             <Stack spacing={1}>
-              <Typography>Ngày sinh</Typography>
+              <Typography>
+                <Trans>Ngày sinh</Trans>
+              </Typography>
               <Typography sx={{ fontWeight: '500' }}>
                 {data?.dob.toLocaleDateString()}
               </Typography>
             </Stack>
             <Stack spacing={1}>
-              <Typography>Số điện thoại</Typography>
+              <Typography>
+                <Trans>Số điện thoại</Trans>
+              </Typography>
               <Typography sx={{ fontWeight: '500' }}>
                 {data?.phone_number}
               </Typography>
             </Stack>
             <Stack spacing={1}>
-              <Typography>Số CMND/CCCD</Typography>
+              <Typography>
+                <Trans>Số CMND/CCCD</Trans>
+              </Typography>
               <Typography sx={{ fontWeight: '500' }}>
                 {data?.citizenId}
               </Typography>
             </Stack>
           </Stack>
-          <Typography variant="h6">Quá trình xử lý</Typography>
+          <Typography variant="h6">
+            <Trans>Quá trình xử lý</Trans>
+          </Typography>
           <Stepper activeStep={activeStep + 1} alternativeLabel>
             {steps.map((label) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel>
+                  <Trans>{label}</Trans>
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
@@ -109,7 +124,7 @@ export const InjectionRegistrationDialog = (props: Props) => {
               sx={{ backgroundColor: colors.indigo['700'] }}
               onClick={onClose}
               type="button">
-              Xác Nhận
+              <Trans>Xác nhận</Trans>
             </StyledButton>
           </Box>
         </Stack>

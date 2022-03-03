@@ -14,6 +14,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Trans } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
@@ -31,6 +33,7 @@ export const InjectionRegistration = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [dataToDialog, setDataToDialog] =
     useState<IInjectionRegistrationResult>();
+  const { t } = useTranslation();
 
   const {
     formState: { isValid },
@@ -81,7 +84,9 @@ export const InjectionRegistration = () => {
           alignItems: 'center'
         }}>
         <Container maxWidth="xl">
-          <Typography variant="h5">Tra cứu đăng ký tiêm</Typography>
+          <Typography variant="h5">
+            <Trans>Tra cứu đăng ký tiêm</Trans>
+          </Typography>
         </Container>
       </Box>
       <Container maxWidth="xl">
@@ -95,7 +100,7 @@ export const InjectionRegistration = () => {
               <Grid item xs={6}>
                 <Stack direction="column" spacing={1}>
                   <Label required={true}>
-                    Số CMND/CCCD/Mã định danh công dân
+                    <Trans>Số CMND/CCCD/Mã định danh công dân</Trans>
                   </Label>
                   <Controller
                     name="citizenId"
@@ -104,9 +109,11 @@ export const InjectionRegistration = () => {
                       <TextField
                         fullWidth
                         size="small"
-                        helperText={error?.message}
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
-                        placeholder="Số CMND/CCCD/Mã định danh công dân"
+                        placeholder={t('Số CMND/CCCD/Mã định danh công dân')}
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
                       />
@@ -116,7 +123,9 @@ export const InjectionRegistration = () => {
               </Grid>
               <Grid item xs={6}>
                 <Stack direction="column" spacing={1}>
-                  <Label required={true}>Số điện thoại</Label>
+                  <Label required={true}>
+                    <Trans>Số điện thoại</Trans>
+                  </Label>
                   <Controller
                     name="phone_number"
                     control={control}
@@ -124,9 +133,11 @@ export const InjectionRegistration = () => {
                       <TextField
                         fullWidth
                         size="small"
-                        helperText={error?.message}
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
-                        placeholder="Số điện thoại"
+                        placeholder={t('Số điện thoại')}
                         {...field}
                         sx={{ root: { height: '50px' }, mt: 1 }}
                       />
@@ -136,11 +147,15 @@ export const InjectionRegistration = () => {
               </Grid>
             </Grid>
             <Box sx={{ color: colors.red['600'] }}>
-              <Box component="b">Lưu ý:</Box>{' '}
+              <Box component="b">
+                <Trans>Lưu ý</Trans>:
+              </Box>{' '}
               <Box component="i">
-                Cá nhân/Tổ chức đăng ký thành công trên hệ thống sẽ được đưa vào
-                danh sách đặt tiêm. Cơ sở y tế sẽ thông báo lịch tiêm khi có vắc
-                xin và kế hoạch tiêm được phê duyệt. Trân trọng cảm ơn!
+                <Trans>
+                  Cá nhân/Tổ chức đăng ký thành công trên hệ thống sẽ được đưa
+                  vào danh sách đặt tiêm. Cơ sở y tế sẽ thông báo lịch tiêm khi
+                  có vắc xin và kế hoạch tiêm được phê duyệt. Trân trọng cảm ơn!
+                </Trans>
               </Box>
             </Box>
             <Box>
@@ -150,7 +165,7 @@ export const InjectionRegistration = () => {
                   sx={{ color: colors.indigo['700'] }}
                   startIcon={<CachedIcon />}
                   type="reset">
-                  Nhập lại
+                  <Trans>Nhập lại</Trans>
                 </StyledButton>
                 <StyledButton
                   variant="contained"
@@ -158,7 +173,7 @@ export const InjectionRegistration = () => {
                   sx={{ backgroundColor: colors.indigo['700'] }}
                   disabled={!isValid}
                   type="submit">
-                  Tra cứu
+                  <Trans>Tra cứu</Trans>
                 </StyledButton>
               </Stack>
             </Box>

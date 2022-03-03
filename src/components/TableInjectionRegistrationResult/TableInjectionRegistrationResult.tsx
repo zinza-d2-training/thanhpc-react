@@ -7,6 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { colors, IconButton, Chip } from '@mui/material';
+import { Trans } from 'react-i18next';
 import {
   IInjectionRegistrationResult,
   Status
@@ -28,14 +29,30 @@ export const TableInjectionRegistrationResult = (props: Props) => {
             sx={{
               background: colors.grey['100']
             }}>
-            <TableCell align="center">STT</TableCell>
-            <TableCell align="center">Họ và tên</TableCell>
-            <TableCell align="center">Ngày sinh </TableCell>
-            <TableCell align="center">Giới tính</TableCell>
-            <TableCell align="center">Số điện thoại</TableCell>
-            <TableCell align="center">Số CMND/CCCD</TableCell>
-            <TableCell align="center">Trạng thái</TableCell>
-            <TableCell align="center">Thao tác</TableCell>
+            <TableCell align="center">
+              <Trans>STT</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Họ và tên</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Ngày sinh</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Giới tính</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Số điện thoại</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Số CMND/CCCD</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Trạng thái</Trans>
+            </TableCell>
+            <TableCell align="center">
+              <Trans>Thao tác</Trans>
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,7 +80,7 @@ export const TableInjectionRegistrationResult = (props: Props) => {
               <TableCell align="center">
                 {row.status === Status.Success ? (
                   <Chip
-                    label="Đăng ký thành công"
+                    label={<Trans>Đăng ký thành công</Trans>}
                     variant="outlined"
                     sx={{
                       border: `1px solid ${colors.blue['500']}`,
@@ -72,7 +89,7 @@ export const TableInjectionRegistrationResult = (props: Props) => {
                   />
                 ) : (
                   <Chip
-                    label="Đăng ký thất bại"
+                    label={<Trans>Đăng ký thất bại</Trans>}
                     variant="outlined"
                     sx={{
                       border: `1px solid ${colors.red['500']}`,

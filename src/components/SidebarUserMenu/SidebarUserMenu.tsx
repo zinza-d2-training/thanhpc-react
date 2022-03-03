@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { SetStateAction } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Trans } from 'react-i18next';
 
 const defaultStyle = {
   color: '#fff',
@@ -48,8 +49,8 @@ export const SidebarUserMenu = (props: Props) => {
             display: 'inline-flex'
           }}
           onMouseOver={handleOpenMenu}>
-          <Typography variant="body1" sx={{ ...defaultStyle, ml: 3 }}>
-            Xin chào {fullName}
+          <Typography variant="body1" sx={{ ...defaultStyle }}>
+            <Trans>Xin chào</Trans> {fullName}
           </Typography>
           <KeyboardArrowDownIcon sx={{ ...defaultStyle }} />
         </Box>
@@ -102,7 +103,7 @@ export const SidebarUserMenu = (props: Props) => {
               <Box>
                 <Link to="/user" style={{ textDecoration: 'none' }}>
                   <Typography onClick={handleCloseMenu} variant="body2">
-                    Trang cá nhân
+                    <Trans>Trang cá nhân</Trans>
                   </Typography>
                 </Link>
               </Box>
@@ -152,7 +153,7 @@ export const SidebarUserMenu = (props: Props) => {
               <Box>
                 <Link to="/" style={{ textDecoration: 'none' }}>
                   <Typography onClick={handleCloseMenu} variant="body2">
-                    Đăng xuất
+                    <Trans>Đăng xuất</Trans>
                   </Typography>
                 </Link>
               </Box>
