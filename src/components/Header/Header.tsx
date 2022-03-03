@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import {  useCallback } from 'react';
 import { Box, colors, Typography, Container, Stack } from '@mui/material';
 
 import { loginSelector } from '../../features/login/loginSlice';
@@ -32,10 +32,6 @@ export const Header = () => {
     dispatch(changeLanguage('en'));
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log(language);
-  }, [language]);
-
   return (
     <Box
       sx={{
@@ -64,15 +60,17 @@ export const Header = () => {
                   <Trans>Trang chủ</Trans>
                 </Typography>
               </Link>
-              <Typography
-                variant="body1"
-                sx={{
-                  ...defaultStyle,
-                  outline: 'none',
-                  textDecoration: 'none'
-                }}>
-                <Trans>Đăng ký tiêm</Trans>
-              </Typography>
+              <Link to="/vaccine-registration">
+                <Typography
+                  variant="body1"
+                  sx={{
+                    ...defaultStyle,
+                    outline: 'none',
+                    textDecoration: 'none'
+                  }}>
+                  <Trans>Đăng ký tiêm</Trans>
+                </Typography>
+              </Link>
               <Box>
                 <SidebarMenu />
               </Box>
