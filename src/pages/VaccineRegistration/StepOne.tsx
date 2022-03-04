@@ -66,8 +66,8 @@ export const StepOne = (props: Props) => {
       nationality: '',
       priorityGroup: '',
       desiredDateOfInjection: new Date('2000-10-23'),
-      desiredSessionOfInjection: null,
-      historyOfTheFirstInjection: null
+      desiredSessionOfInjection: '',
+      historyOfTheFirstInjection: ''
     }
   });
   const formSubmitHandler: SubmitHandler<VaccineRegistrationType> = (

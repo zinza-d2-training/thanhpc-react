@@ -32,10 +32,10 @@ export interface VaccineRegistrationType extends LookUpCertificate {
   provinceId: string;
   districtId: string;
   wardId: string;
-  ethnic: string | null;
-  nationality: string | null;
+  ethnic: string;
+  nationality: string;
   priorityGroup: PriorityGroup | string;
-  desiredDateOfInjection: Date | null;
-  desiredSessionOfInjection: DesiredSessionOfInjection | null;
-  historyOfTheFirstInjection: HistoryOfTheFirstInjection | null;
+  desiredDateOfInjection: Date | string;
+  desiredSessionOfInjection: DesiredSessionOfInjection | string;
+  historyOfTheFirstInjection: HistoryOfTheFirstInjection | string;
 }
