@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Box,
-  Container,
   Typography,
   colors,
   MenuItem,
@@ -10,8 +9,6 @@ import {
   TextField
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, Controller, Resolver, SubmitHandler } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
@@ -24,6 +21,14 @@ import {
   PriorityGroup,
   DesiredSessionOfInjection
 } from './types';
+import {
+  getProvinceName,
+  getDistrictName,
+  getWardName,
+  getChildArr
+} from '../../pages/User/functions';
+import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
+import { administrativeUnits } from '../../db/administrativeUnits';
 
 const convertEnumToArr = (value: any) => {
   const listProp = [];
@@ -35,45 +40,86 @@ const convertEnumToArr = (value: any) => {
 
 interface Props {
   onNextStep: () => void;
+  data: VaccineRegistrationType | null;
+  receiveData: (data: VaccineRegistrationType) => void;
 }
 export const StepOne = (props: Props) => {
-  const { onNextStep } = props;
+  const { onNextStep, data, receiveData } = props;
+  const [allowClickDistrict, setAllowClickDistrict] = useState<boolean>(false);
+  const [allowClickWard, setAllowClickWard] = useState<boolean>(false);
+  const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
+  const [listWard, setListWard] = useState<WardType[]>([]);
   const { t } = useTranslation();
   const PriorityGroupArr = convertEnumToArr(PriorityGroup);
   const DesiredSessionOfInjectionArr = convertEnumToArr(
     DesiredSessionOfInjection
   );
-  const {
-    control,
-    handleSubmit,
-    getValues,
-    formState: { errors }
-  } = useForm<VaccineRegistrationType>({
-    resolver: yupResolver(
-      vaccineRegistrationSchema
-    ) as Resolver<VaccineRegistrationType>,
-    mode: 'onChange',
-    defaultValues: {
-      injectionOrderNumber: 0,
-      email: '',
-      job: '',
-      workUnit: '',
-      currentAddress: '',
-      provinceId: '',
-      districtId: '',
-      wardId: '',
-      ethnic: '',
-      nationality: '',
-      priorityGroup: '',
-      desiredDateOfInjection: new Date('2000-10-23'),
-      desiredSessionOfInjection: null,
-      historyOfTheFirstInjection: null
+  const { control, handleSubmit, getValues, setValue, trigger, clearErrors } =
+    useForm<VaccineRegistrationType>({
+      resolver: yupResolver(
+        vaccineRegistrationSchema
+      ) as Resolver<VaccineRegistrationType>,
+      mode: 'onChange',
+      defaultValues: data
+        ? data
+        : {
+            injectionOrderNumber: 0,
+            email: '',
+            job: '',
+            workUnit: '',
+            currentAddress: '',
+            provinceId: '',
+            districtId: '',
+            wardId: '',
+            ethnic: '',
+            nationality: '',
+            priorityGroup: '',
+            desiredDateOfInjection: new Date('2000-10-23'),
+            desiredSessionOfInjection: '',
+            historyOfTheFirstInjection: ''
+          }
+    });
+
+  const provinceId = getValues('provinceId');
+  const districtId = getValues('districtId');
+  const listProvince = administrativeUnits;
+
+  const handleChangeProvince = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setListDistrict(getChildArr(e.target.value, listProvince, 'Districts'));
+    setListWard([]);
+    setValue('provinceId', e.target.value);
+    setAllowClickDistrict(true);
+    setValue('districtId', '');
+    setValue('wardId', '');
+    if (getValues('provinceId') !== e.target.value) {
+      setAllowClickWard(false);
     }
-  });
+    trigger();
+  };
+
+  const handleChangeDistrict = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue('districtId', e.target.value);
+    setValue('wardId', '');
+    trigger();
+    setListWard(getChildArr(e.target.value, listDistrict, 'Wards'));
+    setAllowClickWard(true);
+  };
+  const handleChangeWard = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setValue('wardId', e.target.value);
+    clearErrors('wardId');
+    trigger();
+  };
   const formSubmitHandler: SubmitHandler<VaccineRegistrationType> = (
     data: VaccineRegistrationType
   ) => {
     console.log(data);
+    receiveData(data);
     onNextStep();
   };
 
@@ -354,25 +400,24 @@ export const StepOne = (props: Props) => {
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
-                        // disabled={disablePersonalInfo}
-                        // helperText={
-                        //   error?.message ? t(`${error?.message}`) : null
-                        // }
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
-                        // defaultValue={getProvinceName(
-                        //   getValues('provinceId'),
-                        //   listProvince
-                        // )}
+                        defaultValue={getProvinceName(
+                          getValues('provinceId'),
+                          listProvince
+                        )}
                         {...field}
-                        // onChange={(e) => handleChangeProvince(e)}
+                        onChange={(e) => handleChangeProvince(e)}
                         select>
-                        {/* {listProvince.length > 0
-                                  ? listProvince.map((value: ProvinceType) => (
-                                      <MenuItem value={value.Id} key={value.Id}>
-                                        {value.Name}
-                                      </MenuItem>
-                                    ))
-                                  : null} */}
+                        {listProvince.length > 0
+                          ? listProvince.map((value: ProvinceType) => (
+                              <MenuItem value={value.Id} key={value.Id}>
+                                {value.Name}
+                              </MenuItem>
+                            ))
+                          : null}
                       </TextField>
                     )}
                   />
@@ -386,36 +431,33 @@ export const StepOne = (props: Props) => {
                   <Controller
                     name="districtId"
                     control={control}
-                    // defaultValue={
-                    //   getValues('districtId')
-                    //     ? getDistrictName(
-                    //         getValues('provinceId'),
-                    //         getValues('districtId'),
-                    //         listProvince
-                    //       ) || undefined
-                    //     : undefined
-                    // }
+                    defaultValue={
+                      getValues('districtId')
+                        ? getDistrictName(
+                            getValues('provinceId'),
+                            getValues('districtId'),
+                            listProvince
+                          ) || undefined
+                        : undefined
+                    }
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
-                        // disabled={
-                        //   disablePersonalInfo ||
-                        //   !allowClickDistrict
-                        // }
-                        // helperText={
-                        //   error?.message ? t(`${error?.message}`) : null
-                        // }
+                        disabled={!allowClickDistrict}
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
                         {...field}
-                        // onChange={(e) => handleChangeDistrict(e)}
+                        onChange={(e) => handleChangeDistrict(e)}
                         select>
-                        {/* {listDistrict.length > 0
-                                  ? listDistrict.map((value: DistrictType) => (
-                                      <MenuItem value={value.Id} key={value.Id}>
-                                        {value.Name}
-                                      </MenuItem>
-                                    ))
-                                  : null} */}
+                        {listDistrict.length > 0
+                          ? listDistrict.map((value: DistrictType) => (
+                              <MenuItem value={value.Id} key={value.Id}>
+                                {value.Name}
+                              </MenuItem>
+                            ))
+                          : null}
                       </TextField>
                     )}
                   />
@@ -429,37 +471,34 @@ export const StepOne = (props: Props) => {
                   <Controller
                     name="wardId"
                     control={control}
-                    // defaultValue={
-                    //   getValues('wardId')
-                    //     ? getWardName(
-                    //         getValues('provinceId'),
-                    //         getValues('districtId'),
-                    //         getValues('wardId'),
-                    //         listProvince
-                    //       )
-                    //     : ''
-                    // }
+                    defaultValue={
+                      getValues('wardId')
+                        ? getWardName(
+                            getValues('provinceId'),
+                            getValues('districtId'),
+                            getValues('wardId'),
+                            listProvince
+                          )
+                        : ''
+                    }
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
-                        // disabled={
-                        //   disablePersonalInfo ||
-                        //   !allowClickWard
-                        // }
-                        // helperText={
-                        //   error?.message ? t(`${error?.message}`) : null
-                        // }
+                        disabled={!allowClickWard}
+                        helperText={
+                          error?.message ? t(`${error?.message}`) : null
+                        }
                         error={invalid}
                         {...field}
-                        // onChange={(e) => handleChangeWard(e)}
+                        onChange={(e) => handleChangeWard(e)}
                         select>
-                        {/* {listWard.length > 0
-                                  ? listWard.map((value: WardType) => (
-                                      <MenuItem value={value.Id} key={value.Id}>
-                                        {value.Name}
-                                      </MenuItem>
-                                    ))
-                                  : null} */}
+                        {listWard.length > 0
+                          ? listWard.map((value: WardType) => (
+                              <MenuItem value={value.Id} key={value.Id}>
+                                {value.Name}
+                              </MenuItem>
+                            ))
+                          : null}
                       </TextField>
                     )}
                   />
@@ -768,24 +807,11 @@ export const StepOne = (props: Props) => {
           marginTop: '24px !important',
           marginBottom: '48px !important'
         }}>
-        {/* {
-          <StyledButton
-            variant="outlined"
-            // onClick={props.onBackStep}
-            sx={{ color: colors.indigo['700'] }}
-            onClick={handlePreviousStep}
-            startIcon={<ArrowBackIcon />}>
-            {t('Quay lại')}
-          </StyledButton>
-        } */}
         <StyledButton
-          // disabled={disabledButton}
           variant="contained"
           sx={{ backgroundColor: colors.indigo['700'] }}
           type="submit"
-          endIcon={<ArrowForwardIcon />}
-          // onClick={handleNextStep}
-        >
+          endIcon={<ArrowForwardIcon />}>
           {t('Tiếp tục')}
         </StyledButton>
       </Stack>

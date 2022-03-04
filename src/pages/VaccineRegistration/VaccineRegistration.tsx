@@ -13,9 +13,20 @@ import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { StepFour } from './StepFour';
 
+import {
+  VaccineRegistrationType,
+  DesiredSessionOfInjection,
+  IMedicalHistory,
+  Answer
+} from './types';
+import { medicalHistoryTemplate } from '../../db/medicalHistoryTemplate';
+
 export const VaccineRegistration = () => {
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [dataStepOne, setDataStepOne] = useState<VaccineRegistrationType>();
+  const [dataStepTwo, setDataStepTwo] = useState<IMedicalHistory[]>();
+  const [dataStepThree, setDataStepThree] = useState<boolean>();
   let contentComponent = null;
   enum tabRegister {
     PersonalInfo = 0,
@@ -30,13 +41,34 @@ export const VaccineRegistration = () => {
     setActiveStep(activeStep + 1);
   };
 
+  const handleSubmitDataStepOne = (data: VaccineRegistrationType) => {
+    setDataStepOne(data);
+  };
+  const handleSubmitDataStepTwo = (data: IMedicalHistory[]) => {
+    console.log('data in cha', data);
+    setDataStepTwo(data);
+  };
+  const handleSubmitDataStepThree = (data: boolean) => {
+    setDataStepThree(data);
+  };
   switch (activeStep) {
     case tabRegister.PersonalInfo:
-      contentComponent = <StepOne onNextStep={handleNextStep} />;
+      contentComponent = (
+        <StepOne
+          onNextStep={handleNextStep}
+          data={dataStepOne || null}
+          receiveData={handleSubmitDataStepOne}
+        />
+      );
       break;
     case tabRegister.MedicalHistory:
       contentComponent = (
-        <StepTwo onNextStep={handleNextStep} onPrevStep={handlePreviousStep} />
+        <StepTwo
+          onNextStep={handleNextStep}
+          onPrevStep={handlePreviousStep}
+          data={dataStepTwo || medicalHistoryTemplate}
+          receiveData={handleSubmitDataStepTwo}
+        />
       );
       break;
     case tabRegister.ConsentFormForInjection:
@@ -44,13 +76,13 @@ export const VaccineRegistration = () => {
         <StepThree
           onNextStep={handleNextStep}
           onPrevStep={handlePreviousStep}
+          data={dataStepThree || false}
+          receiveData={handleSubmitDataStepThree}
         />
       );
       break;
     case tabRegister.Complete:
-      contentComponent = (
-        <StepFour onNextStep={handleNextStep} onPrevStep={handlePreviousStep} />
-      );
+      contentComponent = <StepFour onPrevStep={handlePreviousStep} />;
       break;
   }
 

@@ -1,4 +1,4 @@
-import {  useCallback } from 'react';
+import { useCallback } from 'react';
 import { Box, colors, Typography, Container, Stack } from '@mui/material';
 
 import { loginSelector } from '../../features/login/loginSlice';
@@ -104,7 +104,7 @@ export const Header = () => {
                     cursor: 'pointer',
                     textDecoration: language === 'vn' ? 'underline' : 'none'
                   }}
-                  onClick={handleChangeVN}>
+                  onClick={() => handleChangeVN()}>
                   VN
                 </Typography>
                 <Typography>|</Typography>
@@ -113,7 +113,7 @@ export const Header = () => {
                     textDecoration: language === 'en' ? 'underline' : 'none',
                     cursor: 'pointer'
                   }}
-                  onClick={handleChangeEnglish}>
+                  onClick={() => handleChangeEnglish()}>
                   EN
                 </Typography>
               </Stack>

@@ -17,11 +17,11 @@ export enum ListVaccines {
   Gam = 'Vaccine Gam - COVID - Vac (SPUTNIK V)'
 }
 export interface HistoryOfTheFirstInjection {
-  nameOfVaccine: ListVaccines;
-  injectionDate: Date;
-  shipmentNumber: string;
-  injectionPlace: string;
-  reactionAfterVaccination: string;
+  nameOfVaccine?: ListVaccines;
+  injectionDate?: Date;
+  shipmentNumber?: string;
+  injectionPlace?: string;
+  reactionAfterVaccination?: string;
 }
 export interface VaccineRegistrationType extends LookUpCertificate {
   injectionOrderNumber: number;
@@ -32,10 +32,24 @@ export interface VaccineRegistrationType extends LookUpCertificate {
   provinceId: string;
   districtId: string;
   wardId: string;
-  ethnic: string | null;
-  nationality: string | null;
+  ethnic: string;
+  nationality: string;
   priorityGroup: PriorityGroup | string;
-  desiredDateOfInjection: Date | null;
-  desiredSessionOfInjection: DesiredSessionOfInjection | null;
-  historyOfTheFirstInjection: HistoryOfTheFirstInjection | null;
+  desiredDateOfInjection: Date | string;
+  desiredSessionOfInjection: DesiredSessionOfInjection | string;
+  historyOfTheFirstInjection?: HistoryOfTheFirstInjection | string;
+}
+
+// step2
+export interface IMedicalHistory {
+  id: number;
+  question: string;
+  diseaseSymptoms?: string;
+  answer: Answer;
+}
+
+export enum Answer {
+  YES = 'YES',
+  NO = 'NO',
+  NOT_SURE = 'NOT_SURE'
 }
