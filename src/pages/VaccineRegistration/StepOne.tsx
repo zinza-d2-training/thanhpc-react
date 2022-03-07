@@ -243,7 +243,6 @@ export const StepOne = (props: Props) => {
                   <Controller
                     name="phone_number"
                     control={control}
-                    defaultValue="098624979"
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
@@ -380,7 +379,6 @@ export const StepOne = (props: Props) => {
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
-                        defaultValue={getValues('currentAddress')}
                         helperText={
                           error?.message ? t(`${error?.message}`) : null
                         }
