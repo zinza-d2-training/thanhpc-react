@@ -85,7 +85,7 @@ export const StepOne = (props: Props) => {
           nationality: '',
           priorityGroup: '',
           desiredDateOfInjection: new Date('2000-10-23'),
-          desiredSessionOfInjection: '',
+          desiredSessionOfInjection: ''
         }
   });
   const injectionOrderNumber = watch('injectionOrderNumber');
