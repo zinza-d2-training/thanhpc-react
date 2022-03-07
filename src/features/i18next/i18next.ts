@@ -248,7 +248,9 @@ const translationEn = {
     'Password must be at least 8 characters!',
   'Đăng ký tiêm chủng COVID-19 thành công. Mã đặt tiêm của bạn là 0120211103501237.':
     'Successful registration for COVID-19 vaccination. Your injection order number is 0120211103501237.',
-  'Đăng kí mũi tiêm thứ ?': 'Sign up for the second injection?'
+  'Đăng kí mũi tiêm thứ ?': 'Sign up for the second injection?',
+  'Mũi thứ nhất': 'First injection',
+  'Mũi thứ hai': 'Second injection'
 };
 
 i18n.use(initReactI18next).init({

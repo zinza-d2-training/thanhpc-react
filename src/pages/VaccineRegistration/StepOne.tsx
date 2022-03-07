@@ -46,7 +46,6 @@ export const StepOne = (props: Props) => {
   const PriorityGroupArr = Object.values(PriorityGroup);
   const ListVaccinesArr = Object.values(ListVaccines);
   const DesiredSessionOfInjectionArr = Object.values(DesiredSessionOfInjection);
-  console.log('DesiredSessionOfInjectionArr', DesiredSessionOfInjectionArr)
   const {
     control,
     handleSubmit,
@@ -54,8 +53,7 @@ export const StepOne = (props: Props) => {
     setValue,
     trigger,
     clearErrors,
-    watch,
-    formState: { errors }
+    watch
   } = useForm<VaccineRegistrationType>({
     resolver: yupResolver(
       vaccineRegistrationSchema
@@ -116,7 +114,6 @@ export const StepOne = (props: Props) => {
   const formSubmitHandler: SubmitHandler<VaccineRegistrationType> = (
     data: VaccineRegistrationType
   ) => {
-    console.log('errors', errors);
     receiveData(data);
     onNextStep();
   };
@@ -126,7 +123,6 @@ export const StepOne = (props: Props) => {
       trigger();
     }
   }, [injectionOrderNumber, trigger]);
-  console.log(errors);
 
   return (
     <Box component="form" onSubmit={handleSubmit(formSubmitHandler)}>
@@ -145,8 +141,12 @@ export const StepOne = (props: Props) => {
                     error={invalid}
                     {...field}
                     select>
-                    <MenuItem value={1}>mũi thứ nhất</MenuItem>
-                    <MenuItem value={2}>mũi thứ hai</MenuItem>
+                    <MenuItem value={1}>
+                      <Trans>Mũi thứ nhất</Trans>
+                    </MenuItem>
+                    <MenuItem value={2}>
+                      <Trans>Mũi thứ hai</Trans>
+                    </MenuItem>
                   </TextField>
                 )}
               />
