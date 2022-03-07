@@ -31,14 +31,6 @@ import {
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
 import { administrativeUnits } from '../../db/administrativeUnits';
 
-const convertEnumToArr = (value: any) => {
-  const listProp = [];
-  for (let i in value) {
-    listProp.push(value[i]);
-  }
-  return listProp;
-};
-
 interface Props {
   onNextStep: () => void;
   data: VaccineRegistrationType | null;
@@ -51,11 +43,10 @@ export const StepOne = (props: Props) => {
   const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
   const [listWard, setListWard] = useState<WardType[]>([]);
   const { t } = useTranslation();
-  const PriorityGroupArr = convertEnumToArr(PriorityGroup);
-  const ListVaccinesArr = convertEnumToArr(ListVaccines);
-  const DesiredSessionOfInjectionArr = convertEnumToArr(
-    DesiredSessionOfInjection
-  );
+  const PriorityGroupArr = Object.values(PriorityGroup);
+  const ListVaccinesArr = Object.values(ListVaccines);
+  const DesiredSessionOfInjectionArr = Object.values(DesiredSessionOfInjection);
+  console.log('DesiredSessionOfInjectionArr', DesiredSessionOfInjectionArr)
   const {
     control,
     handleSubmit,
