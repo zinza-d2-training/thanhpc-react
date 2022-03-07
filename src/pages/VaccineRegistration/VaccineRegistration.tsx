@@ -15,7 +15,12 @@ import { StepFour } from './StepFour';
 
 import { VaccineRegistrationType, IMedicalHistory } from './types';
 import { medicalHistoryTemplate } from '../../db/medicalHistoryTemplate';
-
+enum tabRegister {
+  PersonalInfo = 0,
+  MedicalHistory = 1,
+  ConsentFormForInjection = 2,
+  Complete = 3
+}
 export const VaccineRegistration = () => {
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -23,12 +28,7 @@ export const VaccineRegistration = () => {
   const [dataStepTwo, setDataStepTwo] = useState<IMedicalHistory[]>();
   const [dataStepThree, setDataStepThree] = useState<boolean>();
   let contentComponent = null;
-  enum tabRegister {
-    PersonalInfo = 0,
-    MedicalHistory = 1,
-    ConsentFormForInjection = 2,
-    Complete = 3
-  }
+
   const handlePreviousStep = () => {
     setActiveStep(activeStep - 1);
   };
