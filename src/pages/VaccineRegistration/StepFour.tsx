@@ -161,7 +161,6 @@ export const StepFour = (props: Props) => {
         <StyledButton
           variant="contained"
           sx={{ backgroundColor: colors.indigo['700'] }}
-          // type="submit"
           endIcon={<FileDownloadOutlinedIcon />}
           onClick={downloadPdfDocument}>
           {t('Xuất thông tin')}

@@ -157,17 +157,14 @@ export const StepTwo = (props: Props) => {
         }}>
         <StyledButton
           variant="outlined"
-          // onClick={props.onBackStep}
           sx={{ color: colors.indigo['700'] }}
           onClick={onPrevStep}
           startIcon={<ArrowBackIcon />}>
           {t('Quay lại')}
         </StyledButton>
         <StyledButton
-          // disabled={disabledButton}
           variant="contained"
           sx={{ backgroundColor: colors.indigo['700'] }}
-          // type="submit"
           endIcon={<ArrowForwardIcon />}
           onClick={onNextStepTwo}>
           {t('Tiếp tục')}
