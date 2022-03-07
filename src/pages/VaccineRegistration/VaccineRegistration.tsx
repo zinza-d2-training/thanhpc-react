@@ -82,7 +82,9 @@ export const VaccineRegistration = () => {
       );
       break;
     case tabRegister.Complete:
-      contentComponent = <StepFour onPrevStep={handlePreviousStep} />;
+      contentComponent = (
+        <StepFour onPrevStep={handlePreviousStep} data={dataStepOne || null} />
+      );
       break;
   }
 

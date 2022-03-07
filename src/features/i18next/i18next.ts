@@ -243,7 +243,10 @@ const translationEn = {
     'Invalid ID/Citizen ID number!',
   'Vui lòng nhập đúng định dạng!': 'Please enter the correct format!',
   'Họ và tên không bao gồm số': 'First and last name do not include number',
-  'Mật khẩu phải có ít nhất 8 ký tự!': 'Password must be at least 8 characters!'
+  'Mật khẩu phải có ít nhất 8 ký tự!':
+    'Password must be at least 8 characters!',
+  'Đăng ký tiêm chủng COVID-19 thành công. Mã đặt tiêm của bạn là 0120211103501237.':
+    'Successful registration for COVID-19 vaccination. Your injection order number is 0120211103501237.'
 };
 
 i18n.use(initReactI18next).init({

@@ -221,10 +221,10 @@ export const StepOne = (props: Props) => {
                         error={invalid}
                         {...field}
                         select>
-                        <MenuItem value="male">
+                        <MenuItem value="Nam">
                           <Trans>Nam</Trans>
                         </MenuItem>
-                        <MenuItem value="female">
+                        <MenuItem value="Nữ">
                           <Trans>Nữ</Trans>
                         </MenuItem>
                       </TextField>
