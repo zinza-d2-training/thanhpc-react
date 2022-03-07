@@ -30,7 +30,20 @@ export const vaccineRegistrationSchema = yup.object().shape({
   wardId: yup.string().required('Đây là trường bắt buộc!'),
   priorityGroup: yup.string().required('Đây là trường bắt buộc!'),
   historyOfTheFirstInjection: yup.object().shape({
-    nameOfVaccine: yup.string().required('Đây là trường bắt buộc!'),
-    injectionDate: yup.date().required('Đây là trường bắt buộc!')
+    nameOfVaccine: yup.string().test(
+      'test',
+      'Đây là trường bắt buộc!',
+      (value, originalValue: any) =>
+        originalValue.from[1].value.injectionOrderNumber === 1 ||
+        value !== undefined // no error when injectionOrderNumber = 1 or value !== undefined
+    ),
+    injectionDate: yup
+      .string()
+      .test('test', 'Đây là trường bắt buộc!', (value, originalValue: any) => {
+        return (
+          originalValue.from[1].value.injectionOrderNumber === 1 ||
+          value !== undefined // no error when injectionOrderNumber = 1 or value !== undefined
+        );
+      })
   })
 });

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Typography, colors, Checkbox, Stack, TextField } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -101,7 +101,7 @@ export const StepTwo = (props: Props) => {
                   component="th"
                   scope="row"
                   sx={{ maxWidth: '600px' }}>
-                  {`${row.id}. ${row.question}`}
+                  {`${row.id}. ${t(row.question)}`}
                 </TableCell>
                 <TableCell align="center" sx={{ maxWidth: '450px', py: 1 }}>
                   {row.diseaseSymptoms !== undefined && (

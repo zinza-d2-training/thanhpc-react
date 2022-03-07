@@ -18,7 +18,7 @@ export enum ListVaccines {
 }
 export interface HistoryOfTheFirstInjection {
   nameOfVaccine?: ListVaccines;
-  injectionDate?: Date;
+  injectionDate?: Date | string;
   shipmentNumber?: string;
   injectionPlace?: string;
   reactionAfterVaccination?: string;
@@ -37,7 +37,7 @@ export interface VaccineRegistrationType extends LookUpCertificate {
   priorityGroup: PriorityGroup | string;
   desiredDateOfInjection: Date | string;
   desiredSessionOfInjection: DesiredSessionOfInjection | string;
-  historyOfTheFirstInjection?: HistoryOfTheFirstInjection | string;
+  historyOfTheFirstInjection?: HistoryOfTheFirstInjection;
 }
 
 // step2

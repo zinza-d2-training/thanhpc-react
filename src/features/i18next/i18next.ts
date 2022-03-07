@@ -93,7 +93,7 @@ const translationEn = {
   'Đăng ký mũi tiêm thứ': 'Vaccination',
   'Mũi thứ 1': 'Dose',
   'Mũi thứ 2': 'Next dose',
-  'Thông tin người đăng ký tiêm': 'Vaccinated person information',
+  '1. Thông tin người đăng ký tiêm': '1. Vaccinated person information',
   'Đây là trường bắt buộc!': 'This field is required!',
   'Số căn cước hoặc chứng minh thư không hợp lệ!': 'Citizen ID is invalid!',
   'Số điện thoại không hợp lệ!': 'Phone number is invalid!',
@@ -106,13 +106,14 @@ const translationEn = {
   'Quốc tịch': 'Nationality',
   'Nhóm ưu tiên': 'Priority group',
   Nhóm: 'Group',
-  'Thông tin đăng ký tiêm chủng': 'Vaccination registration information',
+  '2. Thông tin đăng ký tiêm chủng': '2. Vaccination registration information',
   'Ngày muốn được tiêm': 'Your preferred vaccination date',
+  'Ngày muốn được tiêm (dự kiến)': 'Date you want to be injected (expected)',
   'Buổi tiêm mong muốn': 'Session',
   'Buổi sáng': 'Morning',
   'Buổi chiều': 'Afternoon',
   'Cả ngày': 'All day',
-  'Lịch sử tiêm mũi thứ 1': 'History of injection 1',
+  '3. Lịch sử tiêm mũi thứ 1': '3. History of injection 1',
   'Tên Vaccine': 'Vaccine name',
   'Ngày tiêm': 'Vaccination date',
   'Số lô': 'Lot number',
@@ -246,7 +247,8 @@ const translationEn = {
   'Mật khẩu phải có ít nhất 8 ký tự!':
     'Password must be at least 8 characters!',
   'Đăng ký tiêm chủng COVID-19 thành công. Mã đặt tiêm của bạn là 0120211103501237.':
-    'Successful registration for COVID-19 vaccination. Your injection order number is 0120211103501237.'
+    'Successful registration for COVID-19 vaccination. Your injection order number is 0120211103501237.',
+  'Đăng kí mũi tiêm thứ ?': 'Sign up for the second injection?'
 };
 
 i18n.use(initReactI18next).init({

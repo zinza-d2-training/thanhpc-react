@@ -31,8 +31,6 @@ export const StepFour = (props: Props) => {
       const imgProps = pdf.getImageProperties(canvas);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      console.log('pdfHeight', pdfHeight);
-      console.log('pdfWidth', pdfWidth);
       pdf.addImage(imgData, 'JPEG', 5, 15, pdfWidth - 10, pdfHeight - 10); // left top width height
       pdf.save('download.pdf');
     });

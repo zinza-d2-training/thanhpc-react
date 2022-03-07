@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
@@ -19,7 +19,8 @@ import { Label } from '../../components/Label';
 import {
   VaccineRegistrationType,
   PriorityGroup,
-  DesiredSessionOfInjection
+  DesiredSessionOfInjection,
+  ListVaccines
 } from './types';
 import {
   getProvinceName,
@@ -51,37 +52,43 @@ export const StepOne = (props: Props) => {
   const [listWard, setListWard] = useState<WardType[]>([]);
   const { t } = useTranslation();
   const PriorityGroupArr = convertEnumToArr(PriorityGroup);
+  const ListVaccinesArr = convertEnumToArr(ListVaccines);
   const DesiredSessionOfInjectionArr = convertEnumToArr(
     DesiredSessionOfInjection
   );
-  const { control, handleSubmit, getValues, setValue, trigger, clearErrors } =
-    useForm<VaccineRegistrationType>({
-      resolver: yupResolver(
-        vaccineRegistrationSchema
-      ) as Resolver<VaccineRegistrationType>,
-      mode: 'onChange',
-      defaultValues: data
-        ? data
-        : {
-            injectionOrderNumber: 0,
-            email: '',
-            job: '',
-            workUnit: '',
-            currentAddress: '',
-            provinceId: '',
-            districtId: '',
-            wardId: '',
-            ethnic: '',
-            nationality: '',
-            priorityGroup: '',
-            desiredDateOfInjection: new Date('2000-10-23'),
-            desiredSessionOfInjection: '',
-            historyOfTheFirstInjection: ''
-          }
-    });
-
-  const provinceId = getValues('provinceId');
-  const districtId = getValues('districtId');
+  const {
+    control,
+    handleSubmit,
+    getValues,
+    setValue,
+    trigger,
+    clearErrors,
+    watch,
+    formState: { errors }
+  } = useForm<VaccineRegistrationType>({
+    resolver: yupResolver(
+      vaccineRegistrationSchema
+    ) as Resolver<VaccineRegistrationType>,
+    mode: 'onChange',
+    defaultValues: data
+      ? data
+      : {
+          injectionOrderNumber: 1,
+          email: '',
+          job: '',
+          workUnit: '',
+          currentAddress: '',
+          provinceId: '',
+          districtId: '',
+          wardId: '',
+          ethnic: '',
+          nationality: '',
+          priorityGroup: '',
+          desiredDateOfInjection: new Date('2000-10-23'),
+          desiredSessionOfInjection: '',
+        }
+  });
+  const injectionOrderNumber = watch('injectionOrderNumber');
   const listProvince = administrativeUnits;
 
   const handleChangeProvince = (
@@ -118,10 +125,17 @@ export const StepOne = (props: Props) => {
   const formSubmitHandler: SubmitHandler<VaccineRegistrationType> = (
     data: VaccineRegistrationType
   ) => {
-    console.log(data);
+    console.log('errors', errors);
     receiveData(data);
     onNextStep();
   };
+
+  useEffect(() => {
+    if (injectionOrderNumber) {
+      trigger();
+    }
+  }, [injectionOrderNumber, trigger]);
+  console.log(errors);
 
   return (
     <Box component="form" onSubmit={handleSubmit(formSubmitHandler)}>
@@ -129,7 +143,7 @@ export const StepOne = (props: Props) => {
         <Grid container spacing={2}>
           <Grid item xs={3}>
             <Stack direction="column" spacing={1}>
-              <Label required={true}>Đăng kí mũi tiêm thứ</Label>
+              <Label required={true}>Đăng kí mũi tiêm thứ ?</Label>
               <Controller
                 name="injectionOrderNumber"
                 control={control}
@@ -137,7 +151,6 @@ export const StepOne = (props: Props) => {
                   <TextField
                     size="small"
                     helperText={error?.message ? t(`${error?.message}`) : null}
-                    defaultValue={0}
                     error={invalid}
                     {...field}
                     select>
@@ -154,7 +167,7 @@ export const StepOne = (props: Props) => {
         </Grid>
         <Stack direction="column" spacing={2}>
           <Typography variant="body1" sx={{ fontWeight: '500' }}>
-            1. Thông tin người đăng ký tiêm
+            <Trans>1. Thông tin người đăng ký tiêm</Trans>
           </Typography>
           <Box>
             <Grid container spacing={2}>
@@ -210,7 +223,6 @@ export const StepOne = (props: Props) => {
                   </Label>
                   <Controller
                     name="gender"
-                    defaultValue="male"
                     control={control}
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
@@ -574,7 +586,7 @@ export const StepOne = (props: Props) => {
         </Stack>
         <Stack direction="column" spacing={2}>
           <Typography variant="body1" sx={{ fontWeight: '500' }}>
-            2. Thông tin đăng ký tiêm chủng
+            <Trans>2. Thông tin đăng ký tiêm chủng</Trans>
           </Typography>
           <Box>
             <Grid container spacing={2}>
@@ -632,10 +644,10 @@ export const StepOne = (props: Props) => {
             </Grid>
           </Box>
         </Stack>
-        {getValues('injectionOrderNumber') === 2 && (
+        {injectionOrderNumber === 2 && (
           <Stack direction="column" spacing={2}>
             <Typography variant="body1" sx={{ fontWeight: '500' }}>
-              3. Lịch sử tiêm mũi thứ 1
+              <Trans>3. Lịch sử tiêm mũi thứ 1</Trans>
             </Typography>
             <Box>
               <Grid container spacing={2}>
@@ -658,7 +670,13 @@ export const StepOne = (props: Props) => {
                           }
                           error={invalid}
                           {...field}
-                        />
+                          select>
+                          {ListVaccinesArr.map((value) => (
+                            <MenuItem key={value} value={value}>
+                              {value}
+                            </MenuItem>
+                          ))}
+                        </TextField>
                       )}
                     />
                   </Stack>

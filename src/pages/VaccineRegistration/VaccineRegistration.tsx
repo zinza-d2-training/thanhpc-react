@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { Box, Container, Typography, colors, Stack } from '@mui/material';
+import { useState } from 'react';
+import { Box, Container, Typography, colors } from '@mui/material';
 
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
@@ -13,12 +13,7 @@ import { StepTwo } from './StepTwo';
 import { StepThree } from './StepThree';
 import { StepFour } from './StepFour';
 
-import {
-  VaccineRegistrationType,
-  DesiredSessionOfInjection,
-  IMedicalHistory,
-  Answer
-} from './types';
+import { VaccineRegistrationType, IMedicalHistory } from './types';
 import { medicalHistoryTemplate } from '../../db/medicalHistoryTemplate';
 
 export const VaccineRegistration = () => {
@@ -45,7 +40,6 @@ export const VaccineRegistration = () => {
     setDataStepOne(data);
   };
   const handleSubmitDataStepTwo = (data: IMedicalHistory[]) => {
-    console.log('data in cha', data);
     setDataStepTwo(data);
   };
   const handleSubmitDataStepThree = (data: boolean) => {
@@ -89,10 +83,10 @@ export const VaccineRegistration = () => {
   }
 
   const steps = [
-    'Thông tin cá nhân',
-    'Tiền sử bệnh',
-    'Phiếu đồng ý tiêm',
-    'Hoàn thành'
+    t('Thông tin cá nhân'),
+    t('Tiền sử bệnh'),
+    t('Phiếu đồng ý tiêm'),
+    t('Hoàn thành')
   ];
 
   return (
@@ -109,7 +103,7 @@ export const VaccineRegistration = () => {
             alignItems: 'center'
           }}>
           <Container maxWidth="xl">
-            <Typography variant="h5">Đăng ký tiêm</Typography>
+            <Typography variant="h5">{t('Đăng ký tiêm')}</Typography>
           </Container>
         </Box>
         <Box>
