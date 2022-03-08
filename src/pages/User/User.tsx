@@ -617,7 +617,6 @@ export const User = () => {
                                     <Controller
                                       name="provinceId"
                                       control={control}
-                                      defaultValue="098624979"
                                       render={({
                                         field,
                                         fieldState: { invalid, error }
@@ -830,7 +829,6 @@ export const User = () => {
                                     <Controller
                                       name="new_password"
                                       control={control}
-                                      defaultValue="098624979"
                                       render={({
                                         field,
                                         fieldState: { invalid, error }
@@ -864,7 +862,6 @@ export const User = () => {
                                     <Controller
                                       name="confirm_password"
                                       control={control}
-                                      defaultValue="098624979"
                                       render={({
                                         field,
                                         fieldState: { invalid, error }

@@ -9,6 +9,7 @@ import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { Register } from './pages/Register/Register';
 import { VaccineCertificate } from './pages/VaccineCertificate/VaccineCertificate';
 import { InjectionRegistration } from './pages/InjectionRegistration/InjectionRegistration';
+import { VaccineRegistration } from './pages/VaccineRegistration/VaccineRegistration';
 import { Documentation } from './pages/Documentation/Documentation';
 import { i18nextSelector } from './features/i18next/i18nextSlice';
 import i18n from './features/i18next/i18next';
@@ -31,6 +32,9 @@ function App() {
             <Route
               path="/vaccine-certificate"
               element={<VaccineCertificate />}></Route>
+            <Route
+              path="/vaccine-registration"
+              element={<VaccineRegistration />}></Route>
             <Route
               path="/injection-registration"
               element={<InjectionRegistration />}></Route>
