@@ -1,5 +1,12 @@
 import { useCallback } from 'react';
-import { Box, colors, Typography, Container, Stack } from '@mui/material';
+import {
+  Box,
+  colors,
+  Typography,
+  Container,
+  Stack,
+  Link as LinkMui
+} from '@mui/material';
 
 import { loginSelector } from '../../features/login/loginSlice';
 import {
@@ -107,23 +114,27 @@ export const Header = () => {
                 </Link>
               )}
               <Stack direction="row" spacing={1} sx={{ color: '#fff' }}>
-                <Typography
+                <LinkMui
+                  underline={language === 'vn' ? 'always' : 'none'}
                   sx={{
                     cursor: 'pointer',
-                    textDecoration: language === 'vn' ? 'underline' : 'none'
+                    color: '#fff',
+                    textDecorationColor: '#fff'
                   }}
                   onClick={() => handleChangeVN()}>
                   VN
-                </Typography>
+                </LinkMui>
                 <Typography>|</Typography>
-                <Typography
+                <LinkMui
+                  underline={language === 'en' ? 'always' : 'none'}
                   sx={{
-                    textDecoration: language === 'en' ? 'underline' : 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    color: '#fff',
+                    textDecorationColor: '#fff'
                   }}
                   onClick={() => handleChangeEnglish()}>
                   EN
-                </Typography>
+                </LinkMui>
               </Stack>
             </Stack>
           </Box>
