@@ -334,7 +334,7 @@ export const Home = () => {
               boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
               borderRadius: '10px'
             }}>
-            <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, ml: 2 }}>
               <Trans>Dữ liệu tiêm theo ngày</Trans>
             </Typography>
             <Box sx={{ mx: 2 }}>
@@ -372,9 +372,17 @@ export const Home = () => {
                     boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
                     borderRadius: '10px'
                   }}>
-                  <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
-                    <Trans>10 địa phương có tỷ lệ tiêm cao nhất</Trans>
-                  </Typography>
+                  <Box sx={{ mb: 2, ml: 2 }}>
+                    <Typography variant="h6">
+                      <Trans>10 địa phương có tỷ lệ tiêm cao nhất</Trans>
+                    </Typography>
+                    <Typography variant="body2">
+                      <Trans>
+                        (Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết
+                        định)
+                      </Trans>
+                    </Typography>
+                  </Box>
                   <Box sx={{ mx: 5, mt: 0.5 }}>
                     <Bar
                       data={{
@@ -429,9 +437,17 @@ export const Home = () => {
                     borderRadius: '10px',
                     minHeight: '700px'
                   }}>
-                  <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
-                    <Trans>10 địa phương có tỷ lệ tiêm Thấp nhất</Trans>
-                  </Typography>
+                  <Box sx={{ mb: 2, ml: 2 }}>
+                    <Typography variant="h6">
+                      <Trans>10 địa phương có tỷ lệ tiêm Thấp nhất</Trans>
+                    </Typography>
+                    <Typography variant="body2">
+                      <Trans>
+                        (Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết
+                        định)
+                      </Trans>
+                    </Typography>
+                  </Box>
                   <Box sx={{ mx: 5, mt: 0.5 }}>
                     <Bar
                       data={{
@@ -479,17 +495,17 @@ export const Home = () => {
           </Box>
           <Box
             sx={{
-              py: 2,
+              pt: 2,
               px: 4,
               border: '1px solid rgba(38, 56, 150, 0.14)',
               boxShadow: '0px 4px 12px rgba(34, 41, 47, 0.12)',
               borderRadius: '10px'
             }}>
-            <Typography variant="h6" sx={{ mt: 3, ml: 2 }}>
+            <Typography variant="h6" sx={{ mt: 2, ml: 2 }}>
               <Trans>Số liệu vắc xin theo địa phương</Trans>
             </Typography>
             <VaccinatedTable dataBody={dataOnTable} dataHead={tableHead} />
-            <Stack direction="row" justifyContent="center" py={3}>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }} py={2}>
               <Box
                 component={Button}
                 sx={{
@@ -501,7 +517,7 @@ export const Home = () => {
                 onClick={handleLoadMoreVaccinationByLocal}>
                 <Trans>Xem thêm</Trans>
               </Box>
-            </Stack>
+            </Box>
           </Box>
           <Box
             sx={{
