@@ -1,5 +1,12 @@
 import { useCallback } from 'react';
-import { Box, colors, Typography, Container, Stack } from '@mui/material';
+import {
+  Box,
+  colors,
+  Typography,
+  Container,
+  Stack,
+  Link as LinkMui
+} from '@mui/material';
 
 import { loginSelector } from '../../features/login/loginSlice';
 import {
@@ -47,10 +54,18 @@ export const Header = () => {
       <Container maxWidth="xl">
         <Box sx={{ display: 'flex', height: '100%' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box component="img" src={headerImg} />
-            <Typography variant="h6" sx={{ ...defaultStyle, ml: 2 }}>
-              <Trans>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</Trans>
-            </Typography>
+            <Link
+              to="/"
+              style={{
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center'
+              }}>
+              <Box component="img" src={headerImg} />
+              <Typography variant="h6" sx={{ ...defaultStyle, ml: 2 }}>
+                <Trans>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</Trans>
+              </Typography>
+            </Link>
           </Box>
           <Box
             sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>
@@ -98,24 +113,31 @@ export const Header = () => {
                   />
                 </Link>
               )}
-              <Stack direction="row" spacing={1} sx={{ color: '#fff' }}>
-                <Typography
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ color: '#fff', display: 'flex', alignItems: 'center' }}>
+                <LinkMui
+                  underline={language === 'vn' ? 'always' : 'none'}
                   sx={{
                     cursor: 'pointer',
-                    textDecoration: language === 'vn' ? 'underline' : 'none'
+                    color: '#fff',
+                    textDecorationColor: '#fff'
                   }}
                   onClick={() => handleChangeVN()}>
                   VN
-                </Typography>
+                </LinkMui>
                 <Typography>|</Typography>
-                <Typography
+                <LinkMui
+                  underline={language === 'en' ? 'always' : 'none'}
                   sx={{
-                    textDecoration: language === 'en' ? 'underline' : 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    color: '#fff',
+                    textDecorationColor: '#fff'
                   }}
                   onClick={() => handleChangeEnglish()}>
                   EN
-                </Typography>
+                </LinkMui>
               </Stack>
             </Stack>
           </Box>

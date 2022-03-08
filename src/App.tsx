@@ -19,7 +19,6 @@ function App() {
   const i18nextSelectorResult = useAppSelector(i18nextSelector);
   const { language } = i18nextSelectorResult;
   useEffect(() => {
-    console.log('i18nextSelectorResult.language', language);
     i18n.changeLanguage(language);
   }, [language]);
 
@@ -28,24 +27,31 @@ function App() {
       <Layout>
         <BrowserRouter>
           <Routes>
-            <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/vaccine-certificate"
-              element={<VaccineCertificate />}></Route>
+              element={<VaccineCertificate />}
+            />
+            <Route
+              path="/vaccine-registration"
+              element={<VaccineRegistration />}
+            />
             <Route
               path="/vaccine-registration"
               element={<VaccineRegistration />}></Route>
             <Route
               path="/injection-registration"
-              element={<InjectionRegistration />}></Route>
-            <Route path="/" element={<Home />}></Route>
+              element={<InjectionRegistration />}
+            />
+            <Route path="/" element={<Home />} />
             <Route
               path="/injection-registration"
-              element={<InjectionRegistration />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/documentation" element={<Documentation />}></Route>
-            <Route path="/user" element={<User />}></Route>
+              element={<InjectionRegistration />}
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/documentation" element={<Documentation />} />
+            <Route path="/user" element={<User />} />
           </Routes>
         </BrowserRouter>
       </Layout>
