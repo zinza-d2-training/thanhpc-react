@@ -47,10 +47,18 @@ export const Header = () => {
       <Container maxWidth="xl">
         <Box sx={{ display: 'flex', height: '100%' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box component="img" src={headerImg} />
-            <Typography variant="h6" sx={{ ...defaultStyle, ml: 2 }}>
-              <Trans>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</Trans>
-            </Typography>
+            <Link
+              to="/"
+              style={{
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center'
+              }}>
+              <Box component="img" src={headerImg} />
+              <Typography variant="h6" sx={{ ...defaultStyle, ml: 2 }}>
+                <Trans>CỔNG THÔNG TIN TIÊM CHỦNG COVID-19</Trans>
+              </Typography>
+            </Link>
           </Box>
           <Box
             sx={{ display: 'flex', alignItems: 'center', marginLeft: 'auto' }}>

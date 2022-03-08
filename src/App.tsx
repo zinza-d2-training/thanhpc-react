@@ -19,7 +19,6 @@ function App() {
   const i18nextSelectorResult = useAppSelector(i18nextSelector);
   const { language } = i18nextSelectorResult;
   useEffect(() => {
-    console.log('i18nextSelectorResult.language', language);
     i18n.changeLanguage(language);
   }, [language]);
 
