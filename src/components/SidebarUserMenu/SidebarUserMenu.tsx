@@ -15,6 +15,9 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Trans } from 'react-i18next';
 
+import { logout, loginSelector } from '../../features/login/loginSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useNavigate } from 'react-router-dom';
 const defaultStyle = {
   color: '#fff',
   cursor: 'pointer'
@@ -27,13 +30,21 @@ interface Props {
 export const SidebarUserMenu = (props: Props) => {
   const { fullName } = props;
   const anchorRef = useRef<HTMLButtonElement>(null);
-
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
+  const loginSelectorResult = useAppSelector(loginSelector);
+  const navigate = useNavigate();
   const handleOpenMenu = () => {
     setOpen(true);
   };
   const handleCloseMenu = () => {
     setOpen(false);
+  };
+  const handleLogout = () => {
+    console.log('loginSelectorResult', loginSelectorResult);
+    dispatch(logout());
+    setOpen(false);
+    navigate('/login');
   };
   return (
     <>
@@ -69,6 +80,7 @@ export const SidebarUserMenu = (props: Props) => {
             <MenuList onMouseLeave={handleCloseMenu} autoFocusItem={open}>
               <MenuItem
                 sx={{
+                  background: '#fff',
                   mb: 3,
                   '&:hover': {
                     background: '#fff',
@@ -148,11 +160,9 @@ export const SidebarUserMenu = (props: Props) => {
                   />
                 </Box>
                 <Box>
-                  <Link to="/" style={{ textDecoration: 'none' }}>
-                    <Typography onClick={handleCloseMenu} variant="body2">
-                      <Trans>Đăng xuất</Trans>
-                    </Typography>
-                  </Link>
+                  <Typography onClick={handleLogout} variant="body2">
+                    <Trans>Đăng xuất</Trans>
+                  </Typography>
                 </Box>
                 <Box>
                   <ArrowForwardIcon

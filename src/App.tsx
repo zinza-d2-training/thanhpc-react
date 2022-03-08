@@ -27,24 +27,28 @@ function App() {
       <Layout>
         <BrowserRouter>
           <Routes>
-            <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/vaccine-certificate"
-              element={<VaccineCertificate />}></Route>
+              element={<VaccineCertificate />}
+            />
             <Route
               path="/vaccine-registration"
-              element={<VaccineRegistration />}></Route>
+              element={<VaccineRegistration />}
+            />
             <Route
               path="/injection-registration"
-              element={<InjectionRegistration />}></Route>
-            <Route path="/" element={<Home />}></Route>
+              element={<InjectionRegistration />}
+            />
+            <Route path="/" element={<Home />} />
             <Route
               path="/injection-registration"
-              element={<InjectionRegistration />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/documentation" element={<Documentation />}></Route>
-            <Route path="/user" element={<User />}></Route>
+              element={<InjectionRegistration />}
+            />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/documentation" element={<Documentation />} />
+            <Route path="/user" element={<User />} />
           </Routes>
         </BrowserRouter>
       </Layout>
