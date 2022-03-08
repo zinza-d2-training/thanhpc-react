@@ -113,7 +113,10 @@ export const Header = () => {
                   />
                 </Link>
               )}
-              <Stack direction="row" spacing={1} sx={{ color: '#fff' }}>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ color: '#fff', display: 'flex', alignItems: 'center' }}>
                 <LinkMui
                   underline={language === 'vn' ? 'always' : 'none'}
                   sx={{
