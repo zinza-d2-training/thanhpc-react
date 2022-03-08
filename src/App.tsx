@@ -37,6 +37,9 @@ function App() {
               element={<VaccineRegistration />}
             />
             <Route
+              path="/vaccine-registration"
+              element={<VaccineRegistration />}></Route>
+            <Route
               path="/injection-registration"
               element={<InjectionRegistration />}
             />
