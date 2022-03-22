@@ -18,7 +18,7 @@ export const StepTwo = (props: Props) => {
   const { handleDisable } = props;
   const isHaveErrors = useMemo(() => {
     return (
-      !!errors.citizenId ||
+      !!errors.citizen_id ||
       !!errors.password ||
       !!errors.full_name ||
       !!errors.dob ||
@@ -26,7 +26,7 @@ export const StepTwo = (props: Props) => {
       !!errors.phone_number
     );
   }, [
-    errors.citizenId,
+    errors.citizen_id,
     errors.password,
     errors.full_name,
     errors.dob,

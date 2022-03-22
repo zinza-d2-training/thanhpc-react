@@ -17,6 +17,7 @@ export const loginAsync = createAsyncThunk(
   async (value: User, { rejectWithValue }) => {
     try {
       const response = await fetchAccount(value);
+      console.log('response', response);
       return response;
     } catch (err: any) {
       return rejectWithValue(err.data);
@@ -39,7 +40,7 @@ export const loginSlice = createSlice({
     });
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.loading = false;
-      state.response = action.payload as LoginQueryResponse;
+      state.response = action.payload as unknown as LoginQueryResponse;
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.response = action.payload as LoginQueryResponse;

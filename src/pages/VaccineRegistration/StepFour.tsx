@@ -103,7 +103,7 @@ export const StepFour = (props: Props) => {
               {t('Số CMND/CCCD/Mã định danh công dân')}
             </Typography>
             <Typography variant="body1" fontWeight="500">
-              {data?.citizenId}
+              {data?.citizen_id}
             </Typography>
           </Box>
           <Box sx={{ flex: 1 }}>
@@ -117,15 +117,18 @@ export const StepFour = (props: Props) => {
           <Box sx={{ flex: 1 }}>
             <Typography variant="body1">{t('Tỉnh/Thành phố')}</Typography>
             <Typography variant="body1" fontWeight="500">
-              {getProvinceName(data?.provinceId as string, administrativeUnits)}
+              {getProvinceName(
+                data?.province_id as string,
+                administrativeUnits
+              )}
             </Typography>
           </Box>
           <Box sx={{ flex: 1 }}>
             <Typography variant="body1">{t('Quận/Huyện')}</Typography>
             <Typography variant="body1" fontWeight="500">
               {getDistrictName(
-                data?.provinceId as string,
-                data?.districtId as string,
+                data?.province_id as string,
+                data?.district_id as string,
                 administrativeUnits
               )}
             </Typography>
@@ -134,9 +137,9 @@ export const StepFour = (props: Props) => {
             <Typography variant="body1">{t('Xã/Phường')}</Typography>
             <Typography variant="body1" fontWeight="500">
               {getWardName(
-                data?.provinceId as string,
-                data?.districtId as string,
-                data?.wardId as string,
+                data?.province_id as string,
+                data?.district_id as string,
+                data?.ward_id as string,
                 administrativeUnits
               )}
             </Typography>

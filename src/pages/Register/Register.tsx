@@ -17,13 +17,14 @@ import { useForm, FormProvider, Resolver } from 'react-hook-form';
 import { registerSchema } from './schema';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 import { UserFormData } from './types';
+import axios from 'axios';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
   const methods = useForm<UserFormData>({
     resolver: yupResolver(registerSchema) as Resolver<UserFormData>,
     mode: 'onChange',
-    defaultValues: { provinceId: '', wardId: '', districtId: '' }
+    defaultValues: { province_id: '', ward_id: '', district_id: '' }
   });
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -33,7 +34,17 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const handleOpenModal = () => setOpen(true);
-  const handleCloseModal = () => setOpen(false);
+  async function handleCloseModal() {
+    setOpen(false);
+    console.log('methods.getValues()', methods.getValues());
+    const images = methods.getValues('images').map((value) => value.file);
+    await axios({
+      method: 'POST',
+      url: 'http://localhost:4000/auth/register',
+      data: {}
+    });
+    return;
+  }
 
   const handleSkip = () => {
     if (activeStep === steps.length - 1) {
@@ -141,7 +152,6 @@ export const Register = () => {
               <FormProvider {...methods}>
                 <Box
                   component="form"
-                  // onSubmit={methods.handleSubmit(onSubmit)}
                   sx={{
                     width: '450px',
                     display: 'flex',

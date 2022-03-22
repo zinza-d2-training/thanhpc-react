@@ -44,7 +44,7 @@ export const InjectionRegistration = () => {
     resolver: yupResolver(injectionRegistrationSchema),
     mode: 'onChange',
     defaultValues: {
-      citizenId: '',
+      citizen_id: '',
       phone_number: ''
     }
   });
@@ -103,7 +103,7 @@ export const InjectionRegistration = () => {
                     <Trans>Số CMND/CCCD/Mã định danh công dân</Trans>
                   </Label>
                   <Controller
-                    name="citizenId"
+                    name="citizen_id"
                     control={control}
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField

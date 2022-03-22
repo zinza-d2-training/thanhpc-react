@@ -4,37 +4,41 @@ import {
   LoginQueryResult,
   QueryResult
 } from './responseLogin';
-import { fakeAccount } from './consts';
-import { SECRET_KEY } from './secret_key';
-export function fetchAccount(value: User) {
-  return new Promise<LoginQueryResponse>((resolve, reject) => {
-    setTimeout(() => {
-      if (
-        value.citizenId === fakeAccount.citizenId &&
-        value.password === fakeAccount.password
-      ) {
-        const token = value.citizenId + SECRET_KEY;
-        const data: QueryResult<LoginQueryResult> = {
-          user: {
-            citizenId: fakeAccount.citizenId,
-            full_name: fakeAccount.full_name
-          },
-          token
-        };
-        const loginResponse: LoginQueryResponse = {
-          data,
-          statusCode: 200,
-          message: 'Đăng nhập thành công!!!'
-        };
-        resolve(loginResponse);
-      } else {
-        const loginResponse: LoginQueryResponse = {
-          data: null,
-          statusCode: 401,
-          message: 'Tên đăng nhập/mật khẩu không chính xác'
-        };
-        reject(loginResponse);
-      }
-    }, 2000);
-  });
+import axios from 'axios';
+
+export async function fetchAccount(value: User) {
+  return await axios({
+    method: 'POST',
+    url: 'http://localhost:4000/auth/login',
+    headers: { 'Content-Type': 'application/json' },
+    data: {
+      citizen_id: value.citizen_id,
+      password: value.password
+    }
+  })
+    .then((response) => {
+      const token = response.data.accessToken;
+      const data: QueryResult<LoginQueryResult> = {
+        user: {
+          citizen_id: response.data.payload.citizen_id,
+          full_name: response.data.payload.full_name
+        },
+        token
+      };
+      const loginResponse: LoginQueryResponse = {
+        data,
+        statusCode: 200,
+        message: 'Đăng nhập thành công!!!'
+      };
+      return loginResponse;
+    })
+    .catch((err) => {
+      const data: QueryResult<LoginQueryResult> = null;
+      const loginResponse: LoginQueryResponse = {
+        data,
+        statusCode: err.statusCode,
+        message: 'Mã định danh hoặc mật khẩu không chính xác!'
+      };
+      return loginResponse;
+    });
 }

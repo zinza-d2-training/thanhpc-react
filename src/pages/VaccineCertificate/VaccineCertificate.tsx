@@ -38,7 +38,7 @@ export const VaccineCertificate = () => {
       dob: undefined,
       gender: 'male',
       phone_number: '',
-      citizenId: '',
+      citizen_id: '',
       healthInsuranceCardNumber: ''
     }
   });
@@ -182,7 +182,7 @@ export const VaccineCertificate = () => {
                   <Box sx={{}}>
                     <Label required={false}>Số CMND/CCCD</Label>
                     <Controller
-                      name="citizenId"
+                      name="citizen_id"
                       control={control}
                       render={({ field, fieldState: { invalid, error } }) => (
                         <TextField

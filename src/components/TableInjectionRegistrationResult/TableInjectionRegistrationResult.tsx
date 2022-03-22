@@ -76,7 +76,7 @@ export const TableInjectionRegistrationResult = (props: Props) => {
               </TableCell>
               <TableCell align="center">{row.gender}</TableCell>
               <TableCell align="center">{row.phone_number}</TableCell>
-              <TableCell align="center">{row.citizenId}</TableCell>
+              <TableCell align="center">{row.citizen_id}</TableCell>
               <TableCell align="center">
                 {row.status === Status.Success ? (
                   <Chip

@@ -4,7 +4,7 @@ export const lookUpCertificateResult: LookUpCertificateResult = {
   dob: new Date('2000-10-23'),
   gender: 'male',
   phone_number: '0986249793',
-  citizenId: '184415207',
+  citizen_id: '184415207',
   healthInsuranceCardNumber: '39390173912',
   address: 'Số 105 Yên Bình, Phường Phúc La, Quận Hà Đông, Hà Nội',
   vaccines: [

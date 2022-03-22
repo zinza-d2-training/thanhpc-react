@@ -41,17 +41,17 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
     trigger
   } = methods;
 
-  const provinceId = getValues('provinceId');
-  const districtId = getValues('districtId');
+  const province_id = getValues('province_id');
+  const district_id = getValues('district_id');
   const listProvince = administrativeUnits;
 
   const listDistrict = useMemo(() => {
-    return getChildArr(provinceId, listProvince, 'Districts');
-  }, [provinceId, listProvince]);
+    return getChildArr(province_id, listProvince, 'Districts');
+  }, [province_id, listProvince]);
 
   const listWard = useMemo(() => {
-    return getChildArr(districtId, listDistrict, 'Wards');
-  }, [districtId, listDistrict]);
+    return getChildArr(district_id, listDistrict, 'Wards');
+  }, [district_id, listDistrict]);
 
   const [allowClickDistrict, setAllowClickDistrict] = useState<boolean>(false);
   const [allowClickWard, setAllowClickWard] = useState<boolean>(false);
@@ -59,10 +59,10 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('provinceId', e.target.value);
+    setValue('province_id', e.target.value);
     setAllowClickDistrict(true);
-    setValue('districtId', '');
-    if (getValues('provinceId') !== e.target.value) {
+    setValue('district_id', '');
+    if (getValues('province_id') !== e.target.value) {
       setAllowClickWard(false);
       handleDisable(true);
     }
@@ -72,21 +72,21 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('districtId', e.target.value);
-    setValue('wardId', '');
+    setValue('district_id', e.target.value);
+    setValue('ward_id', '');
     trigger();
     setAllowClickWard(true);
   };
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('wardId', e.target.value);
-    clearErrors('wardId');
+    setValue('ward_id', e.target.value);
+    clearErrors('ward_id');
     handleDisable(false);
     trigger();
   };
   useEffect(() => {
-    if (errors.provinceId || errors.districtId || errors.wardId) {
+    if (errors.province_id || errors.district_id || errors.ward_id) {
       handleDisable(true);
     }
   }, [errors, handleDisable]);
@@ -96,7 +96,7 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
       <Box sx={{ mb: 1, minWidth: '450px' }}>
         <Label required={true}>Tỉnh/Thành phố</Label>
         <Controller
-          name="provinceId"
+          name="province_id"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <TextField
@@ -122,7 +122,7 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
       <Box sx={{ mb: 1, minWidth: '450px' }}>
         <Label required={true}>Quận/Huyện</Label>
         <Controller
-          name="districtId"
+          name="district_id"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <TextField
@@ -135,7 +135,7 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
               onChange={(e) => handleChangeDistrict(e)}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              {!!getValues('provinceId')
+              {!!getValues('province_id')
                 ? listDistrict.map((value: DistrictType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}
@@ -149,7 +149,7 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
       <Box sx={{ mb: 1, minWidth: '450px' }}>
         <Label required={true}>Xã/Phường</Label>
         <Controller
-          name="wardId"
+          name="ward_id"
           control={control}
           render={({ field, fieldState: { invalid, error } }) => (
             <TextField
@@ -162,7 +162,7 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
               onChange={(e) => handleChangeWard(e)}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              {!!getValues('districtId')
+              {!!getValues('district_id')
                 ? listWard.map((value: WardType) => (
                     <MenuItem value={value.Id} key={value.Id}>
                       {value.Name}

@@ -36,8 +36,8 @@ export const StepOne = (props: Props) => {
 
   const { handleDisable, maxImage } = props;
   const isHaveErrors = useMemo(() => {
-    return !!errors.citizenId || !!errors.password || !!errors.images;
-  }, [errors.citizenId, errors.password, errors.images]);
+    return !!errors.citizen_id || !!errors.password || !!errors.images;
+  }, [errors.citizen_id, errors.password, errors.images]);
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -106,6 +106,9 @@ export const StepOne = (props: Props) => {
       setListImage(getValues('images'));
     }
   }, [setListImage, getValues]);
+  useEffect(() => {
+    console.log(getValues());
+  });
   return (
     <>
       <ImageDialog
@@ -117,17 +120,17 @@ export const StepOne = (props: Props) => {
         <Box sx={{ mb: 2 }}>
           <Label required={true}>Chứng minh nhân dân/Căn cước công dân</Label>
           <Controller
-            name="citizenId"
+            name="citizen_id"
             control={control}
             defaultValue="123456789"
             render={({ field }) => (
               <TextField
                 fullWidth
                 helperText={
-                  errors.citizenId?.message ? errors.citizenId?.message : null
+                  errors.citizen_id?.message ? errors.citizen_id?.message : null
                 }
                 autoComplete="on"
-                error={errors.citizenId?.message ? true : false}
+                error={errors.citizen_id?.message ? true : false}
                 placeholder="123456789"
                 {...field}
                 sx={{ root: { height: '50px' }, mt: 1 }}

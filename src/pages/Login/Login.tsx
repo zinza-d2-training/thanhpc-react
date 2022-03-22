@@ -10,7 +10,7 @@ import {
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loginImg from '../../images/login.png';
@@ -20,6 +20,8 @@ import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';
 
 export const Login = () => {
+  const [errMessage, setErrMessage] = useState('');
+  console.log('errMessage', errMessage);
   const {
     formState: { errors, isValid },
     control,
@@ -34,7 +36,10 @@ export const Login = () => {
 
   useEffect(() => {
     if (loginselectorResult.response?.data?.token) {
-      navigate('/user');
+      return navigate('/user');
+    }
+    if (loginselectorResult.response?.message) {
+      setErrMessage(loginselectorResult.response?.message as string);
     }
   }, [navigate, loginselectorResult]);
 
@@ -88,18 +93,18 @@ export const Login = () => {
                   Chứng minh nhân dân/Căn cước công dân
                 </Typography>
                 <Controller
-                  name="citizenId"
+                  name="citizen_id"
                   control={control}
                   defaultValue="123456789"
                   render={({ field }) => (
                     <TextField
                       fullWidth
                       helperText={
-                        errors.citizenId?.message
-                          ? errors.citizenId?.message
+                        errors.citizen_id?.message
+                          ? errors.citizen_id?.message
                           : null
                       }
-                      error={errors.citizenId?.message ? true : false}
+                      error={errors.citizen_id?.message ? true : false}
                       placeholder="123456789"
                       {...field}
                       sx={{ root: { height: '50px' }, mt: 1 }}
@@ -123,9 +128,11 @@ export const Login = () => {
                       helperText={
                         errors.password?.message
                           ? errors.password?.message
-                          : null
+                          : errMessage || null
                       }
-                      error={errors.password?.message ? true : false}
+                      error={
+                        errors.password?.message || errMessage ? true : false
+                      }
                       {...field}
                       sx={{ root: { height: '50px' }, mt: 1 }}
                     />

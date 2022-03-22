@@ -67,9 +67,9 @@ export const StepOne = (props: Props) => {
           job: '',
           workUnit: '',
           currentAddress: '',
-          provinceId: '',
-          districtId: '',
-          wardId: '',
+          province_id: '',
+          district_id: '',
+          ward_id: '',
           ethnic: '',
           nationality: '',
           priorityGroup: '',
@@ -85,11 +85,11 @@ export const StepOne = (props: Props) => {
   ) => {
     setListDistrict(getChildArr(e.target.value, listProvince, 'Districts'));
     setListWard([]);
-    setValue('provinceId', e.target.value);
+    setValue('province_id', e.target.value);
     setAllowClickDistrict(true);
-    setValue('districtId', '');
-    setValue('wardId', '');
-    if (getValues('provinceId') !== e.target.value) {
+    setValue('district_id', '');
+    setValue('ward_id', '');
+    if (getValues('province_id') !== e.target.value) {
       setAllowClickWard(false);
     }
     trigger();
@@ -98,8 +98,8 @@ export const StepOne = (props: Props) => {
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('districtId', e.target.value);
-    setValue('wardId', '');
+    setValue('district_id', e.target.value);
+    setValue('ward_id', '');
     trigger();
     setListWard(getChildArr(e.target.value, listDistrict, 'Wards'));
     setAllowClickWard(true);
@@ -107,8 +107,8 @@ export const StepOne = (props: Props) => {
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('wardId', e.target.value);
-    clearErrors('wardId');
+    setValue('ward_id', e.target.value);
+    clearErrors('ward_id');
     trigger();
   };
   const formSubmitHandler: SubmitHandler<VaccineRegistrationType> = (
@@ -285,12 +285,12 @@ export const StepOne = (props: Props) => {
                     <Trans>Số CMND/CCCD/Mã định danh công dân</Trans>
                   </Label>
                   <Controller
-                    name="citizenId"
+                    name="citizen_id"
                     control={control}
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
-                        defaultValue={getValues('citizenId')}
+                        defaultValue={getValues('citizen_id')}
                         helperText={
                           error?.message ? t(`${error?.message}`) : null
                         }
@@ -396,7 +396,7 @@ export const StepOne = (props: Props) => {
                     <Trans>Tỉnh/Thành phố</Trans>
                   </Label>
                   <Controller
-                    name="provinceId"
+                    name="province_id"
                     control={control}
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
@@ -406,7 +406,7 @@ export const StepOne = (props: Props) => {
                         }
                         error={invalid}
                         defaultValue={getProvinceName(
-                          getValues('provinceId'),
+                          getValues('province_id'),
                           listProvince
                         )}
                         {...field}
@@ -430,13 +430,13 @@ export const StepOne = (props: Props) => {
                     <Trans>Quận/Huyện</Trans>
                   </Label>
                   <Controller
-                    name="districtId"
+                    name="district_id"
                     control={control}
                     defaultValue={
-                      getValues('districtId')
+                      getValues('district_id')
                         ? getDistrictName(
-                            getValues('provinceId'),
-                            getValues('districtId'),
+                            getValues('province_id'),
+                            getValues('district_id'),
                             listProvince
                           ) || undefined
                         : undefined
@@ -470,14 +470,14 @@ export const StepOne = (props: Props) => {
                     <Trans>Xã/Phường</Trans>
                   </Label>
                   <Controller
-                    name="wardId"
+                    name="ward_id"
                     control={control}
                     defaultValue={
-                      getValues('wardId')
+                      getValues('ward_id')
                         ? getWardName(
-                            getValues('provinceId'),
-                            getValues('districtId'),
-                            getValues('wardId'),
+                            getValues('province_id'),
+                            getValues('district_id'),
+                            getValues('ward_id'),
                             listProvince
                           )
                         : ''
