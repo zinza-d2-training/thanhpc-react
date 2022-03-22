@@ -92,8 +92,8 @@ export const StepTwo = (props: Props) => {
               {...field}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              <MenuItem value="male">Nam</MenuItem>
-              <MenuItem value="female">Nữ</MenuItem>
+              <MenuItem value="1">Nam</MenuItem>
+              <MenuItem value="2">Nữ</MenuItem>
             </TextField>
           )}
         />

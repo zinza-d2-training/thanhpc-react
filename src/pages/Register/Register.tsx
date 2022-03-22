@@ -37,12 +37,28 @@ export const Register = () => {
   async function handleCloseModal() {
     setOpen(false);
     console.log('methods.getValues()', methods.getValues());
-    const images = methods.getValues('images').map((value) => value.file);
+    const files = methods.getValues('images').map((value) => value.file);
+    const formData = new FormData();
+    files.forEach((file) => formData.append('files', file as File));
+    formData.append('citizen_id', methods.getValues('citizen_id'));
+    formData.append('password', methods.getValues('password'));
+    formData.append('full_name', methods.getValues('full_name'));
+    formData.append('dob', methods.getValues('dob'));
+    formData.append('gender', methods.getValues('gender'));
+    formData.append('phone_number', methods.getValues('phone_number'));
+    formData.append('ward_id', methods.getValues('ward_id'));
     await axios({
       method: 'POST',
       url: 'http://localhost:4000/auth/register',
-      data: {}
-    });
+      headers: { 'Content-Type': 'multipart/form-data' },
+      data: formData
+    })
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
     return;
   }
 
