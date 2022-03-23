@@ -22,7 +22,7 @@ import { User } from '../../models/User';
 export const Login = () => {
   const [errMessage, setErrMessage] = useState('');
   const {
-    formState: { errors, isValid },
+    formState: { isValid },
     control,
     handleSubmit
   } = useForm<User>({
@@ -95,15 +95,11 @@ export const Login = () => {
                   name="citizen_id"
                   control={control}
                   defaultValue="123456789"
-                  render={({ field }) => (
+                  render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
                       fullWidth
-                      helperText={
-                        errors.citizen_id?.message
-                          ? errors.citizen_id?.message
-                          : null
-                      }
-                      error={errors.citizen_id?.message ? true : false}
+                      helperText={error?.message ? error?.message : null}
+                      error={invalid}
                       placeholder="123456789"
                       {...field}
                       sx={{ root: { height: '50px' }, mt: 1 }}
@@ -119,19 +115,15 @@ export const Login = () => {
                   name="password"
                   control={control}
                   defaultValue="password123"
-                  render={({ field }) => (
+                  render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
                       fullWidth
                       type="password"
                       placeholder="***********"
                       helperText={
-                        errors.password?.message
-                          ? errors.password?.message
-                          : errMessage || null
+                        error?.message ? error?.message : errMessage || null
                       }
-                      error={
-                        errors.password?.message || errMessage ? true : false
-                      }
+                      error={invalid || !!errMessage}
                       {...field}
                       sx={{ root: { height: '50px' }, mt: 1 }}
                     />
