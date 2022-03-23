@@ -38,7 +38,7 @@ export const Login = () => {
       return navigate('/user');
     }
     if (loginselectorResult.response?.message) {
-      setErrMessage(loginselectorResult.response?.message as string);
+      setErrMessage(loginselectorResult.response.message as string);
     }
   }, [navigate, loginselectorResult]);
 
