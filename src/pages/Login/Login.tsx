@@ -21,7 +21,6 @@ import { User } from '../../models/User';
 
 export const Login = () => {
   const [errMessage, setErrMessage] = useState('');
-  console.log('errMessage', errMessage);
   const {
     formState: { errors, isValid },
     control,

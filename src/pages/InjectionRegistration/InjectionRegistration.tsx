@@ -52,12 +52,11 @@ export const InjectionRegistration = () => {
     setDataToDialog(info);
     setOpen(true);
   };
-  const handleShowInjectionResult: SubmitHandler<IInjectionRegistration> = () =>
-    // data
-    {
-      // console.log(data);
-      setShowInjectionResult(true);
-    };
+  const handleShowInjectionResult: SubmitHandler<
+    IInjectionRegistration
+  > = () => {
+    setShowInjectionResult(true);
+  };
   const handleReset = () => {
     reset();
     setDataToDialog(undefined);

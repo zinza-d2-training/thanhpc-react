@@ -106,9 +106,6 @@ export const StepOne = (props: Props) => {
       setListImage(getValues('images'));
     }
   }, [setListImage, getValues]);
-  useEffect(() => {
-    console.log(getValues());
-  });
   return (
     <>
       <ImageDialog

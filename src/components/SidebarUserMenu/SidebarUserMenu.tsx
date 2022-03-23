@@ -41,7 +41,6 @@ export const SidebarUserMenu = (props: Props) => {
     setOpen(false);
   };
   const handleLogout = () => {
-    console.log('loginSelectorResult', loginSelectorResult);
     dispatch(logout());
     setOpen(false);
     navigate('/login');

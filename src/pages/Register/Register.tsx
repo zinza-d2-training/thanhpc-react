@@ -36,7 +36,6 @@ export const Register = () => {
   const handleOpenModal = () => setOpen(true);
   async function handleCloseModal() {
     setOpen(false);
-    console.log('methods.getValues()', methods.getValues());
     const files = methods.getValues('images').map((value) => value.file);
     const formData = new FormData();
     files.forEach((file) => formData.append('files', file as File));
@@ -54,7 +53,7 @@ export const Register = () => {
       data: formData
     })
       .then((response) => {
-        console.log('response', response);
+        navigate('/login');
       })
       .catch((error) => {
         console.log('error', error);

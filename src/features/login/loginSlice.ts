@@ -17,7 +17,6 @@ export const loginAsync = createAsyncThunk(
   async (value: User, { rejectWithValue }) => {
     try {
       const response = await fetchAccount(value);
-      console.log('response', response);
       return response;
     } catch (err: any) {
       return rejectWithValue(err.data);
@@ -29,7 +28,6 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {
     logout(state) {
-      console.log('state', state.response);
       state.response = null;
       state.loading = false;
     }
