@@ -162,13 +162,13 @@ export const User = () => {
         listPreview.push(preview);
         listFile.push({ file: e.target.files[i], preview });
       }
-      if (listPreview.length < maxImage && getValues('images')) {
-        setValue('images', [...getValues('images'), ...listFile]);
+      if (listPreview.length < maxImage && getValues('files')) {
+        setValue('files', [...getValues('files'), ...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...prev, ...listFile];
         });
       } else {
-        setValue('images', [...listFile]);
+        setValue('files', [...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...listFile];
         });
@@ -176,12 +176,12 @@ export const User = () => {
     }
   };
   const handleRemoveImage = (index: number) => {
-    setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
-    let listImagePreview = getValues('images');
+    setError('files', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    let listImagePreview = getValues('files');
     if (listImagePreview !== null) {
       listImagePreview.splice(index, 1);
     }
-    setValue('images', listImagePreview);
+    setValue('files', listImagePreview);
     setListImage((prev: Array<IFile>) => {
       let newListImage = [...prev];
       newListImage.splice(index, 1);
@@ -196,17 +196,17 @@ export const User = () => {
     setShowModalImage(false);
   };
   useMemo(() => {
-    if (listImage.length < maxImage && !errors.images) {
-      setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    if (listImage.length < maxImage && !errors.files) {
+      setError('files', { message: 'Vui lòng chọn đúng 2 ảnh' });
     } else {
-      clearErrors('images');
+      clearErrors('files');
     }
   }, [errors, listImage, setError, clearErrors]);
   const handleCancelCitizenId = () => {
     setDisableCitizendId(true);
-    setValue('images', []);
+    setValue('files', []);
     setValue('citizen_id', '123456789');
-    clearErrors('images');
+    clearErrors('files');
     clearErrors('citizen_id');
     setListImage([]);
   };
@@ -383,7 +383,7 @@ export const User = () => {
                                 handleRemoveImage={handleRemoveImage}
                                 handleShowModalImage={handleShowModalImage}
                                 maxImage={maxImage}
-                                error={errors.images?.message}
+                                error={errors.files?.message}
                               />
                             )}
                             {!disableCitizendId && (
@@ -402,7 +402,7 @@ export const User = () => {
                                   size="small"
                                   variant="contained"
                                   disabled={
-                                    !!errors.citizen_id || !!errors.images
+                                    !!errors.citizen_id || !!errors.files
                                   }
                                   sx={{
                                     background: colors.indigo['700'],

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAccount } from './loginAPI';
+import { FetchAccount } from './loginAPI';
 import { User } from '../../models/User';
 import { LoginQueryResponse } from './responseLogin';
 import { RootState } from '../../store';
@@ -13,10 +13,10 @@ const initialState: LoginState = {
   loading: false
 };
 export const loginAsync = createAsyncThunk(
-  '/login/fetchAccount',
+  '/login/FetchAccount',
   async (value: User, { rejectWithValue }) => {
     try {
-      const response = await fetchAccount(value);
+      const response = await FetchAccount(value);
       return response;
     } catch (err: any) {
       return rejectWithValue(err.data);

@@ -17,10 +17,11 @@ import { useForm, FormProvider, Resolver } from 'react-hook-form';
 import { registerSchema } from './schema';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 import { UserFormData } from './types';
-import axios from 'axios';
+import { useAuth } from '../../hooks/useAuth';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
+  const { register } = useAuth();
   const methods = useForm<UserFormData>({
     resolver: yupResolver(registerSchema) as Resolver<UserFormData>,
     mode: 'onChange',
@@ -36,7 +37,7 @@ export const Register = () => {
   const handleOpenModal = () => setOpen(true);
   async function handleCloseModal() {
     setOpen(false);
-    const files = methods.getValues('images').map((value) => value.file);
+    const files = methods.getValues('files').map((value) => value.file);
     const formData = new FormData();
     files.forEach((file) => formData.append('files', file as File));
     formData.append('citizen_id', methods.getValues('citizen_id'));
@@ -46,19 +47,10 @@ export const Register = () => {
     formData.append('gender', methods.getValues('gender'));
     formData.append('phone_number', methods.getValues('phone_number'));
     formData.append('ward_id', methods.getValues('ward_id'));
-    await axios({
-      method: 'POST',
-      url: 'http://localhost:4000/auth/register',
-      headers: { 'Content-Type': 'multipart/form-data' },
-      data: formData
-    })
-      .then((response) => {
-        navigate('/login');
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
-    return;
+    const response = await register(formData);
+    if ((await response.status) === 200) {
+      return navigate('/login');
+    }
   }
 
   const handleSkip = () => {

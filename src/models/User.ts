@@ -5,8 +5,8 @@ export interface User {
   full_name: string;
   dob: string;
   gender: string;
-  province_id: string;
-  district_id: string;
+  province_id?: string;
+  district_id?: string;
   ward_id: string;
   password: string;
 }
