@@ -1,6 +1,6 @@
 import { Dialog, Divider } from '@mui/material';
-import { HeaderDialog } from './HeaderDialog';
 import { ContentDialog } from './ContentDialog';
+import { HeaderDialog } from '../HeaderDialog/HeaderDialog';
 
 interface IFile {
   file?: File | undefined;

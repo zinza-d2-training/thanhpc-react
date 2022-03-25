@@ -8,13 +8,11 @@ import {
   colors,
   Grid,
   MenuItem,
-  Tab,
   IconButton,
   Typography
 } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useForm, Controller, Resolver } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
@@ -51,10 +49,7 @@ import {
   getChildArr
 } from './functions';
 import { administrativeUnits } from '../../db/administrativeUnits';
-
-const useStyle = {
-  color: '#333 !important'
-};
+import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
 
 const maxImage = 2;
 export const User = () => {
@@ -284,36 +279,11 @@ export const User = () => {
       <Header />
       <Box sx={{ minHeight: '500px', mt: '80px' }}>
         <TabContext value={activeTab.toString()}>
-          <Box sx={{ boxShadow: '0px 1px 8px rgba(0, 0, 0, 0.1)' }}>
-            <Container maxWidth="xl">
-              <Box sx={{ color: '#6E6D7A', cursor: 'pointer' }}>
-                <TabList
-                  value={activeTab}
-                  onChange={handleChange}
-                  sx={{
-                    height: '64px',
-                    '.MuiTabs-scroller': {
-                      display: 'flex !important'
-                    }
-                  }}
-                  TabIndicatorProps={{
-                    style: {
-                      backgroundColor: '#333'
-                    }
-                  }}
-                  aria-label="basic tabs example">
-                  {headerTabs.map((tab, index) => (
-                    <Tab
-                      key={index}
-                      value={index.toString()}
-                      label={t(`${tab}`)}
-                      sx={activeTab === index ? useStyle : null}
-                    />
-                  ))}
-                </TabList>
-              </Box>
-            </Container>
-          </Box>
+          <HeaderTabs
+            activeTab={activeTab}
+            handleChange={handleChange}
+            headerTabs={headerTabs}
+          />
           <Box sx={{ marginTop: '48px' }}>
             <Container maxWidth="xl">
               <TabPanel value="0">

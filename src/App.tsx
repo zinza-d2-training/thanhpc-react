@@ -5,6 +5,7 @@ import Layout from './theme/layout';
 import { Login } from './pages/Login/Login';
 import { Home } from './pages/Home/Home';
 import { User } from './pages/User/User';
+import { Admin } from './pages/Admin/Admin';
 import { ForgotPassword } from './pages/ForgotPassword/ForgotPassword';
 import { Register } from './pages/Register/Register';
 import { VaccineCertificate } from './pages/VaccineCertificate/VaccineCertificate';
@@ -52,6 +53,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/documentation" element={<Documentation />} />
             <Route path="/user" element={<User />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </BrowserRouter>
       </Layout>

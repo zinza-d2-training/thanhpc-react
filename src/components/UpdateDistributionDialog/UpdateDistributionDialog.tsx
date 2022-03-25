@@ -8,7 +8,7 @@ interface Props {
   open: boolean;
 }
 
-export const OTPInputDialog = (props: Props) => {
+export const UpdateDistributionDialog = (props: Props) => {
   const { onClose, open, onConfirm } = props;
   return (
     <Dialog open={open} hideBackdrop>
