@@ -4,14 +4,13 @@ import {
   LoginQueryResult,
   QueryResult
 } from './responseLogin';
-import { UseLogin } from '../../hooks/UseLogin';
+import { useLogin } from '../../hooks/useLogin';
 
 export async function FetchAccount(value: User) {
-  const response = await UseLogin({
+  const response = await useLogin({
     citizen_id: value.citizen_id,
     password: value.password
   });
-  console.log('response');
   if (response.accessToken) {
     const token = response.accessToken;
     const data: QueryResult<LoginQueryResult> = {

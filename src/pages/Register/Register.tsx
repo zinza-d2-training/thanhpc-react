@@ -3,12 +3,20 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
-import { Box, Grid, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Typography,
+  CircularProgress,
+  Alert,
+  IconButton
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
-
+import CloseIcon from '@mui/icons-material/Close';
+import DoneIcon from '@mui/icons-material/Done';
 import loginImg from '../../images/login.png';
 import { StepOne } from './StepOne';
 import { StepTwo } from './StepTwo';
@@ -17,7 +25,7 @@ import { useForm, FormProvider, Resolver } from 'react-hook-form';
 import { registerSchema } from './schema';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 import { IRegister, UserFormData } from './types';
-import { UseRegister } from '../../hooks/UseRegister';
+import { UseRegister } from '../../hooks/useRegister';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
@@ -29,6 +37,9 @@ export const Register = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   let contentComponent = null;
   const navigate = useNavigate();
@@ -50,14 +61,17 @@ export const Register = () => {
       gender: methods.getValues('gender'),
       password: methods.getValues('password')
     };
-    console.log('formData', formData);
+    setLoading(true);
     try {
       const response = await UseRegister(formData);
       if ((await response.status) === 200) {
-        return navigate('/login');
+        setSuccess(true);
       }
     } catch (err: any) {
       console.log(err.message);
+      setError(true);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -112,6 +126,49 @@ export const Register = () => {
         onClose={handleCloseModal}
         onConfirm={handleCloseModal}
       />
+      <Alert
+        sx={{
+          position: 'fixed',
+          zIndex: 1100,
+          right: error ? 0 : '-300px',
+          transition: 'all .3s ease-in-out'
+        }}
+        severity="error"
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setError(false);
+            }}>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }>
+        Đăng ký thất bại, có lỗi xảy ra!
+      </Alert>
+      <Alert
+        sx={{
+          position: 'fixed',
+          zIndex: 1100,
+          right: success ? 0 : '-500px',
+          transition: 'all .3s ease-in-out'
+        }}
+        severity="success"
+        action={
+          <IconButton
+            aria-label="close"
+            color="inherit"
+            size="small"
+            onClick={() => {
+              setSuccess(false);
+              navigate('/login');
+            }}>
+            <DoneIcon fontSize="inherit" />
+          </IconButton>
+        }>
+        Đăng ký thành công, chuyển hướng đến trang đăng nhập?
+      </Alert>
       <Grid item xs={6}>
         <Box
           component="img"
@@ -198,6 +255,7 @@ export const Register = () => {
                       type="button"
                       onClick={handleSkip}
                       disabled={disabled}
+                      startIcon={loading && <CircularProgress size={20} />}
                       endIcon={<ArrowForwardIcon />}>
                       {activeStep === steps.length - 1
                         ? 'Hoàn thành'

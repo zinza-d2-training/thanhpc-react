@@ -43,12 +43,9 @@ export const VaccineCertificate = () => {
     }
   });
   const handleCloseModal = () => setOpen(false);
-  const handleSubmitForm: SubmitHandler<LookUpCertificate> = () =>
-    // data: LookUpCertificate
-    {
-      // console.log('data', data);
-      setOpen(true);
-    };
+  const handleSubmitForm: SubmitHandler<LookUpCertificate> = () => {
+    setOpen(true);
+  };
   const handleReset = () => {
     reset();
   };
