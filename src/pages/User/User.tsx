@@ -94,35 +94,36 @@ export const User = () => {
     mode: 'onChange',
     defaultValues: {
       id: 'abc',
-      citizenId: '123456789',
+      citizen_id: '123456789',
       phone_number: '0986249793',
       full_name: 'Phạm Công Thành',
       dob: '2000-10-23',
       gender: 'male',
-      provinceId: '01',
-      districtId: '001',
-      wardId: '00001',
+      province_id: '01',
+      district_id: '001',
+      ward_id: '00001',
       new_password: '',
       confirm_password: '',
       password: ''
     }
   });
 
-  const provinceId = getValues('provinceId');
-  const districtId = getValues('districtId');
+  const province_id = getValues('province_id');
+  const district_id = getValues('district_id');
   const listProvince = administrativeUnits;
 
   const listDistrict = useMemo(() => {
-    return getChildArr(provinceId, listProvince, 'Districts');
-  }, [provinceId, listProvince]);
+    return getChildArr(province_id, listProvince, 'Districts');
+  }, [province_id, listProvince]);
 
   const listWard = useMemo(() => {
-    return getChildArr(districtId, listDistrict, 'Wards');
-  }, [districtId, listDistrict]);
+    return getChildArr(district_id, listDistrict, 'Wards');
+  }, [district_id, listDistrict]);
 
   const dataInjectionRegistration = injectionRegistrationResult.filter(
     (injection: IInjectionRegistrationResult) =>
-      injection.citizenId === loginSelectorResult.response?.data?.user.citizenId
+      injection.citizen_id ===
+      loginSelectorResult.response?.data?.payload.citizen_id
   );
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -161,13 +162,13 @@ export const User = () => {
         listPreview.push(preview);
         listFile.push({ file: e.target.files[i], preview });
       }
-      if (listPreview.length < maxImage && getValues('images')) {
-        setValue('images', [...getValues('images'), ...listFile]);
+      if (listPreview.length < maxImage && getValues('files')) {
+        setValue('files', [...getValues('files'), ...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...prev, ...listFile];
         });
       } else {
-        setValue('images', [...listFile]);
+        setValue('files', [...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...listFile];
         });
@@ -175,12 +176,12 @@ export const User = () => {
     }
   };
   const handleRemoveImage = (index: number) => {
-    setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
-    let listImagePreview = getValues('images');
+    setError('files', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    let listImagePreview = getValues('files');
     if (listImagePreview !== null) {
       listImagePreview.splice(index, 1);
     }
-    setValue('images', listImagePreview);
+    setValue('files', listImagePreview);
     setListImage((prev: Array<IFile>) => {
       let newListImage = [...prev];
       newListImage.splice(index, 1);
@@ -195,18 +196,18 @@ export const User = () => {
     setShowModalImage(false);
   };
   useMemo(() => {
-    if (listImage.length < maxImage && !errors.images) {
-      setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    if (listImage.length < maxImage && !errors.files) {
+      setError('files', { message: 'Vui lòng chọn đúng 2 ảnh' });
     } else {
-      clearErrors('images');
+      clearErrors('files');
     }
   }, [errors, listImage, setError, clearErrors]);
   const handleCancelCitizenId = () => {
     setDisableCitizendId(true);
-    setValue('images', []);
-    setValue('citizenId', '123456789');
-    clearErrors('images');
-    clearErrors('citizenId');
+    setValue('files', []);
+    setValue('citizen_id', '123456789');
+    clearErrors('files');
+    clearErrors('citizen_id');
     setListImage([]);
   };
   const handleCancelPhoneNumber = () => {
@@ -219,15 +220,15 @@ export const User = () => {
     setValue('full_name', 'Phạm Công Thành');
     setValue('dob', '2000-10-23');
     setValue('gender', 'male');
-    setValue('provinceId', '01');
-    setValue('districtId', '001');
-    setValue('wardId', '00001');
+    setValue('province_id', '01');
+    setValue('district_id', '001');
+    setValue('ward_id', '00001');
     clearErrors('full_name');
     clearErrors('dob');
     clearErrors('gender');
-    clearErrors('provinceId');
-    clearErrors('districtId');
-    clearErrors('wardId');
+    clearErrors('province_id');
+    clearErrors('district_id');
+    clearErrors('ward_id');
   };
   const handleCancelPassword = () => {
     setDisablePassword(true);
@@ -248,11 +249,11 @@ export const User = () => {
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('provinceId', e.target.value);
+    setValue('province_id', e.target.value);
     setAllowClickDistrict(true);
-    setValue('districtId', '');
-    setValue('wardId', '');
-    if (getValues('provinceId') !== e.target.value) {
+    setValue('district_id', '');
+    setValue('ward_id', '');
+    if (getValues('province_id') !== e.target.value) {
       setAllowClickWard(false);
     }
     trigger();
@@ -261,19 +262,19 @@ export const User = () => {
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('districtId', e.target.value);
-    setValue('wardId', '');
+    setValue('district_id', e.target.value);
+    setValue('ward_id', '');
     trigger();
     setAllowClickWard(true);
   };
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('wardId', e.target.value);
-    clearErrors('wardId');
+    setValue('ward_id', e.target.value);
+    clearErrors('ward_id');
     trigger();
   };
-  return loginSelectorResult.response?.data?.token ? (
+  return loginSelectorResult.response?.data?.accessToken ? (
     <>
       <ImageDialog
         image={imageIsShowed}
@@ -351,7 +352,7 @@ export const User = () => {
                                     <Trans>Số CMND/CCCD/Mã định danh</Trans>
                                   </Typography>
                                   <Controller
-                                    name="citizenId"
+                                    name="citizen_id"
                                     control={control}
                                     defaultValue="123456789"
                                     render={({
@@ -382,7 +383,7 @@ export const User = () => {
                                 handleRemoveImage={handleRemoveImage}
                                 handleShowModalImage={handleShowModalImage}
                                 maxImage={maxImage}
-                                error={errors.images?.message}
+                                error={errors.files?.message}
                               />
                             )}
                             {!disableCitizendId && (
@@ -401,7 +402,7 @@ export const User = () => {
                                   size="small"
                                   variant="contained"
                                   disabled={
-                                    !!errors.citizenId || !!errors.images
+                                    !!errors.citizen_id || !!errors.files
                                   }
                                   sx={{
                                     background: colors.indigo['700'],
@@ -615,7 +616,7 @@ export const User = () => {
                                       <Trans>Tỉnh/Thành phố</Trans>
                                     </Typography>
                                     <Controller
-                                      name="provinceId"
+                                      name="province_id"
                                       control={control}
                                       render={({
                                         field,
@@ -631,7 +632,7 @@ export const User = () => {
                                           }
                                           error={invalid}
                                           defaultValue={getProvinceName(
-                                            getValues('provinceId'),
+                                            getValues('province_id'),
                                             listProvince
                                           )}
                                           {...field}
@@ -663,13 +664,13 @@ export const User = () => {
                                       <Trans>Quận/Huyện</Trans>
                                     </Typography>
                                     <Controller
-                                      name="districtId"
+                                      name="district_id"
                                       control={control}
                                       defaultValue={
-                                        getValues('districtId')
+                                        getValues('district_id')
                                           ? getDistrictName(
-                                              getValues('provinceId'),
-                                              getValues('districtId'),
+                                              getValues('province_id'),
+                                              getValues('district_id'),
                                               listProvince
                                             ) || undefined
                                           : undefined
@@ -719,14 +720,14 @@ export const User = () => {
                                       <Trans>Phường/Xã</Trans>
                                     </Typography>
                                     <Controller
-                                      name="wardId"
+                                      name="ward_id"
                                       control={control}
                                       defaultValue={
-                                        getValues('wardId')
+                                        getValues('ward_id')
                                           ? getWardName(
-                                              getValues('provinceId'),
-                                              getValues('districtId'),
-                                              getValues('wardId'),
+                                              getValues('province_id'),
+                                              getValues('district_id'),
+                                              getValues('ward_id'),
                                               listProvince
                                             )
                                           : ''
@@ -788,9 +789,9 @@ export const User = () => {
                                     !!errors.full_name ||
                                     !!errors.dob ||
                                     !!errors.gender ||
-                                    !!errors.provinceId ||
-                                    !!errors.districtId ||
-                                    !!errors.wardId
+                                    !!errors.province_id ||
+                                    !!errors.district_id ||
+                                    !!errors.ward_id
                                   }
                                   sx={{
                                     background: colors.indigo['700'],

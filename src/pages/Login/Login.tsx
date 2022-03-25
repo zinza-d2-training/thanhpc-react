@@ -10,7 +10,7 @@ import {
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import loginImg from '../../images/login.png';
@@ -20,8 +20,9 @@ import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';
 
 export const Login = () => {
+  const [errMessage, setErrMessage] = useState('');
   const {
-    formState: { errors, isValid },
+    formState: { isValid },
     control,
     handleSubmit
   } = useForm<User>({
@@ -33,8 +34,11 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loginselectorResult.response?.data?.token) {
-      navigate('/user');
+    if (loginselectorResult.response?.data?.accessToken) {
+      return navigate('/user');
+    }
+    if (loginselectorResult.response?.message) {
+      setErrMessage(loginselectorResult.response.message as string);
     }
   }, [navigate, loginselectorResult]);
 
@@ -42,7 +46,7 @@ export const Login = () => {
     dispatch(loginAsync(data));
   };
 
-  return !loginselectorResult.response?.data?.token ? (
+  return !loginselectorResult.response?.data?.accessToken ? (
     <Grid container>
       <Grid item xs={6}>
         <Box
@@ -88,18 +92,14 @@ export const Login = () => {
                   Chứng minh nhân dân/Căn cước công dân
                 </Typography>
                 <Controller
-                  name="citizenId"
+                  name="citizen_id"
                   control={control}
                   defaultValue="123456789"
-                  render={({ field }) => (
+                  render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
                       fullWidth
-                      helperText={
-                        errors.citizenId?.message
-                          ? errors.citizenId?.message
-                          : null
-                      }
-                      error={errors.citizenId?.message ? true : false}
+                      helperText={error?.message ? error?.message : null}
+                      error={invalid}
                       placeholder="123456789"
                       {...field}
                       sx={{ root: { height: '50px' }, mt: 1 }}
@@ -115,17 +115,15 @@ export const Login = () => {
                   name="password"
                   control={control}
                   defaultValue="password123"
-                  render={({ field }) => (
+                  render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
                       fullWidth
                       type="password"
                       placeholder="***********"
                       helperText={
-                        errors.password?.message
-                          ? errors.password?.message
-                          : null
+                        error?.message ? error?.message : errMessage || null
                       }
-                      error={errors.password?.message ? true : false}
+                      error={invalid || !!errMessage}
                       {...field}
                       sx={{ root: { height: '50px' }, mt: 1 }}
                     />

@@ -44,7 +44,7 @@ export const InjectionRegistration = () => {
     resolver: yupResolver(injectionRegistrationSchema),
     mode: 'onChange',
     defaultValues: {
-      citizenId: '',
+      citizen_id: '',
       phone_number: ''
     }
   });
@@ -52,12 +52,11 @@ export const InjectionRegistration = () => {
     setDataToDialog(info);
     setOpen(true);
   };
-  const handleShowInjectionResult: SubmitHandler<IInjectionRegistration> = () =>
-    // data
-    {
-      // console.log(data);
-      setShowInjectionResult(true);
-    };
+  const handleShowInjectionResult: SubmitHandler<
+    IInjectionRegistration
+  > = () => {
+    setShowInjectionResult(true);
+  };
   const handleReset = () => {
     reset();
     setDataToDialog(undefined);
@@ -103,7 +102,7 @@ export const InjectionRegistration = () => {
                     <Trans>Số CMND/CCCD/Mã định danh công dân</Trans>
                   </Label>
                   <Controller
-                    name="citizenId"
+                    name="citizen_id"
                     control={control}
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField

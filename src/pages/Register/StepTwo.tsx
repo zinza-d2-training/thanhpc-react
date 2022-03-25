@@ -3,7 +3,7 @@ import { Box, TextField, MenuItem } from '@mui/material';
 import { useMemo, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { Label } from '../../components/Label';
-import { UserFormData } from './types';
+import { Gender, UserFormData } from './types';
 
 interface Props {
   handleDisable: (isHaveErrors: boolean, length?: number) => void;
@@ -18,7 +18,7 @@ export const StepTwo = (props: Props) => {
   const { handleDisable } = props;
   const isHaveErrors = useMemo(() => {
     return (
-      !!errors.citizenId ||
+      !!errors.citizen_id ||
       !!errors.password ||
       !!errors.full_name ||
       !!errors.dob ||
@@ -26,7 +26,7 @@ export const StepTwo = (props: Props) => {
       !!errors.phone_number
     );
   }, [
-    errors.citizenId,
+    errors.citizen_id,
     errors.password,
     errors.full_name,
     errors.dob,
@@ -92,8 +92,8 @@ export const StepTwo = (props: Props) => {
               {...field}
               sx={{ root: { height: '50px' }, mt: 1 }}
               select>
-              <MenuItem value="male">Nam</MenuItem>
-              <MenuItem value="female">Nữ</MenuItem>
+              <MenuItem value={Gender.Male}>Nam</MenuItem>
+              <MenuItem value={Gender.Female}>Nữ</MenuItem>
             </TextField>
           )}
         />

@@ -8,7 +8,7 @@ export const injectionRegistrationResult: IInjectionRegistrationResult[] = [
     dob: new Date('2000-10-23'),
     gender: 'male',
     phone_number: '0986249793',
-    citizenId: '123456789',
+    citizen_id: '123456789',
     status: Status.Success,
     process: Process.One
   },
@@ -18,7 +18,7 @@ export const injectionRegistrationResult: IInjectionRegistrationResult[] = [
     dob: new Date('11/05/2000'),
     gender: 'male',
     phone_number: '0865265498',
-    citizenId: '718390472',
+    citizen_id: '718390472',
     status: Status.Failure,
     process: Process.Three
   }

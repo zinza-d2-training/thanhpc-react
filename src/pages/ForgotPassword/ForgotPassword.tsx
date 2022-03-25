@@ -11,7 +11,7 @@ import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
 export const ForgotPassword = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [citizenId, setCitizenId] = useState<string>('');
+  const [citizen_id, setCitizenId] = useState<string>('');
   const navigate = useNavigate();
 
   const handleOpenModal = () => {
@@ -82,7 +82,7 @@ export const ForgotPassword = () => {
                 onChange={handleChange}
                 sx={{ borderRadius: 1, height: '50px' }}
                 placeholder="123456789"
-                value={citizenId}
+                value={citizen_id}
               />
             </Box>
             <Box sx={{ justifyContent: 'center', display: 'flex', mt: 5 }}>

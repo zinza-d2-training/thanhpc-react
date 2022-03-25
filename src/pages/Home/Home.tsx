@@ -93,31 +93,35 @@ const getNameById = (id: string, arr: any) => {
   const name = arr.find((value: any) => value.Id === id)['Name'];
   return name;
 };
-const getDistrictName = (provinceId: string, districtId: string, arr: any) => {
-  const listDistrict = arr.find((value: any) => value.Id === provinceId)[
+const getDistrictName = (
+  province_id: string,
+  district_id: string,
+  arr: any
+) => {
+  const listDistrict = arr.find((value: any) => value.Id === province_id)[
     'Districts'
   ];
   if (listDistrict) {
-    return listDistrict.find((value: any) => value.Id === districtId)['Name'];
+    return listDistrict.find((value: any) => value.Id === district_id)['Name'];
   }
   return null;
 };
 const getWardName = (
-  provinceId: string,
-  districtId: string,
-  wardId: string,
+  province_id: string,
+  district_id: string,
+  ward_id: string,
   arr: any
 ) => {
-  const listDistrict = arr.find((value: any) => value.Id === provinceId)[
+  const listDistrict = arr.find((value: any) => value.Id === province_id)[
     'Districts'
   ];
   if (listDistrict) {
-    const listWard = listDistrict.find((value: any) => value.Id === districtId)[
-      'Wards'
-    ];
+    const listWard = listDistrict.find(
+      (value: any) => value.Id === district_id
+    )['Wards'];
     if (listWard) {
       let wardName =
-        listWard.find((value: any) => value.Id === wardId)['Name'] ||
+        listWard.find((value: any) => value.Id === ward_id)['Name'] ||
         'Không xác định';
       return wardName;
     }
@@ -125,9 +129,9 @@ const getWardName = (
   return undefined;
 };
 interface Address {
-  provinceId: string;
-  districtId: string;
-  wardId: string;
+  province_id: string;
+  district_id: string;
+  ward_id: string;
 }
 
 export const Home = () => {
@@ -160,9 +164,9 @@ export const Home = () => {
   const handleChangeProvince = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('provinceId', e.target.value);
-    setValue('districtId', '');
-    setValue('wardId', '');
+    setValue('province_id', e.target.value);
+    setValue('district_id', '');
+    setValue('ward_id', '');
     setListDistrict(getChildArr(e.target.value, listProvince, 'Districts'));
     setListWard([]);
     setDisableClickDistrict(false);
@@ -171,44 +175,44 @@ export const Home = () => {
   const handleChangeDistrict = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('districtId', e.target.value);
-    setValue('wardId', '');
+    setValue('district_id', e.target.value);
+    setValue('ward_id', '');
     setListWard(getChildArr(e.target.value, listDistrict, 'Wards'));
     setDisableClickWard(false);
   };
   const handleChangeWard = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('wardId', e.target.value);
+    setValue('ward_id', e.target.value);
   };
   const handleSearchLookUp = () => {
     let newData: LookUpInjectionSitesByLocation[] = [];
-    if (getValues('provinceId')) {
+    if (getValues('province_id')) {
       newData = lookUpInjectionSitesByLocation.filter(
-        (value) => value.provinceId === getValues('provinceId')
+        (value) => value.province_id === getValues('province_id')
       );
-      if (getValues('districtId')) {
+      if (getValues('district_id')) {
         newData = newData.filter(
-          (value) => value.districtId === getValues('districtId')
+          (value) => value.district_id === getValues('district_id')
         );
-        if (getValues('wardId')) {
+        if (getValues('ward_id')) {
           newData = newData.filter(
-            (value) => value.wardId === getValues('wardId')
+            (value) => value.ward_id === getValues('ward_id')
           );
         }
       }
     }
     newData.forEach((value) => {
-      value.provinceName = getNameById(value.provinceId, administrativeUnits);
+      value.provinceName = getNameById(value.province_id, administrativeUnits);
       value.districtName = getDistrictName(
-        value.provinceId,
-        value.districtId,
+        value.province_id,
+        value.district_id,
         administrativeUnits
       );
       value.wardName = getWardName(
-        value.provinceId,
-        value.districtId,
-        value.wardId,
+        value.province_id,
+        value.district_id,
+        value.ward_id,
         administrativeUnits
       );
     });
@@ -216,16 +220,16 @@ export const Home = () => {
   };
   useEffect(() => {
     lookUpInjectionSitesByLocation.forEach((value) => {
-      value.provinceName = getNameById(value.provinceId, administrativeUnits);
+      value.provinceName = getNameById(value.province_id, administrativeUnits);
       value.districtName = getDistrictName(
-        value.provinceId,
-        value.districtId,
+        value.province_id,
+        value.district_id,
         administrativeUnits
       );
       value.wardName = getWardName(
-        value.provinceId,
-        value.districtId,
-        value.wardId,
+        value.province_id,
+        value.district_id,
+        value.ward_id,
         administrativeUnits
       );
     });
@@ -533,7 +537,7 @@ export const Home = () => {
             <Box sx={{ display: 'flex' }}>
               <Box sx={{ mb: 1, ml: 2 }}>
                 <Controller
-                  name="provinceId"
+                  name="province_id"
                   control={control}
                   render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
@@ -561,7 +565,7 @@ export const Home = () => {
               </Box>
               <Box sx={{ mb: 1, ml: 2 }}>
                 <Controller
-                  name="districtId"
+                  name="district_id"
                   control={control}
                   render={({ field, fieldState: { invalid, error } }) => (
                     <TextField
@@ -590,7 +594,7 @@ export const Home = () => {
               </Box>
               <Box sx={{ mb: 1, ml: 2 }}>
                 <Controller
-                  name="wardId"
+                  name="ward_id"
                   control={control}
                   render={({ field, fieldState: { invalid, error } }) => (
                     <TextField

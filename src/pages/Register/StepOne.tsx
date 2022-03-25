@@ -36,8 +36,8 @@ export const StepOne = (props: Props) => {
 
   const { handleDisable, maxImage } = props;
   const isHaveErrors = useMemo(() => {
-    return !!errors.citizenId || !!errors.password || !!errors.images;
-  }, [errors.citizenId, errors.password, errors.images]);
+    return !!errors.citizen_id || !!errors.password || !!errors.files;
+  }, [errors.citizen_id, errors.password, errors.files]);
 
   const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -51,13 +51,13 @@ export const StepOne = (props: Props) => {
         listPreview.push(preview);
         listFile.push({ file: e.target.files[i], preview });
       }
-      if (listPreview.length < maxImage && getValues('images')) {
-        setValue('images', [...getValues('images'), ...listFile]);
+      if (listPreview.length < maxImage && getValues('files')) {
+        setValue('files', [...getValues('files'), ...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...prev, ...listFile];
         });
       } else {
-        setValue('images', [...listFile]);
+        setValue('files', [...listFile]);
         setListImage((prev: Array<IFile>) => {
           return [...listFile];
         });
@@ -65,12 +65,12 @@ export const StepOne = (props: Props) => {
     }
   };
   const handleRemoveImage = (index: number) => {
-    setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
-    let listImagePreview = getValues('images');
+    setError('files', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    let listImagePreview = getValues('files');
     if (listImagePreview !== null) {
       listImagePreview.splice(index, 1);
     }
-    setValue('images', listImagePreview);
+    setValue('files', listImagePreview);
     setListImage((prev: Array<IFile>) => {
       let newListImage = [...prev];
       newListImage.splice(index, 1);
@@ -85,10 +85,10 @@ export const StepOne = (props: Props) => {
     setShowModalImage(false);
   };
   useMemo(() => {
-    if (listImage.length < maxImage && !errors.images) {
-      setError('images', { message: 'Vui lòng chọn đúng 2 ảnh' });
+    if (listImage.length < maxImage && !errors.files) {
+      setError('files', { message: 'Vui lòng chọn đúng 2 ảnh' });
     } else {
-      clearErrors('images');
+      clearErrors('files');
     }
   }, [errors, listImage, setError, clearErrors, maxImage]);
   useEffect(() => {
@@ -98,12 +98,12 @@ export const StepOne = (props: Props) => {
     handleDisable,
     listImage,
     setError,
-    errors.images,
+    errors.files,
     clearErrors
   ]);
   useEffect(() => {
-    if (getValues('images')) {
-      setListImage(getValues('images'));
+    if (getValues('files')) {
+      setListImage(getValues('files'));
     }
   }, [setListImage, getValues]);
   return (
@@ -117,17 +117,17 @@ export const StepOne = (props: Props) => {
         <Box sx={{ mb: 2 }}>
           <Label required={true}>Chứng minh nhân dân/Căn cước công dân</Label>
           <Controller
-            name="citizenId"
+            name="citizen_id"
             control={control}
             defaultValue="123456789"
             render={({ field }) => (
               <TextField
                 fullWidth
                 helperText={
-                  errors.citizenId?.message ? errors.citizenId?.message : null
+                  errors.citizen_id?.message ? errors.citizen_id?.message : null
                 }
                 autoComplete="on"
-                error={errors.citizenId?.message ? true : false}
+                error={errors.citizen_id?.message ? true : false}
                 placeholder="123456789"
                 {...field}
                 sx={{ root: { height: '50px' }, mt: 1 }}
@@ -164,7 +164,7 @@ export const StepOne = (props: Props) => {
           handleRemoveImage={handleRemoveImage}
           handleShowModalImage={handleShowModalImage}
           maxImage={maxImage}
-          error={errors.images?.message}
+          error={errors.files?.message}
         />
       </Box>
     </>

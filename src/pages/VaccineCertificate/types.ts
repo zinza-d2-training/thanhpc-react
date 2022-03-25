@@ -12,7 +12,7 @@ export interface LookUpCertificate {
   dob: Date;
   gender: string;
   phone_number: string;
-  citizenId: string;
+  citizen_id: string;
   healthInsuranceCardNumber: string;
 }
 export interface LookUpCertificateResult {
@@ -20,7 +20,7 @@ export interface LookUpCertificateResult {
   dob: Date;
   gender: string;
   phone_number: string;
-  citizenId: string;
+  citizen_id: string;
   healthInsuranceCardNumber: string;
   address: string;
   vaccines: IVaccinate[];

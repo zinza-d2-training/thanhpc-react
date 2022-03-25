@@ -24,7 +24,27 @@ enum tabRegister {
 export const VaccineRegistration = () => {
   const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState<number>(0);
-  const [dataStepOne, setDataStepOne] = useState<VaccineRegistrationType>();
+  const [dataStepOne, setDataStepOne] = useState<VaccineRegistrationType>({
+    injectionOrderNumber: 0,
+    email: '',
+    job: '',
+    workUnit: '',
+    currentAddress: '',
+    province_id: '',
+    district_id: '',
+    ward_id: '',
+    ethnic: '',
+    nationality: '',
+    priorityGroup: '',
+    desiredDateOfInjection: '',
+    desiredSessionOfInjection: '',
+    full_name: '',
+    dob: new Date(),
+    gender: '',
+    phone_number: '',
+    citizen_id: '',
+    healthInsuranceCardNumber: ''
+  });
   const [dataStepTwo, setDataStepTwo] = useState<IMedicalHistory[]>();
   const [dataStepThree, setDataStepThree] = useState<boolean>();
   let contentComponent = null;
@@ -77,7 +97,7 @@ export const VaccineRegistration = () => {
       break;
     case tabRegister.Complete:
       contentComponent = (
-        <StepFour onPrevStep={handlePreviousStep} data={dataStepOne || null} />
+        <StepFour onPrevStep={handlePreviousStep} data={dataStepOne} />
       );
       break;
   }

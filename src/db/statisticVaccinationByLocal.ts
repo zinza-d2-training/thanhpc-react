@@ -2,7 +2,7 @@ import { StatisticVaccinationByLocal } from '../pages/Home/types';
 
 export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -15,7 +15,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -28,7 +28,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -41,7 +41,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -54,7 +54,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -67,7 +67,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -80,7 +80,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -93,7 +93,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -106,7 +106,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -119,7 +119,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -134,7 +134,7 @@ export const statisticVaccinationByLocalMore: StatisticVaccinationByLocal[] = [
 ];
 export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -147,7 +147,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -160,7 +160,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -173,7 +173,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -186,7 +186,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -199,7 +199,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -212,7 +212,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -225,7 +225,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -238,7 +238,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,
@@ -251,7 +251,7 @@ export const statisticVaccinationByLocal: StatisticVaccinationByLocal[] = [
     vaccineDistributionRate: 11.06
   },
   {
-    provinceId: 1,
+    province_id: 1,
     provinceName: 'Hà Nội',
     distributionPlan: 11376541,
     actualDistribution: 10419772,

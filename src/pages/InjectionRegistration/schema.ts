@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const injectionRegistrationSchema = yup.object().shape({
-  citizenId: yup
+  citizen_id: yup
     .string()
     .required('Đây là trường bắt buộc!')
     .matches(

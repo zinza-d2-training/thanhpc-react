@@ -15,7 +15,7 @@ export interface IInjectionRegistrationResult {
   dob: Date;
   gender: string;
   phone_number: string;
-  citizenId: string;
+  citizen_id: string;
   status: Status;
   process: Process;
 }

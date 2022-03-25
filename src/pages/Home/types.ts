@@ -9,7 +9,7 @@ export interface InjectedByTotalSupplied {
   totalSupplied: number;
 }
 export interface StatisticVaccinationByLocal {
-  provinceId: number;
+  province_id: number;
   provinceName: string;
   distributionPlan: number;
   actualDistribution: number;
@@ -24,11 +24,11 @@ export interface StatisticVaccinationByLocal {
 export interface LookUpInjectionSitesByLocation {
   locationName: string;
   streetName: string;
-  wardId: string;
+  ward_id: string;
   wardName?: string;
-  districtId: string;
+  district_id: string;
   districtName?: string;
-  provinceId: string;
+  province_id: string;
   provinceName?: string;
   manager: string;
   numberOfInjectionTables: number;

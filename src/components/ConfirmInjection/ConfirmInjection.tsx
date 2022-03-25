@@ -85,7 +85,7 @@ export const ConfirmInjection = (props: Props) => {
                   <Trans>Số CMND/CCCD</Trans>
                 </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                  {data.citizenId}
+                  {data.citizen_id}
                 </Typography>
               </Stack>
             </Grid>
@@ -265,7 +265,7 @@ export const ConfirmInjection = (props: Props) => {
                   <Trans>Số CMND/CCCD</Trans>
                 </Typography>
                 <Typography variant="body1" sx={{ fontWeight: '500' }}>
-                  {data.citizenId}
+                  {data.citizen_id}
                 </Typography>
               </Stack>
             </Stack>
