@@ -17,7 +17,7 @@ import { administrativeUnits } from '../../db/administrativeUnits';
 
 interface Props {
   onPrevStep: () => void;
-  data: VaccineRegistrationType | null;
+  data: VaccineRegistrationType;
 }
 export const StepFour = (props: Props) => {
   const { t } = useTranslation();
@@ -117,18 +117,15 @@ export const StepFour = (props: Props) => {
           <Box sx={{ flex: 1 }}>
             <Typography variant="body1">{t('Tỉnh/Thành phố')}</Typography>
             <Typography variant="body1" fontWeight="500">
-              {getProvinceName(
-                data?.province_id as string,
-                administrativeUnits
-              )}
+              {getProvinceName(data?.province_id, administrativeUnits)}
             </Typography>
           </Box>
           <Box sx={{ flex: 1 }}>
             <Typography variant="body1">{t('Quận/Huyện')}</Typography>
             <Typography variant="body1" fontWeight="500">
               {getDistrictName(
-                data?.province_id as string,
-                data?.district_id as string,
+                data?.province_id,
+                data?.district_id,
                 administrativeUnits
               )}
             </Typography>
@@ -137,9 +134,9 @@ export const StepFour = (props: Props) => {
             <Typography variant="body1">{t('Xã/Phường')}</Typography>
             <Typography variant="body1" fontWeight="500">
               {getWardName(
-                data?.province_id as string,
-                data?.district_id as string,
-                data?.ward_id as string,
+                data?.province_id,
+                data?.district_id,
+                data?.ward_id,
                 administrativeUnits
               )}
             </Typography>
