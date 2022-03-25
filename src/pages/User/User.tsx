@@ -123,7 +123,7 @@ export const User = () => {
   const dataInjectionRegistration = injectionRegistrationResult.filter(
     (injection: IInjectionRegistrationResult) =>
       injection.citizen_id ===
-      loginSelectorResult.response?.data?.user.citizen_id
+      loginSelectorResult.response?.data?.payload.citizen_id
   );
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -274,7 +274,7 @@ export const User = () => {
     clearErrors('ward_id');
     trigger();
   };
-  return loginSelectorResult.response?.data?.token ? (
+  return loginSelectorResult.response?.data?.accessToken ? (
     <>
       <ImageDialog
         image={imageIsShowed}

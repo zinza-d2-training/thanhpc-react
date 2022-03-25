@@ -8,6 +8,10 @@ export interface UserFormData extends User {
   district_id: string;
   ward_id: string;
 }
+export interface IRegister extends User {
+  files: File[];
+  ward_id: string;
+}
 export enum Gender {
   Male = 1,
   Female = 2

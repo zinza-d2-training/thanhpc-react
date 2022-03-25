@@ -94,9 +94,11 @@ export const Header = () => {
                   <Trans>Tài liệu</Trans>
                 </Typography>
               </Link>
-              {loginSelectorResult.response?.data?.user.full_name ? (
+              {loginSelectorResult.response?.data?.payload.full_name ? (
                 <SidebarUserMenu
-                  fullName={loginSelectorResult.response?.data?.user.full_name}
+                  fullName={
+                    loginSelectorResult.response?.data?.payload.full_name
+                  }
                 />
               ) : (
                 <Link to="/login" style={{ textDecoration: 'none' }}>

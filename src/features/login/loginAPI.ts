@@ -4,22 +4,22 @@ import {
   LoginQueryResult,
   QueryResult
 } from './responseLogin';
-import { useAuth } from '../../hooks/useAuth';
+import { UseLogin } from '../../hooks/UseLogin';
 
 export async function FetchAccount(value: User) {
-  const { login } = useAuth();
-  const response = await login({
+  const response = await UseLogin({
     citizen_id: value.citizen_id,
     password: value.password
   });
-  if (response.token) {
-    const token = response.data.accessToken;
+  console.log('response');
+  if (response.accessToken) {
+    const token = response.accessToken;
     const data: QueryResult<LoginQueryResult> = {
-      user: {
-        citizen_id: response.data.payload.citizen_id,
-        full_name: response.data.payload.full_name
+      payload: {
+        citizen_id: response.payload.citizen_id,
+        full_name: response.payload.full_name
       },
-      token
+      accessToken: token
     };
     const loginResponse: LoginQueryResponse = {
       data,

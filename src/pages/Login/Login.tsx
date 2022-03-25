@@ -34,7 +34,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loginselectorResult.response?.data?.token) {
+    if (loginselectorResult.response?.data?.accessToken) {
       return navigate('/user');
     }
     if (loginselectorResult.response?.message) {
@@ -46,7 +46,7 @@ export const Login = () => {
     dispatch(loginAsync(data));
   };
 
-  return !loginselectorResult.response?.data?.token ? (
+  return !loginselectorResult.response?.data?.accessToken ? (
     <Grid container>
       <Grid item xs={6}>
         <Box

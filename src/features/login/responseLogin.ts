@@ -5,10 +5,10 @@ export interface ApiResponse<TData> {
   message: string;
 }
 export interface LoginQueryResult {
-  user: {
+  payload: {
     citizen_id: String;
     full_name: string;
   };
-  token: string;
+  accessToken: string;
 }
 export type LoginQueryResponse = ApiResponse<LoginQueryResult>;

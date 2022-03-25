@@ -16,12 +16,11 @@ import { StepThree } from './StepThree';
 import { useForm, FormProvider, Resolver } from 'react-hook-form';
 import { registerSchema } from './schema';
 import { OTPInputDialog } from '../../components/OTPInputDialog/OTPInputDialog';
-import { UserFormData } from './types';
-import { useAuth } from '../../hooks/useAuth';
+import { IRegister, UserFormData } from './types';
+import { UseRegister } from '../../hooks/UseRegister';
 
 const steps = ['Số CMND/CCCD', 'Thông tin cá nhân', 'Địa chỉ'];
 export const Register = () => {
-  const { register } = useAuth();
   const methods = useForm<UserFormData>({
     resolver: yupResolver(registerSchema) as Resolver<UserFormData>,
     mode: 'onChange',
@@ -37,19 +36,28 @@ export const Register = () => {
   const handleOpenModal = () => setOpen(true);
   async function handleCloseModal() {
     setOpen(false);
-    const files = methods.getValues('files').map((value) => value.file);
-    const formData = new FormData();
-    files.forEach((file) => formData.append('files', file as File));
-    formData.append('citizen_id', methods.getValues('citizen_id'));
-    formData.append('password', methods.getValues('password'));
-    formData.append('full_name', methods.getValues('full_name'));
-    formData.append('dob', methods.getValues('dob'));
-    formData.append('gender', methods.getValues('gender'));
-    formData.append('phone_number', methods.getValues('phone_number'));
-    formData.append('ward_id', methods.getValues('ward_id'));
-    const response = await register(formData);
-    if ((await response.status) === 200) {
-      return navigate('/login');
+    const files = methods
+      .getValues('files')
+      .map((value) => value.file) as File[];
+
+    const formData: IRegister = {
+      files: files,
+      ward_id: methods.getValues('ward_id'),
+      citizen_id: methods.getValues('citizen_id'),
+      phone_number: methods.getValues('phone_number'),
+      full_name: methods.getValues('full_name'),
+      dob: methods.getValues('dob'),
+      gender: methods.getValues('gender'),
+      password: methods.getValues('password')
+    };
+    console.log('formData', formData);
+    try {
+      const response = await UseRegister(formData);
+      if ((await response.status) === 200) {
+        return navigate('/login');
+      }
+    } catch (err: any) {
+      console.log(err.message);
     }
   }
 
