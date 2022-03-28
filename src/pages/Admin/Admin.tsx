@@ -31,6 +31,7 @@ const tableHead = [
 ];
 export const Admin = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const [refetch, setRefetch] = useState<boolean>(false);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
@@ -38,11 +39,14 @@ export const Admin = () => {
   useEffect(() => {
     const fetchListProvince = async () => {
       const result = await UseUnitAdministrative();
-      console.log('result', result);
       setListProvince(result);
     };
     fetchListProvince();
-  }, []);
+    setRefetch(false);
+  }, [refetch]);
+  const handleRefetch = () => {
+    setRefetch(true);
+  };
   return (
     <>
       <Header />
@@ -59,6 +63,7 @@ export const Admin = () => {
                 <UpdateDistributionTable
                   dataBody={listProvince}
                   dataHead={tableHead}
+                  handleRefetch={handleRefetch}
                 />
               </TabPanel>
               <TabPanel value="1"></TabPanel>

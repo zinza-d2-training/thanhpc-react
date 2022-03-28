@@ -7,7 +7,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -17,7 +17,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -27,7 +27,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -37,7 +37,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -47,7 +47,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -57,7 +57,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -67,7 +67,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -77,7 +77,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -87,7 +87,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   },
@@ -97,7 +97,7 @@ export const manageUpdateDistribution: ManageUpdateDistribution[] = [
     distribution_plan: 11376541,
     actual_distribution: 10419772,
     adult_population: 6200000,
-    number_of_injected: 9876581,
+    injected_number: 9876581,
     vaccination_rate: 94.79,
     vaccine_distribution_rate: 11.06
   }

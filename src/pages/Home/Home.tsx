@@ -34,7 +34,7 @@ import { highestInjectionRate } from '../../db/highestInjectionRate';
 import { lowestInjectionRate } from '../../db/lowestInjectionRate';
 import { statisticVaccinationByLocal } from '../../db/statisticVaccinationByLocal';
 import { statisticVaccinationByLocalMore } from '../../db/statisticVaccinationByLocal';
-import { StatisticVaccinationByLocal } from '../../pages/Home/types';
+import { Address, StatisticVaccinationByLocal } from '../../pages/Home/types';
 import { lookUpInjectionSitesByLocation } from '../../db/lookUpInjectionSitesByLocation';
 import { LookUpInjectionSitesByLocation } from '../../pages/Home/types';
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
@@ -51,6 +51,12 @@ import {
 } from 'chart.js';
 import { StyledButton } from '../../components';
 import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import {
+  getChildArr,
+  getNameById,
+  getDistrictName,
+  getWardName
+} from './functions';
 
 Chart.register(
   LineController,
@@ -85,54 +91,6 @@ const dataAfterLookUpByLocationHeader = [
   'Người đứng đầu cơ sở tiêm chủng',
   'Số bàn tiêm'
 ];
-const getChildArr = (valueArgs: number, parentArr: any, nameArr: string) => {
-  const unit = parentArr.find((value: any) => value.id === valueArgs);
-  return unit ? unit[nameArr] : [];
-};
-const getNameById = (id: number, arr: any) => {
-  const name = arr.find((value: any) => value.id === id)['name'];
-  return name;
-};
-const getDistrictName = (
-  province_id: number,
-  district_id: number,
-  arr: any
-) => {
-  const listDistrict = arr.find((value: any) => value.id === province_id)[
-    'districts'
-  ];
-  if (listDistrict) {
-    return listDistrict.find((value: any) => value.id === district_id)['name'];
-  }
-  return null;
-};
-const getWardName = (
-  province_id: number,
-  district_id: number,
-  ward_id: number,
-  arr: any
-) => {
-  const listDistrict = arr.find((value: any) => value.id === province_id)[
-    'districts'
-  ];
-  if (listDistrict) {
-    const listWard = listDistrict.find(
-      (value: any) => value.id === district_id
-    )['wards'];
-    if (listWard) {
-      let wardName =
-        listWard.find((value: any) => value.id === ward_id)['name'] ||
-        'Không xác định';
-      return wardName;
-    }
-  }
-  return undefined;
-};
-interface Address {
-  province_id: number;
-  district_id: number;
-  ward_id: number;
-}
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -224,10 +182,8 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    console.log('ok');
     const fetchListProvince = async () => {
       const result = await UseUnitAdministrative();
-      console.log('result', result);
       setListProvince(result);
     };
     fetchListProvince();

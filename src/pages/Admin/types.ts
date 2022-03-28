@@ -4,13 +4,14 @@ export interface ManageUpdateDistribution {
   distribution_plan: number;
   actual_distribution: number;
   adult_population: number;
-  number_of_injected: number;
+  injected_number: number;
   vaccination_rate: number;
   vaccine_distribution_rate: number;
 }
 export interface ManageDistributionFormUpdate {
-  province_id: number;
+  id: number;
   distribution_plan: number;
   actual_distribution: number;
   adult_population: number;
+  injected_number: number;
 }

@@ -29,7 +29,6 @@ export const StepFour = (props: Props) => {
   useEffect(() => {
     const fetchListProvince = async () => {
       const result = await UseUnitAdministrative();
-      console.log('result', result);
       setListProvince(result);
     };
     fetchListProvince();
