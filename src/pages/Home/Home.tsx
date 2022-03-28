@@ -35,7 +35,6 @@ import { lowestInjectionRate } from '../../db/lowestInjectionRate';
 import { statisticVaccinationByLocal } from '../../db/statisticVaccinationByLocal';
 import { statisticVaccinationByLocalMore } from '../../db/statisticVaccinationByLocal';
 import { StatisticVaccinationByLocal } from '../../pages/Home/types';
-import { administrativeUnits } from '../../db/administrativeUnits';
 import { lookUpInjectionSitesByLocation } from '../../db/lookUpInjectionSitesByLocation';
 import { LookUpInjectionSitesByLocation } from '../../pages/Home/types';
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
@@ -51,6 +50,7 @@ import {
   Title
 } from 'chart.js';
 import { StyledButton } from '../../components';
+import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 Chart.register(
   LineController,
@@ -85,43 +85,43 @@ const dataAfterLookUpByLocationHeader = [
   'Người đứng đầu cơ sở tiêm chủng',
   'Số bàn tiêm'
 ];
-const getChildArr = (valueArgs: string, parentArr: any, nameArr: string) => {
-  const unit = parentArr.find((value: any) => value.Id === valueArgs);
+const getChildArr = (valueArgs: number, parentArr: any, nameArr: string) => {
+  const unit = parentArr.find((value: any) => value.id === valueArgs);
   return unit ? unit[nameArr] : [];
 };
-const getNameById = (id: string, arr: any) => {
-  const name = arr.find((value: any) => value.Id === id)['Name'];
+const getNameById = (id: number, arr: any) => {
+  const name = arr.find((value: any) => value.id === id)['name'];
   return name;
 };
 const getDistrictName = (
-  province_id: string,
-  district_id: string,
+  province_id: number,
+  district_id: number,
   arr: any
 ) => {
-  const listDistrict = arr.find((value: any) => value.Id === province_id)[
-    'Districts'
+  const listDistrict = arr.find((value: any) => value.id === province_id)[
+    'districts'
   ];
   if (listDistrict) {
-    return listDistrict.find((value: any) => value.Id === district_id)['Name'];
+    return listDistrict.find((value: any) => value.id === district_id)['name'];
   }
   return null;
 };
 const getWardName = (
-  province_id: string,
-  district_id: string,
-  ward_id: string,
+  province_id: number,
+  district_id: number,
+  ward_id: number,
   arr: any
 ) => {
-  const listDistrict = arr.find((value: any) => value.Id === province_id)[
-    'Districts'
+  const listDistrict = arr.find((value: any) => value.id === province_id)[
+    'districts'
   ];
   if (listDistrict) {
     const listWard = listDistrict.find(
-      (value: any) => value.Id === district_id
-    )['Wards'];
+      (value: any) => value.id === district_id
+    )['wards'];
     if (listWard) {
       let wardName =
-        listWard.find((value: any) => value.Id === ward_id)['Name'] ||
+        listWard.find((value: any) => value.id === ward_id)['name'] ||
         'Không xác định';
       return wardName;
     }
@@ -129,9 +129,9 @@ const getWardName = (
   return undefined;
 };
 interface Address {
-  province_id: string;
-  district_id: string;
-  ward_id: string;
+  province_id: number;
+  district_id: number;
+  ward_id: number;
 }
 
 export const Home = () => {
@@ -141,7 +141,7 @@ export const Home = () => {
     defaultValues: {}
   });
 
-  const listProvince = administrativeUnits;
+  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
   const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
   const [listWard, setListWard] = useState<WardType[]>([]);
   const [disableClickDistrict, setDisableClickDistrict] =
@@ -164,10 +164,12 @@ export const Home = () => {
   const handleChangeProvince = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('province_id', e.target.value);
-    setValue('district_id', '');
-    setValue('ward_id', '');
-    setListDistrict(getChildArr(e.target.value, listProvince, 'Districts'));
+    setValue('province_id', Number(e.target.value));
+    setValue('district_id', 0);
+    setValue('ward_id', 0);
+    setListDistrict(
+      getChildArr(Number(e.target.value), listProvince, 'districts')
+    );
     setListWard([]);
     setDisableClickDistrict(false);
     setDisableClickWard(true);
@@ -175,15 +177,15 @@ export const Home = () => {
   const handleChangeDistrict = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('district_id', e.target.value);
-    setValue('ward_id', '');
-    setListWard(getChildArr(e.target.value, listDistrict, 'Wards'));
+    setValue('district_id', Number(e.target.value));
+    setValue('ward_id', 0);
+    setListWard(getChildArr(Number(e.target.value), listDistrict, 'wards'));
     setDisableClickWard(false);
   };
   const handleChangeWard = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('ward_id', e.target.value);
+    setValue('ward_id', Number(e.target.value));
   };
   const handleSearchLookUp = () => {
     let newData: LookUpInjectionSitesByLocation[] = [];
@@ -203,38 +205,53 @@ export const Home = () => {
       }
     }
     newData.forEach((value) => {
-      value.provinceName = getNameById(value.province_id, administrativeUnits);
-      value.districtName = getDistrictName(
-        value.province_id,
-        value.district_id,
-        administrativeUnits
-      );
-      value.wardName = getWardName(
-        value.province_id,
-        value.district_id,
-        value.ward_id,
-        administrativeUnits
-      );
+      if (listProvince.length > 0) {
+        value.provinceName = getNameById(value.province_id, listProvince);
+        value.districtName = getDistrictName(
+          value.province_id,
+          value.district_id,
+          listProvince
+        );
+        value.wardName = getWardName(
+          value.province_id,
+          value.district_id,
+          value.ward_id,
+          listProvince
+        );
+      }
     });
     setDataAfterLookUpByLocation(newData);
   };
+
+  useEffect(() => {
+    console.log('ok');
+    const fetchListProvince = async () => {
+      const result = await UseUnitAdministrative();
+      console.log('result', result);
+      setListProvince(result);
+    };
+    fetchListProvince();
+  }, []);
+
   useEffect(() => {
     lookUpInjectionSitesByLocation.forEach((value) => {
-      value.provinceName = getNameById(value.province_id, administrativeUnits);
-      value.districtName = getDistrictName(
-        value.province_id,
-        value.district_id,
-        administrativeUnits
-      );
-      value.wardName = getWardName(
-        value.province_id,
-        value.district_id,
-        value.ward_id,
-        administrativeUnits
-      );
+      if (listProvince.length > 0) {
+        value.provinceName = getNameById(value.province_id, listProvince);
+        value.districtName = getDistrictName(
+          value.province_id,
+          value.district_id,
+          listProvince
+        );
+        value.wardName = getWardName(
+          value.province_id,
+          value.district_id,
+          value.ward_id,
+          listProvince
+        );
+      }
     });
     setDataAfterLookUpByLocation(lookUpInjectionSitesByLocation);
-  }, []);
+  }, [listProvince]);
   return (
     <>
       <Header />
@@ -539,7 +556,7 @@ export const Home = () => {
                 <Controller
                   name="province_id"
                   control={control}
-                  render={({ field, fieldState: { invalid, error } }) => (
+                  render={({ field }) => (
                     <TextField
                       placeholder="Tỉnh/Thành phố"
                       {...field}
@@ -554,8 +571,8 @@ export const Home = () => {
                       select>
                       {listProvince.length > 0
                         ? listProvince.map((value: ProvinceType) => (
-                            <MenuItem value={value.Id} key={value.Id}>
-                              {value.Name}
+                            <MenuItem value={value.id} key={value.id}>
+                              {value.name}
                             </MenuItem>
                           ))
                         : null}
@@ -583,8 +600,8 @@ export const Home = () => {
                       select>
                       {listDistrict.length > 0
                         ? listDistrict.map((value: DistrictType) => (
-                            <MenuItem value={value.Id} key={value.Id}>
-                              {value.Name}
+                            <MenuItem value={value.id} key={value.id}>
+                              {value.name}
                             </MenuItem>
                           ))
                         : null}
@@ -612,8 +629,8 @@ export const Home = () => {
                       select>
                       {listWard.length > 0
                         ? listWard.map((value: WardType) => (
-                            <MenuItem value={value.Id} key={value.Id}>
-                              {value.Name}
+                            <MenuItem value={value.id} key={value.id}>
+                              {value.name}
                             </MenuItem>
                           ))
                         : null}

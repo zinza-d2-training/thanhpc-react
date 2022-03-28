@@ -13,7 +13,7 @@ export const UseRegister = async (
   formData.append('dob', userRegister.dob);
   formData.append('gender', userRegister.gender);
   formData.append('phone_number', userRegister.phone_number);
-  formData.append('ward_id', userRegister.ward_id);
+  formData.append('ward_id', userRegister.ward_id.toString());
 
   return await axiosClient.post(
     'http://localhost:4000/auth/register',

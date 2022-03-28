@@ -1,27 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { administrativeUnits } from '../../db/administrativeUnits';
 import { Box, TextField, MenuItem } from '@mui/material';
 import { Controller, UseFormReturn } from 'react-hook-form';
 
 import { Label } from '../../components/Label';
 import { UserFormData } from './types';
-interface WardType {
-  Id?: string;
-  Name?: string;
-  Level?: string;
-}
-interface DistrictType {
-  Id?: string;
-  Name?: string;
-  Wards?: WardType[];
-}
-interface ProvinceType {
-  Id?: string;
-  Name?: string;
-  Districts?: DistrictType[];
-}
-const getChildArr = (valueArgs: string, parentArr: any, nameArr: string) => {
-  const unit = parentArr.find((value: any) => value.Id === valueArgs);
+import { DistrictType, ProvinceType, WardType } from '../User/types';
+import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+const getChildArr = (valueArgs: number, parentArr: any, nameArr: string) => {
+  const unit = parentArr.find((value: any) => value.id === valueArgs);
   return unit ? unit[nameArr] : [];
 };
 
@@ -43,14 +29,22 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
 
   const province_id = getValues('province_id');
   const district_id = getValues('district_id');
-  const listProvince = administrativeUnits;
+  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
+  useEffect(() => {
+    const fetchListProvince = async () => {
+      const result = await UseUnitAdministrative();
+      console.log('result', result);
+      setListProvince(result);
+    };
+    fetchListProvince();
+  }, []);
 
   const listDistrict = useMemo(() => {
-    return getChildArr(province_id, listProvince, 'Districts');
+    return getChildArr(province_id, listProvince, 'districts');
   }, [province_id, listProvince]);
 
   const listWard = useMemo(() => {
-    return getChildArr(district_id, listDistrict, 'Wards');
+    return getChildArr(district_id, listDistrict, 'wards');
   }, [district_id, listDistrict]);
 
   const [allowClickDistrict, setAllowClickDistrict] = useState<boolean>(false);
@@ -59,10 +53,10 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('province_id', e.target.value);
+    setValue('province_id', Number(e.target.value));
     setAllowClickDistrict(true);
-    setValue('district_id', '');
-    if (getValues('province_id') !== e.target.value) {
+    setValue('district_id', 0);
+    if (getValues('province_id') !== Number(e.target.value)) {
       setAllowClickWard(false);
       handleDisable(true);
     }
@@ -72,15 +66,15 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('district_id', e.target.value);
-    setValue('ward_id', '');
+    setValue('district_id', Number(e.target.value));
+    setValue('ward_id', 0);
     trigger();
     setAllowClickWard(true);
   };
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('ward_id', e.target.value);
+    setValue('ward_id', Number(e.target.value));
     clearErrors('ward_id');
     handleDisable(false);
     trigger();
@@ -110,8 +104,8 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
               select>
               {listProvince.length > 0
                 ? listProvince.map((value: ProvinceType) => (
-                    <MenuItem value={value.Id} key={value.Id}>
-                      {value.Name}
+                    <MenuItem value={value.id} key={value.id}>
+                      {value.name}
                     </MenuItem>
                   ))
                 : null}
@@ -137,8 +131,8 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
               select>
               {!!getValues('province_id')
                 ? listDistrict.map((value: DistrictType) => (
-                    <MenuItem value={value.Id} key={value.Id}>
-                      {value.Name}
+                    <MenuItem value={value.id} key={value.id}>
+                      {value.name}
                     </MenuItem>
                   ))
                 : null}
@@ -164,8 +158,8 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
               select>
               {!!getValues('district_id')
                 ? listWard.map((value: WardType) => (
-                    <MenuItem value={value.Id} key={value.Id}>
-                      {value.Name}
+                    <MenuItem value={value.id} key={value.id}>
+                      {value.name}
                     </MenuItem>
                   ))
                 : null}

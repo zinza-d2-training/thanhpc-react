@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Container } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
@@ -6,7 +6,8 @@ import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
 import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
 import { UpdateDistributionTable } from '../../components/UpdateDistributionTable/UpdateDistributionTable';
-import { manageUpdateDistribution } from '../../db/UpdateDistributionTable';
+import { ProvinceType } from '../User/types';
+import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 const headerTabs = [
   'Phân bổ',
@@ -33,7 +34,15 @@ export const Admin = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
-
+  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
+  useEffect(() => {
+    const fetchListProvince = async () => {
+      const result = await UseUnitAdministrative();
+      console.log('result', result);
+      setListProvince(result);
+    };
+    fetchListProvince();
+  }, []);
   return (
     <>
       <Header />
@@ -48,7 +57,7 @@ export const Admin = () => {
             <Container maxWidth="xl">
               <TabPanel value="0" sx={{ padding: 0, mb: 10 }}>
                 <UpdateDistributionTable
-                  dataBody={manageUpdateDistribution}
+                  dataBody={listProvince}
                   dataHead={tableHead}
                 />
               </TabPanel>

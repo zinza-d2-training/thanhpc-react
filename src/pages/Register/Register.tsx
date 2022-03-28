@@ -32,7 +32,7 @@ export const Register = () => {
   const methods = useForm<UserFormData>({
     resolver: yupResolver(registerSchema) as Resolver<UserFormData>,
     mode: 'onChange',
-    defaultValues: { province_id: '', ward_id: '', district_id: '' }
+    defaultValues: { province_id: 0, ward_id: 0, district_id: 0 }
   });
   const [open, setOpen] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -254,7 +254,7 @@ export const Register = () => {
                       }}
                       type="button"
                       onClick={handleSkip}
-                      disabled={disabled}
+                      disabled={disabled || loading}
                       startIcon={loading && <CircularProgress size={20} />}
                       endIcon={<ArrowForwardIcon />}>
                       {activeStep === steps.length - 1
