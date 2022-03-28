@@ -33,7 +33,6 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
   useEffect(() => {
     const fetchListProvince = async () => {
       const result = await UseUnitAdministrative();
-      console.log('result', result);
       setListProvince(result);
     };
     fetchListProvince();

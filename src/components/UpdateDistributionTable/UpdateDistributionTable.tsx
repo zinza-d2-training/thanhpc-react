@@ -17,24 +17,26 @@ import { ProvinceType } from '../../pages/User/types';
 interface Props {
   dataHead: unknown[];
   dataBody: ProvinceType[];
+  handleRefetch: () => void;
 }
 export const UpdateDistributionTable = (props: Props) => {
-  const { dataHead, dataBody } = props;
+  const { dataHead, dataBody, handleRefetch } = props;
   const handleCloseModal = () => setOpen(false);
   const [open, setOpen] = useState<boolean>(false);
-  const handleConfirmModal = () => {
-    console.log('ok');
-  };
+  const [provinceId, setProvinceId] = useState<number>(0);
   const handleOpenModal = (id: number) => {
+    console.log('id', id);
     setOpen(true);
+    setProvinceId(id);
   };
   return (
     <>
       <UpdateDistributionDialog
         onClose={handleCloseModal}
-        onConfirm={handleConfirmModal}
         open={open}
         data={dataBody}
+        provinceId={provinceId}
+        handleRefetch={handleRefetch}
       />
       <TableContainer
         component={Paper}
@@ -63,17 +65,21 @@ export const UpdateDistributionTable = (props: Props) => {
                 <TableCell>{row.distribution_plan}</TableCell>
                 <TableCell>{row.actual_distribution}</TableCell>
                 <TableCell>{row.adult_population}</TableCell>
-                <TableCell>{row.number_of_injected}</TableCell>
+                <TableCell>{row.injected_number}</TableCell>
                 <TableCell>
                   <StyledLinearProgress
                     color="#C65312"
-                    number={row.vaccination_rate}
+                    number={Math.round(
+                      (row.injected_number * 100) / row.actual_distribution
+                    )}
                   />
                 </TableCell>
                 <TableCell>
                   <StyledLinearProgress
                     color="#0593CF"
-                    number={row.vaccine_distribution_rate}
+                    number={Math.round(
+                      (row.actual_distribution * 100) / row.distribution_plan
+                    )}
                   />
                 </TableCell>
                 <TableCell>

@@ -1,5 +1,12 @@
-import { Stack, Box, colors, MenuItem, TextField } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  Stack,
+  Box,
+  colors,
+  TextField,
+  Typography,
+  CircularProgress
+} from '@mui/material';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Trans } from 'react-i18next';
 import { Label } from '../../components/Label';
 import { ProvinceType } from '../../pages/User/types';
@@ -7,59 +14,68 @@ import { StyledButton } from '../StyledButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { adminSchema } from '../../pages/Admin/schema';
 import { ManageDistributionFormUpdate } from '../../pages/Admin/types';
+import { getProvinceById } from '../../pages/Home/functions';
+import { useState } from 'react';
+import { UseDistributionUpdate } from '../../hooks/useDistributionUpdate';
 
 interface Props {
   onClose: () => void;
-  onConfirm: () => void;
   data: ProvinceType[];
+  provinceId: number;
+  handleRefetch: () => void;
 }
 
 export const ContentDialog = (props: Props) => {
-  // const { onClose, onConfirm } = props;
-  const { data } = props;
+  const { data, provinceId, handleRefetch, onClose } = props;
   const listProvince = data;
-  const { control, trigger, setValue } = useForm<ManageDistributionFormUpdate>({
+  const province = getProvinceById(provinceId, listProvince);
+  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid }
+  } = useForm<ManageDistributionFormUpdate>({
     resolver: yupResolver(adminSchema),
-    mode: 'onChange'
+    mode: 'onChange',
+    defaultValues: {
+      id: province.id,
+      distribution_plan: province.distribution_plan,
+      actual_distribution: province.actual_distribution,
+      adult_population: province.adult_population,
+      injected_number: province.injected_number
+    }
   });
-  const handleChangeProvince = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+
+  const formSubmitHandler: SubmitHandler<ManageDistributionFormUpdate> = async (
+    data: ManageDistributionFormUpdate
   ) => {
-    setValue('province_id', Number(e.target.value));
-    trigger();
+    setLoading(true);
+    try {
+      const response = await UseDistributionUpdate({
+        ...data
+      });
+      if (response.status === 200) {
+        setLoading(false);
+        handleRefetch();
+        onClose();
+      }
+    } catch (err) {
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
+
   return (
     <>
       <Stack
         component="form"
         direction="column"
+        onSubmit={handleSubmit(formSubmitHandler)}
         spacing={3}
         sx={{ px: 3, mt: 3 }}>
         <Box sx={{ width: '400px' }}>
-          <Label required={true}>Tỉnh/Thành phố</Label>
-          <Controller
-            name="province_id"
-            control={control}
-            render={({ field, fieldState: { invalid, error } }) => (
-              <TextField
-                placeholder="Tỉnh/Thành phố"
-                fullWidth
-                helperText={error?.message}
-                error={invalid}
-                {...field}
-                sx={{ root: { height: '50px' }, mt: 1 }}
-                onChange={(e) => handleChangeProvince(e)}
-                select>
-                {listProvince.length > 0
-                  ? listProvince.map((value: ProvinceType) => (
-                      <MenuItem value={value.id} key={value.id}>
-                        {value.name}
-                      </MenuItem>
-                    ))
-                  : null}
-              </TextField>
-            )}
-          />
+          <Typography variant="h5">{province.name}</Typography>
         </Box>
         <Box sx={{ width: '400px' }}>
           <Label required={true}>Dân số {'>'}= 18 tuổi</Label>
@@ -112,42 +128,60 @@ export const ContentDialog = (props: Props) => {
             )}
           />
         </Box>
+        <Box sx={{ width: '400px' }}>
+          <Label required={true}>Số liều đã tiêm</Label>
+          <Controller
+            name="injected_number"
+            control={control}
+            render={({ field, fieldState: { invalid, error } }) => (
+              <TextField
+                fullWidth
+                helperText={error?.message ? error?.message : null}
+                autoComplete="on"
+                error={invalid}
+                {...field}
+                sx={{ root: { height: '50px' }, mt: 1 }}
+              />
+            )}
+          />
+        </Box>
+        <Box
+          sx={{
+            justifyContent: 'right',
+            display: 'flex',
+            width: '400px',
+            mb: '16px !important'
+          }}>
+          <StyledButton
+            sx={{
+              border: 1,
+              borderColor: colors.indigo['700'],
+              color: colors.indigo['700'],
+              background: '#fff',
+              mr: 1
+            }}
+            variant="contained"
+            disabled={loading}
+            startIcon={loading && <CircularProgress size={20} />}
+            onClick={onClose}>
+            <Trans>Hủy bỏ</Trans>
+          </StyledButton>
+          <StyledButton
+            type="submit"
+            sx={{
+              background: colors.indigo['700'],
+              color: '#fff',
+              '&:hover': {
+                background: colors.indigo['600']
+              }
+            }}
+            variant="contained"
+            disabled={!isValid || loading}
+            startIcon={loading && <CircularProgress size={20} />}>
+            <Trans>Xác nhận</Trans>
+          </StyledButton>
+        </Box>
       </Stack>
-      <Box
-        sx={{
-          justifyContent: 'right',
-          display: 'flex',
-          mt: 5,
-          mb: 2.1,
-          mr: 3
-        }}>
-        <StyledButton
-          sx={{
-            border: 1,
-            borderColor: colors.indigo['700'],
-            color: colors.indigo['700'],
-            background: '#fff',
-            mr: 1
-          }}
-          // onClick={onClose}
-        >
-          <Trans>Hủy bỏ</Trans>
-        </StyledButton>
-        <StyledButton
-          sx={{
-            background: colors.indigo['700'],
-            color: '#fff',
-            '&:hover': {
-              background: colors.indigo['600']
-            }
-          }}
-          variant="contained"
-          // disabled={disabled}
-          // onClick={onConfirm}
-        >
-          <Trans>Xác nhận</Trans>
-        </StyledButton>
-      </Box>
     </>
   );
 };

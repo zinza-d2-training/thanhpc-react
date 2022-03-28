@@ -22,12 +22,7 @@ import {
   DesiredSessionOfInjection,
   ListVaccines
 } from './types';
-import {
-  getProvinceName,
-  getDistrictName,
-  getWardName,
-  getChildArr
-} from '../../pages/User/functions';
+import { getChildArr } from '../../pages/User/functions';
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
 import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
@@ -82,7 +77,6 @@ export const StepOne = (props: Props) => {
   useEffect(() => {
     const fetchListProvince = async () => {
       const result = await UseUnitAdministrative();
-      console.log('result', result);
       setListProvince(result);
     };
     fetchListProvince();
@@ -415,10 +409,6 @@ export const StepOne = (props: Props) => {
                           error?.message ? t(`${error?.message}`) : null
                         }
                         error={invalid}
-                        defaultValue={getProvinceName(
-                          Number(getValues('province_id')),
-                          listProvince
-                        )}
                         {...field}
                         onChange={(e) => handleChangeProvince(e)}
                         select>

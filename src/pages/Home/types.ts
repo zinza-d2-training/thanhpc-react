@@ -33,3 +33,8 @@ export interface LookUpInjectionSitesByLocation {
   manager: string;
   numberOfInjectionTables: number;
 }
+export interface Address {
+  province_id: number;
+  district_id: number;
+  ward_id: number;
+}
