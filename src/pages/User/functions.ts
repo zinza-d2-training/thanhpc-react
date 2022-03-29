@@ -5,6 +5,9 @@ export const getProvinceName = (province_id: number, arr: ProvinceType[]) => {
     : undefined;
   return name;
 };
+export const getProvinceById = (id: number, arr: ProvinceType[]) => {
+  return arr.find((value: ProvinceType) => value.id === id);
+};
 export const getDistrictName = (
   province_id: number,
   district_id: number,

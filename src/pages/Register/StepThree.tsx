@@ -5,7 +5,7 @@ import { Controller, UseFormReturn } from 'react-hook-form';
 import { Label } from '../../components/Label';
 import { UserFormData } from './types';
 import { DistrictType, ProvinceType, WardType } from '../User/types';
-import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 const getChildArr = (valueArgs: number, parentArr: any, nameArr: string) => {
   const unit = parentArr.find((value: any) => value.id === valueArgs);
   return unit ? unit[nameArr] : [];
@@ -29,14 +29,7 @@ export const StepThree = ({ methods, handleDisable }: Props) => {
 
   const province_id = getValues('province_id');
   const district_id = getValues('district_id');
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  useEffect(() => {
-    const fetchListProvince = async () => {
-      const result = await UseUnitAdministrative();
-      setListProvince(result);
-    };
-    fetchListProvince();
-  }, []);
+  const { listProvince } = useUnitAdministrative();
 
   const listDistrict = useMemo(() => {
     return getChildArr(province_id, listProvince, 'districts');

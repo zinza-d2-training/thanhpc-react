@@ -50,13 +50,13 @@ import {
   Title
 } from 'chart.js';
 import { StyledButton } from '../../components';
-import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 import {
   getChildArr,
-  getNameById,
   getDistrictName,
+  getProvinceName,
   getWardName
-} from './functions';
+} from '../User/functions';
 
 Chart.register(
   LineController,
@@ -93,13 +93,12 @@ const dataAfterLookUpByLocationHeader = [
 ];
 
 export const Home = () => {
+  const { listProvince } = useUnitAdministrative();
   const { t } = useTranslation();
   const { control, getValues, setValue } = useForm<Address>({
     mode: 'onChange',
     defaultValues: {}
   });
-
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
   const [listDistrict, setListDistrict] = useState<DistrictType[]>([]);
   const [listWard, setListWard] = useState<WardType[]>([]);
   const [disableClickDistrict, setDisableClickDistrict] =
@@ -164,7 +163,7 @@ export const Home = () => {
     }
     newData.forEach((value) => {
       if (listProvince.length > 0) {
-        value.provinceName = getNameById(value.province_id, listProvince);
+        value.provinceName = getProvinceName(value.province_id, listProvince);
         value.districtName = getDistrictName(
           value.province_id,
           value.district_id,
@@ -182,17 +181,9 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    const fetchListProvince = async () => {
-      const result = await UseUnitAdministrative();
-      setListProvince(result);
-    };
-    fetchListProvince();
-  }, []);
-
-  useEffect(() => {
     lookUpInjectionSitesByLocation.forEach((value) => {
       if (listProvince.length > 0) {
-        value.provinceName = getNameById(value.province_id, listProvince);
+        value.provinceName = getProvinceName(value.province_id, listProvince);
         value.districtName = getDistrictName(
           value.province_id,
           value.district_id,

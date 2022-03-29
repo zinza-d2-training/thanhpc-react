@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { Box, Stack, Link, Typography, colors } from '@mui/material';
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -14,8 +13,7 @@ import {
   getDistrictName,
   getWardName
 } from '../../pages/User/functions';
-import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
-import { ProvinceType } from '../User/types';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 interface Props {
   onPrevStep: () => void;
@@ -25,14 +23,7 @@ export const StepFour = (props: Props) => {
   const { t } = useTranslation();
   const { onPrevStep, data } = props;
 
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  useEffect(() => {
-    const fetchListProvince = async () => {
-      const result = await UseUnitAdministrative();
-      setListProvince(result);
-    };
-    fetchListProvince();
-  }, []);
+  const { listProvince } = useUnitAdministrative();
 
   const downloadPdfDocument = () => {
     const input = document.getElementById('element-to-print');

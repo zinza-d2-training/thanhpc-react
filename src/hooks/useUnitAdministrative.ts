@@ -1,8 +1,17 @@
+import { useState, useCallback, useEffect } from 'react';
 import { ProvinceType } from '../pages/User/types';
 import axiosClient from '../utils/axios/axios';
 
-export const UseUnitAdministrative = async (): Promise<ProvinceType[]> => {
-  return await axiosClient.get(
-    'http://localhost:4000/export-unit-administrative'
-  );
+export const useUnitAdministrative = () => {
+  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
+  const reFetch = useCallback(async () => {
+    const { data } = await axiosClient.get<ProvinceType[]>(
+      'http://localhost:4000/export-unit-administrative'
+    );
+    setListProvince(data);
+  }, []);
+  useEffect(() => {
+    reFetch();
+  }, [reFetch]);
+  return { listProvince, reFetch };
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Container } from '@mui/material';
 import TabContext from '@mui/lab/TabContext';
 import TabPanel from '@mui/lab/TabPanel';
@@ -6,8 +6,7 @@ import { Header } from '../../components/Header/Header';
 import { Footer } from '../../components/Footer/Footer';
 import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
 import { UpdateDistributionTable } from '../../components/UpdateDistributionTable/UpdateDistributionTable';
-import { ProvinceType } from '../User/types';
-import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 const headerTabs = [
   'Phân bổ',
@@ -31,21 +30,13 @@ const tableHead = [
 ];
 export const Admin = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [refetch, setRefetch] = useState<boolean>(false);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  useEffect(() => {
-    const fetchListProvince = async () => {
-      const result = await UseUnitAdministrative();
-      setListProvince(result);
-    };
-    fetchListProvince();
-    setRefetch(false);
-  }, [refetch]);
+  const { listProvince, reFetch } = useUnitAdministrative();
+
   const handleRefetch = () => {
-    setRefetch(true);
+    reFetch();
   };
   return (
     <>

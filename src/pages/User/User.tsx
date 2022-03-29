@@ -44,7 +44,7 @@ import {
 } from '../../components/FileUploadImage/FileUploadImage';
 import { getChildArr } from './functions';
 import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
-import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 const maxImage = 2;
 export const User = () => {
@@ -100,15 +100,7 @@ export const User = () => {
 
   const province_id = getValues('province_id');
   const district_id = getValues('district_id');
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  useEffect(() => {
-    const fetchListProvince = async () => {
-      const result = await UseUnitAdministrative();
-      setListProvince(result);
-    };
-    fetchListProvince();
-  }, []);
-
+  const { listProvince } = useUnitAdministrative();
   const listDistrict = useMemo(() => {
     return getChildArr(province_id, listProvince, 'districts');
   }, [province_id, listProvince]);
