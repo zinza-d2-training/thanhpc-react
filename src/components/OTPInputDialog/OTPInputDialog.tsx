@@ -1,7 +1,6 @@
-import { HeaderDialog } from './HeaderDialog';
 import { ContentDialog } from './ContentDialog';
-
 import { Dialog, Divider } from '@mui/material';
+import { HeaderDialog } from '../HeaderDialog/HeaderDialog';
 
 interface Props {
   onClose: () => void;

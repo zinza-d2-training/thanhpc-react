@@ -24,17 +24,28 @@ export interface userInfo extends UserFormData {
   confirm_password: string;
 }
 export interface WardType {
-  Id?: string;
-  Name?: string;
-  Level?: string;
+  id: number;
+  name: string;
+  district_id: number;
+  created_at: Date;
+  updated_at: Date;
 }
 export interface DistrictType {
-  Id?: string;
-  Name?: string;
-  Wards?: WardType[];
+  id: number;
+  name: string;
+  province_id: number;
+  created_at: Date;
+  updated_at: Date;
+  wards: WardType[];
 }
 export interface ProvinceType {
-  Id?: string;
-  Name?: string;
-  Districts?: DistrictType[];
+  id: number;
+  name: string;
+  distribution_plan: number;
+  actual_distribution: number;
+  adult_population: number;
+  injected_number: number;
+  created_at: Date;
+  updated_at: Date;
+  districts: DistrictType[];
 }

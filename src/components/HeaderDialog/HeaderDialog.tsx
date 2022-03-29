@@ -5,7 +5,7 @@ import { Trans } from 'react-i18next';
 
 interface Props {
   onClose: () => void;
-  title: string;
+  title: string | null | undefined;
 }
 export const HeaderDialog = (props: Props) => {
   const { onClose, title, ...other } = props;

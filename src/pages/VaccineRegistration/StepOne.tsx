@@ -22,14 +22,9 @@ import {
   DesiredSessionOfInjection,
   ListVaccines
 } from './types';
-import {
-  getProvinceName,
-  getDistrictName,
-  getWardName,
-  getChildArr
-} from '../../pages/User/functions';
+import { getChildArr } from '../../pages/User/functions';
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
-import { administrativeUnits } from '../../db/administrativeUnits';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 interface Props {
   onNextStep: () => void;
@@ -67,9 +62,9 @@ export const StepOne = (props: Props) => {
           job: '',
           workUnit: '',
           currentAddress: '',
-          province_id: '',
-          district_id: '',
-          ward_id: '',
+          province_id: 0,
+          district_id: 0,
+          ward_id: 0,
           ethnic: '',
           nationality: '',
           priorityGroup: '',
@@ -78,18 +73,20 @@ export const StepOne = (props: Props) => {
         }
   });
   const injectionOrderNumber = watch('injectionOrderNumber');
-  const listProvince = administrativeUnits;
+  const { listProvince } = useUnitAdministrative();
 
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setListDistrict(getChildArr(e.target.value, listProvince, 'Districts'));
+    setListDistrict(
+      getChildArr(Number(e.target.value), listProvince, 'districts')
+    );
     setListWard([]);
-    setValue('province_id', e.target.value);
+    setValue('province_id', Number(e.target.value));
     setAllowClickDistrict(true);
-    setValue('district_id', '');
-    setValue('ward_id', '');
-    if (getValues('province_id') !== e.target.value) {
+    setValue('district_id', 0);
+    setValue('ward_id', 0);
+    if (getValues('province_id') !== Number(e.target.value)) {
       setAllowClickWard(false);
     }
     trigger();
@@ -98,16 +95,16 @@ export const StepOne = (props: Props) => {
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('district_id', e.target.value);
-    setValue('ward_id', '');
+    setValue('district_id', Number(e.target.value));
+    setValue('ward_id', 0);
     trigger();
-    setListWard(getChildArr(e.target.value, listDistrict, 'Wards'));
+    setListWard(getChildArr(Number(e.target.value), listDistrict, 'wards'));
     setAllowClickWard(true);
   };
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('ward_id', e.target.value);
+    setValue('ward_id', Number(e.target.value));
     clearErrors('ward_id');
     trigger();
   };
@@ -405,17 +402,13 @@ export const StepOne = (props: Props) => {
                           error?.message ? t(`${error?.message}`) : null
                         }
                         error={invalid}
-                        defaultValue={getProvinceName(
-                          getValues('province_id'),
-                          listProvince
-                        )}
                         {...field}
                         onChange={(e) => handleChangeProvince(e)}
                         select>
                         {listProvince.length > 0
                           ? listProvince.map((value: ProvinceType) => (
-                              <MenuItem value={value.Id} key={value.Id}>
-                                {value.Name}
+                              <MenuItem value={value.id} key={value.id}>
+                                {value.name}
                               </MenuItem>
                             ))
                           : null}
@@ -432,15 +425,6 @@ export const StepOne = (props: Props) => {
                   <Controller
                     name="district_id"
                     control={control}
-                    defaultValue={
-                      getValues('district_id')
-                        ? getDistrictName(
-                            getValues('province_id'),
-                            getValues('district_id'),
-                            listProvince
-                          ) || undefined
-                        : undefined
-                    }
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
@@ -454,8 +438,8 @@ export const StepOne = (props: Props) => {
                         select>
                         {listDistrict.length > 0
                           ? listDistrict.map((value: DistrictType) => (
-                              <MenuItem value={value.Id} key={value.Id}>
-                                {value.Name}
+                              <MenuItem value={value.id} key={value.id}>
+                                {value.name}
                               </MenuItem>
                             ))
                           : null}
@@ -472,16 +456,6 @@ export const StepOne = (props: Props) => {
                   <Controller
                     name="ward_id"
                     control={control}
-                    defaultValue={
-                      getValues('ward_id')
-                        ? getWardName(
-                            getValues('province_id'),
-                            getValues('district_id'),
-                            getValues('ward_id'),
-                            listProvince
-                          )
-                        : ''
-                    }
                     render={({ field, fieldState: { invalid, error } }) => (
                       <TextField
                         size="small"
@@ -495,8 +469,8 @@ export const StepOne = (props: Props) => {
                         select>
                         {listWard.length > 0
                           ? listWard.map((value: WardType) => (
-                              <MenuItem value={value.Id} key={value.Id}>
-                                {value.Name}
+                              <MenuItem value={value.id} key={value.id}>
+                                {value.name}
                               </MenuItem>
                             ))
                           : null}

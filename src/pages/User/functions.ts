@@ -1,55 +1,58 @@
 import { WardType, DistrictType, ProvinceType } from './types';
-export const getProvinceName = (province_id: string, arr: ProvinceType[]) => {
-  const name = arr.find((value: ProvinceType) => value?.Id === province_id)
-    ? arr.find((value: ProvinceType) => value?.Id === province_id)?.Name
+export const getProvinceName = (province_id: number, arr: ProvinceType[]) => {
+  const name = arr.find((value: ProvinceType) => value?.id === province_id)
+    ? arr.find((value: ProvinceType) => value?.id === province_id)?.name
     : undefined;
   return name;
 };
+export const getProvinceById = (id: number, arr: ProvinceType[]) => {
+  return arr.find((value: ProvinceType) => value.id === id);
+};
 export const getDistrictName = (
-  province_id: string,
-  district_id: string,
+  province_id: number,
+  district_id: number,
   arr: ProvinceType[]
 ) => {
   const listDistrict = arr.find(
-    (value: ProvinceType) => value.Id === province_id
+    (value: ProvinceType) => value.id === province_id
   )
-    ? arr.find((value: ProvinceType) => value.Id === province_id)?.Districts
+    ? arr.find((value: ProvinceType) => value.id === province_id)?.districts
     : undefined;
   if (listDistrict) {
-    return listDistrict.find((value: DistrictType) => value.Id === district_id)
-      ?.Name;
+    return listDistrict.find((value: DistrictType) => value.id === district_id)
+      ?.name;
   }
   return undefined;
 };
 export const getWardName = (
-  province_id: string,
-  district_id: string,
-  ward_id: string,
+  province_id: number,
+  district_id: number,
+  ward_id: number,
   arr: ProvinceType[]
 ) => {
   const listDistrict = arr.find(
-    (value: ProvinceType) => value.Id === province_id
+    (value: ProvinceType) => value.id === province_id
   )
-    ? arr.find((value: ProvinceType) => value.Id === province_id)?.Districts
+    ? arr.find((value: ProvinceType) => value.id === province_id)?.districts
     : undefined;
   if (listDistrict) {
     const listWard = listDistrict.find(
-      (value: DistrictType) => value.Id === district_id
-    )?.Wards;
+      (value: DistrictType) => value.id === district_id
+    )?.wards;
     if (listWard) {
       let wardName = listWard.find(
-        (value: WardType) => value.Id === ward_id
-      )?.Name;
+        (value: WardType) => value.id === ward_id
+      )?.name;
       return wardName;
     }
   }
   return undefined;
 };
 export const getChildArr = (
-  valueArgs: string,
+  valueArgs: number,
   parentArr: any,
   nameArr: string
 ) => {
-  const unit = parentArr.find((value: any) => value.Id === valueArgs);
+  const unit = parentArr.find((value: any) => value.id === valueArgs);
   return unit ? unit[nameArr] : [];
 };

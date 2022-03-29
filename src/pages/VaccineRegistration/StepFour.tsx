@@ -13,7 +13,7 @@ import {
   getDistrictName,
   getWardName
 } from '../../pages/User/functions';
-import { administrativeUnits } from '../../db/administrativeUnits';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 interface Props {
   onPrevStep: () => void;
@@ -22,6 +22,8 @@ interface Props {
 export const StepFour = (props: Props) => {
   const { t } = useTranslation();
   const { onPrevStep, data } = props;
+
+  const { listProvince } = useUnitAdministrative();
 
   const downloadPdfDocument = () => {
     const input = document.getElementById('element-to-print');
@@ -117,16 +119,16 @@ export const StepFour = (props: Props) => {
           <Box sx={{ flex: 1 }}>
             <Typography variant="body1">{t('Tỉnh/Thành phố')}</Typography>
             <Typography variant="body1" fontWeight="500">
-              {getProvinceName(data?.province_id, administrativeUnits)}
+              {getProvinceName(Number(data?.province_id), listProvince)}
             </Typography>
           </Box>
           <Box sx={{ flex: 1 }}>
             <Typography variant="body1">{t('Quận/Huyện')}</Typography>
             <Typography variant="body1" fontWeight="500">
               {getDistrictName(
-                data?.province_id,
+                Number(data?.province_id),
                 data?.district_id,
-                administrativeUnits
+                listProvince
               )}
             </Typography>
           </Box>
@@ -134,10 +136,10 @@ export const StepFour = (props: Props) => {
             <Typography variant="body1">{t('Xã/Phường')}</Typography>
             <Typography variant="body1" fontWeight="500">
               {getWardName(
-                data?.province_id,
+                Number(data?.province_id),
                 data?.district_id,
                 data?.ward_id,
-                administrativeUnits
+                listProvince
               )}
             </Typography>
           </Box>

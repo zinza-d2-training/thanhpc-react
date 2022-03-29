@@ -29,9 +29,9 @@ export interface VaccineRegistrationType extends LookUpCertificate {
   job: string;
   workUnit: string;
   currentAddress: string;
-  province_id: string;
-  district_id: string;
-  ward_id: string;
+  province_id: number;
+  district_id: number;
+  ward_id: number;
   ethnic: string;
   nationality: string;
   priorityGroup: PriorityGroup | string;

@@ -8,13 +8,11 @@ import {
   colors,
   Grid,
   MenuItem,
-  Tab,
   IconButton,
   Typography
 } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useForm, Controller, Resolver } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
@@ -44,17 +42,9 @@ import {
   FileUploadImage,
   IFile
 } from '../../components/FileUploadImage/FileUploadImage';
-import {
-  getProvinceName,
-  getDistrictName,
-  getWardName,
-  getChildArr
-} from './functions';
-import { administrativeUnits } from '../../db/administrativeUnits';
-
-const useStyle = {
-  color: '#333 !important'
-};
+import { getChildArr } from './functions';
+import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 const maxImage = 2;
 export const User = () => {
@@ -99,9 +89,9 @@ export const User = () => {
       full_name: 'Phạm Công Thành',
       dob: '2000-10-23',
       gender: 'male',
-      province_id: '01',
-      district_id: '001',
-      ward_id: '00001',
+      province_id: 1,
+      district_id: 1,
+      ward_id: 1,
       new_password: '',
       confirm_password: '',
       password: ''
@@ -110,14 +100,13 @@ export const User = () => {
 
   const province_id = getValues('province_id');
   const district_id = getValues('district_id');
-  const listProvince = administrativeUnits;
-
+  const { listProvince } = useUnitAdministrative();
   const listDistrict = useMemo(() => {
-    return getChildArr(province_id, listProvince, 'Districts');
+    return getChildArr(province_id, listProvince, 'districts');
   }, [province_id, listProvince]);
 
   const listWard = useMemo(() => {
-    return getChildArr(district_id, listDistrict, 'Wards');
+    return getChildArr(district_id, listDistrict, 'wards');
   }, [district_id, listDistrict]);
 
   const dataInjectionRegistration = injectionRegistrationResult.filter(
@@ -220,9 +209,9 @@ export const User = () => {
     setValue('full_name', 'Phạm Công Thành');
     setValue('dob', '2000-10-23');
     setValue('gender', 'male');
-    setValue('province_id', '01');
-    setValue('district_id', '001');
-    setValue('ward_id', '00001');
+    setValue('province_id', 1);
+    setValue('district_id', 1);
+    setValue('ward_id', 1);
     clearErrors('full_name');
     clearErrors('dob');
     clearErrors('gender');
@@ -249,11 +238,11 @@ export const User = () => {
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('province_id', e.target.value);
+    setValue('province_id', Number(e.target.value));
     setAllowClickDistrict(true);
-    setValue('district_id', '');
-    setValue('ward_id', '');
-    if (getValues('province_id') !== e.target.value) {
+    setValue('district_id', 0);
+    setValue('ward_id', 0);
+    if (getValues('province_id') !== Number(e.target.value)) {
       setAllowClickWard(false);
     }
     trigger();
@@ -262,15 +251,15 @@ export const User = () => {
   const handleChangeDistrict = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('district_id', e.target.value);
-    setValue('ward_id', '');
+    setValue('district_id', Number(e.target.value));
+    setValue('ward_id', 0);
     trigger();
     setAllowClickWard(true);
   };
   const handleChangeWard = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    setValue('ward_id', e.target.value);
+    setValue('ward_id', Number(e.target.value));
     clearErrors('ward_id');
     trigger();
   };
@@ -284,36 +273,11 @@ export const User = () => {
       <Header />
       <Box sx={{ minHeight: '500px', mt: '80px' }}>
         <TabContext value={activeTab.toString()}>
-          <Box sx={{ boxShadow: '0px 1px 8px rgba(0, 0, 0, 0.1)' }}>
-            <Container maxWidth="xl">
-              <Box sx={{ color: '#6E6D7A', cursor: 'pointer' }}>
-                <TabList
-                  value={activeTab}
-                  onChange={handleChange}
-                  sx={{
-                    height: '64px',
-                    '.MuiTabs-scroller': {
-                      display: 'flex !important'
-                    }
-                  }}
-                  TabIndicatorProps={{
-                    style: {
-                      backgroundColor: '#333'
-                    }
-                  }}
-                  aria-label="basic tabs example">
-                  {headerTabs.map((tab, index) => (
-                    <Tab
-                      key={index}
-                      value={index.toString()}
-                      label={t(`${tab}`)}
-                      sx={activeTab === index ? useStyle : null}
-                    />
-                  ))}
-                </TabList>
-              </Box>
-            </Container>
-          </Box>
+          <HeaderTabs
+            activeTab={activeTab}
+            handleChange={handleChange}
+            headerTabs={headerTabs}
+          />
           <Box sx={{ marginTop: '48px' }}>
             <Container maxWidth="xl">
               <TabPanel value="0">
@@ -631,10 +595,6 @@ export const User = () => {
                                               : null
                                           }
                                           error={invalid}
-                                          defaultValue={getProvinceName(
-                                            getValues('province_id'),
-                                            listProvince
-                                          )}
                                           {...field}
                                           onChange={(e) =>
                                             handleChangeProvince(e)
@@ -644,9 +604,9 @@ export const User = () => {
                                             ? listProvince.map(
                                                 (value: ProvinceType) => (
                                                   <MenuItem
-                                                    value={value.Id}
-                                                    key={value.Id}>
-                                                    {value.Name}
+                                                    value={value.id}
+                                                    key={value.id}>
+                                                    {value.name}
                                                   </MenuItem>
                                                 )
                                               )
@@ -666,15 +626,6 @@ export const User = () => {
                                     <Controller
                                       name="district_id"
                                       control={control}
-                                      defaultValue={
-                                        getValues('district_id')
-                                          ? getDistrictName(
-                                              getValues('province_id'),
-                                              getValues('district_id'),
-                                              listProvince
-                                            ) || undefined
-                                          : undefined
-                                      }
                                       render={({
                                         field,
                                         fieldState: { invalid, error }
@@ -700,9 +651,9 @@ export const User = () => {
                                             ? listDistrict.map(
                                                 (value: DistrictType) => (
                                                   <MenuItem
-                                                    value={value.Id}
-                                                    key={value.Id}>
-                                                    {value.Name}
+                                                    value={value.id}
+                                                    key={value.id}>
+                                                    {value.name}
                                                   </MenuItem>
                                                 )
                                               )
@@ -722,16 +673,6 @@ export const User = () => {
                                     <Controller
                                       name="ward_id"
                                       control={control}
-                                      defaultValue={
-                                        getValues('ward_id')
-                                          ? getWardName(
-                                              getValues('province_id'),
-                                              getValues('district_id'),
-                                              getValues('ward_id'),
-                                              listProvince
-                                            )
-                                          : ''
-                                      }
                                       render={({
                                         field,
                                         fieldState: { invalid, error }
@@ -755,9 +696,9 @@ export const User = () => {
                                             ? listWard.map(
                                                 (value: WardType) => (
                                                   <MenuItem
-                                                    value={value.Id}
-                                                    key={value.Id}>
-                                                    {value.Name}
+                                                    value={value.id}
+                                                    key={value.id}>
+                                                    {value.name}
                                                   </MenuItem>
                                                 )
                                               )

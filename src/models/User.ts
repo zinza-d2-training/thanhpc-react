@@ -5,10 +5,10 @@ export interface User {
   full_name: string;
   dob: string;
   gender: string;
-  province_id?: string;
-  district_id?: string;
-  ward_id: string;
+  province_id?: number;
+  district_id?: number;
   password: string;
+  ward_id: number;
 }
 export type UserInsertInput = Pick<
   User,

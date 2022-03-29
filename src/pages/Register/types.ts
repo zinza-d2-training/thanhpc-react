@@ -4,13 +4,12 @@ import { User } from '../../models/User';
 
 export interface UserFormData extends User {
   files: NestedValue<IFile[]>;
-  province_id: string;
-  district_id: string;
-  ward_id: string;
+  province_id: number;
+  district_id: number;
+  ward_id: number;
 }
 export interface IRegister extends User {
   files: File[];
-  ward_id: string;
 }
 export enum Gender {
   Male = 1,

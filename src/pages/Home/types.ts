@@ -24,12 +24,17 @@ export interface StatisticVaccinationByLocal {
 export interface LookUpInjectionSitesByLocation {
   locationName: string;
   streetName: string;
-  ward_id: string;
+  ward_id: number;
   wardName?: string;
-  district_id: string;
+  district_id: number;
   districtName?: string;
-  province_id: string;
+  province_id: number;
   provinceName?: string;
   manager: string;
   numberOfInjectionTables: number;
+}
+export interface Address {
+  province_id: number;
+  district_id: number;
+  ward_id: number;
 }
