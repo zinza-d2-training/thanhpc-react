@@ -7,7 +7,8 @@ import {
 import { useLogin } from '../../hooks/useLogin';
 
 export async function FetchAccount(value: User) {
-  const response = await useLogin({
+  const { user } = useLogin();
+  const response = await user({
     citizen_id: value.citizen_id,
     password: value.password
   });

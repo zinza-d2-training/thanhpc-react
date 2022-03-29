@@ -41,6 +41,10 @@ export interface DistrictType {
 export interface ProvinceType {
   id: number;
   name: string;
+  distribution_plan: number;
+  actual_distribution: number;
+  adult_population: number;
+  injected_number: number;
   created_at: Date;
   updated_at: Date;
   districts: DistrictType[];

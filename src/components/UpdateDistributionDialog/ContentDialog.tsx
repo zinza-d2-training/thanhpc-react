@@ -14,9 +14,9 @@ import { StyledButton } from '../StyledButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { adminSchema } from '../../pages/Admin/schema';
 import { ManageDistributionFormUpdate } from '../../pages/Admin/types';
-import { getProvinceById } from '../../pages/Home/functions';
 import { useState } from 'react';
-import { UseDistributionUpdate } from '../../hooks/useDistributionUpdate';
+import { useDistributionUpdate } from '../../hooks/useDistributionUpdate';
+import { getProvinceById } from '../../pages/User/functions';
 
 interface Props {
   onClose: () => void;
@@ -28,6 +28,7 @@ interface Props {
 export const ContentDialog = (props: Props) => {
   const { data, provinceId, handleRefetch, onClose } = props;
   const listProvince = data;
+  const [mutation] = useDistributionUpdate();
   const province = getProvinceById(provinceId, listProvince);
   const [loading, setLoading] = useState<boolean>(false);
   const {
@@ -38,11 +39,11 @@ export const ContentDialog = (props: Props) => {
     resolver: yupResolver(adminSchema),
     mode: 'onChange',
     defaultValues: {
-      id: province.id,
-      distribution_plan: province.distribution_plan,
-      actual_distribution: province.actual_distribution,
-      adult_population: province.adult_population,
-      injected_number: province.injected_number
+      id: province?.id,
+      distribution_plan: province?.distribution_plan,
+      actual_distribution: province?.actual_distribution,
+      adult_population: province?.adult_population,
+      injected_number: province?.injected_number
     }
   });
 
@@ -51,9 +52,7 @@ export const ContentDialog = (props: Props) => {
   ) => {
     setLoading(true);
     try {
-      const response = await UseDistributionUpdate({
-        ...data
-      });
+      const response = await mutation(data);
       if (response.status === 200) {
         setLoading(false);
         handleRefetch();
@@ -75,7 +74,7 @@ export const ContentDialog = (props: Props) => {
         spacing={3}
         sx={{ px: 3, mt: 3 }}>
         <Box sx={{ width: '400px' }}>
-          <Typography variant="h5">{province.name}</Typography>
+          <Typography variant="h5">{province?.name}</Typography>
         </Box>
         <Box sx={{ width: '400px' }}>
           <Label required={true}>Dân số {'>'}= 18 tuổi</Label>

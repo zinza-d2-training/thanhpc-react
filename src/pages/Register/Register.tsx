@@ -68,7 +68,6 @@ export const Register = () => {
         setSuccess(true);
       }
     } catch (err: any) {
-      console.log(err.message);
       setError(true);
     } finally {
       setLoading(false);

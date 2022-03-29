@@ -24,7 +24,7 @@ import {
 } from './types';
 import { getChildArr } from '../../pages/User/functions';
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
-import { UseUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 
 interface Props {
   onNextStep: () => void;
@@ -73,14 +73,7 @@ export const StepOne = (props: Props) => {
         }
   });
   const injectionOrderNumber = watch('injectionOrderNumber');
-  const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  useEffect(() => {
-    const fetchListProvince = async () => {
-      const result = await UseUnitAdministrative();
-      setListProvince(result);
-    };
-    fetchListProvince();
-  }, []);
+  const { listProvince } = useUnitAdministrative();
 
   const handleChangeProvince = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
