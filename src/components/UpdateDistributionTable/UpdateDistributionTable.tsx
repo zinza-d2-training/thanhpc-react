@@ -25,6 +25,7 @@ export const UpdateDistributionTable = (props: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [provinceId, setProvinceId] = useState<number>(0);
   const handleOpenModal = (id: number) => {
+    console.log('id', id);
     setOpen(true);
     setProvinceId(id);
   };
