@@ -12,7 +12,7 @@ import { Label } from '../../components/Label';
 import { ProvinceType } from '../../pages/User/types';
 import { StyledButton } from '../StyledButton';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { adminSchema } from '../../pages/Admin/schema';
+import { distributionUpdateSchema } from '../../pages/Admin/schema';
 import { ManageDistributionFormUpdate } from '../../pages/Admin/types';
 import { useState } from 'react';
 import { useDistributionUpdate } from '../../hooks/useDistributionUpdate';
@@ -36,7 +36,7 @@ export const ContentDialog = (props: Props) => {
     handleSubmit,
     formState: { isValid }
   } = useForm<ManageDistributionFormUpdate>({
-    resolver: yupResolver(adminSchema),
+    resolver: yupResolver(distributionUpdateSchema),
     mode: 'onChange',
     defaultValues: {
       id: province?.id,
