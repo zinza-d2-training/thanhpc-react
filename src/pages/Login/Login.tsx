@@ -18,9 +18,12 @@ import { loginSchema } from './schema';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { loginSelector, loginAsync } from '../../features/login/loginSlice';
 import { User } from '../../models/User';
+import { useLogin } from '../../hooks/useLogin';
 
 export const Login = () => {
+  const { login } = useLogin();
   const [errMessage, setErrMessage] = useState('');
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     formState: { isValid },
     control,
@@ -42,8 +45,16 @@ export const Login = () => {
     }
   }, [navigate, loginselectorResult]);
 
-  const formSubmitHandler: SubmitHandler<User> = (data: User) => {
-    dispatch(loginAsync(data));
+  const formSubmitHandler: SubmitHandler<User> = async (user: User) => {
+    setLoading(true);
+    try {
+      const { data } = await login(user);
+      dispatch(loginAsync(data));
+    } catch (err) {
+      return err;
+    } finally {
+      setLoading(false);
+    }
   };
   return !loginselectorResult.response?.data?.accessToken ? (
     <Grid container>
@@ -147,13 +158,9 @@ export const Login = () => {
                     }
                   }}
                   variant="contained"
-                  disabled={Boolean(!isValid || loginselectorResult.loading)}
+                  disabled={Boolean(!isValid || loading)}
                   type="submit"
-                  startIcon={
-                    loginselectorResult.loading && (
-                      <CircularProgress size={20} />
-                    )
-                  }>
+                  startIcon={loading && <CircularProgress size={20} />}>
                   Đăng nhập
                 </Button>
               </Box>
