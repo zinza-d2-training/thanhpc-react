@@ -7,6 +7,7 @@ import { Footer } from '../../components/Footer/Footer';
 import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
 import { UpdateDistributionTable } from '../../components/UpdateDistributionTable/UpdateDistributionTable';
 import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
+import { VaccinationSite } from './VaccinationSite';
 
 const headerTabs = [
   'Phân bổ',
@@ -17,26 +18,14 @@ const headerTabs = [
   'Tiền sử',
   'Tài liệu'
 ];
-const tableHead = [
-  'STT',
-  'Tỉnh/Thành phố',
-  'Dự kiến KH phân bổ',
-  'Phân bổ thực tế',
-  'Dân số >= 18 tuổi',
-  'Số liều đã tiêm',
-  'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
-  'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước',
-  'Thao tác'
-];
 export const Admin = () => {
   const [activeTab, setActiveTab] = useState<number>(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
-  const { listProvince, reFetch } = useUnitAdministrative();
-
+  const { listProvince, reFetchListProvince } = useUnitAdministrative();
   const handleRefetch = () => {
-    reFetch();
+    reFetchListProvince();
   };
   return (
     <>
@@ -53,16 +42,17 @@ export const Admin = () => {
               <TabPanel value="0" sx={{ padding: 0, mb: 10 }}>
                 <UpdateDistributionTable
                   dataBody={listProvince}
-                  dataHead={tableHead}
                   handleRefetch={handleRefetch}
                 />
               </TabPanel>
-              <TabPanel value="1"></TabPanel>
-              <TabPanel value="2"></TabPanel>
-              <TabPanel value="3"></TabPanel>
-              <TabPanel value="4"></TabPanel>
-              <TabPanel value="5"></TabPanel>
-              <TabPanel value="6"></TabPanel>
+              <TabPanel value="1" sx={{ padding: 0, mb: 10 }}>
+                <VaccinationSite />
+              </TabPanel>
+              <TabPanel value="2" sx={{ padding: 0, mb: 10 }}></TabPanel>
+              <TabPanel value="3" sx={{ padding: 0, mb: 10 }}></TabPanel>
+              <TabPanel value="4" sx={{ padding: 0, mb: 10 }}></TabPanel>
+              <TabPanel value="5" sx={{ padding: 0, mb: 10 }}></TabPanel>
+              <TabPanel value="6" sx={{ padding: 0, mb: 10 }}></TabPanel>
             </Container>
           </Box>
         </TabContext>

@@ -4,14 +4,14 @@ import axiosClient from '../utils/axios/axios';
 
 export const useUnitAdministrative = () => {
   const [listProvince, setListProvince] = useState<ProvinceType[]>([]);
-  const reFetch = useCallback(async () => {
+  const reFetchListProvince = useCallback(async () => {
     const { data } = await axiosClient.get<ProvinceType[]>(
       'http://localhost:4000/export-unit-administrative'
     );
     setListProvince(data);
   }, []);
   useEffect(() => {
-    reFetch();
-  }, [reFetch]);
-  return { listProvince, reFetch };
+    reFetchListProvince();
+  }, [reFetchListProvince]);
+  return { listProvince, reFetchListProvince };
 };

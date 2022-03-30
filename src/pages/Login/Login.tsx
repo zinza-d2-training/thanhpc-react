@@ -45,7 +45,6 @@ export const Login = () => {
   const formSubmitHandler: SubmitHandler<User> = (data: User) => {
     dispatch(loginAsync(data));
   };
-
   return !loginselectorResult.response?.data?.accessToken ? (
     <Grid container>
       <Grid item xs={6}>

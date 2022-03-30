@@ -15,12 +15,22 @@ import { useState } from 'react';
 import { ProvinceType } from '../../pages/User/types';
 
 interface Props {
-  dataHead: unknown[];
   dataBody: ProvinceType[];
   handleRefetch: () => void;
 }
+const tableHead = [
+  'STT',
+  'Tỉnh/Thành phố',
+  'Dự kiến KH phân bổ',
+  'Phân bổ thực tế',
+  'Dân số >= 18 tuổi',
+  'Số liều đã tiêm',
+  'Tỷ lệ tiêm chủng/ Vắc xin phân bổ thực tế',
+  'Tỷ lệ phân bổ vắc xin/Tổng số phân bổ cả nước',
+  'Thao tác'
+];
 export const UpdateDistributionTable = (props: Props) => {
-  const { dataHead, dataBody, handleRefetch } = props;
+  const { dataBody, handleRefetch } = props;
   const handleCloseModal = () => setOpen(false);
   const [open, setOpen] = useState<boolean>(false);
   const [provinceId, setProvinceId] = useState<number>(0);
@@ -43,7 +53,7 @@ export const UpdateDistributionTable = (props: Props) => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {dataHead.map((value: any, index: number) => (
+              {tableHead.map((value: any, index: number) => (
                 <TableCell key={index}>
                   <Trans>{value}</Trans>
                 </TableCell>
@@ -84,7 +94,6 @@ export const UpdateDistributionTable = (props: Props) => {
                 <TableCell>
                   <IconButton
                     color="primary"
-                    aria-label="upload picture"
                     onClick={() => handleOpenModal(row.id)}
                     component="span">
                     <CreateIcon />
