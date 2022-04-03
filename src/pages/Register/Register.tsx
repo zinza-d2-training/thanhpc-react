@@ -64,7 +64,7 @@ export const Register = () => {
     setLoading(true);
     try {
       const response = await UseRegister(formData);
-      if ((await response.status) === 200) {
+      if ((await response.status) === 201) {
         setSuccess(true);
       }
     } catch (err: any) {

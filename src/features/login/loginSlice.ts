@@ -13,14 +13,12 @@ export const loginAsync = createAsyncThunk(
   '/login/FetchAccount',
   async (value: LoginQueryResult, { rejectWithValue }) => {
     try {
-      console.log('value', value);
       return {
         data: value,
         statusCode: 200,
         message: 'Đăng nhập thành công!'
       };
     } catch (err: any) {
-      console.log('err', err);
       return rejectWithValue({
         data: null,
         statusCode: 404,

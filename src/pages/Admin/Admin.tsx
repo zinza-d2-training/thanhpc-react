@@ -8,6 +8,7 @@ import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
 import { UpdateDistributionTable } from '../../components/UpdateDistributionTable/UpdateDistributionTable';
 import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 import { VaccinationSite } from './VaccinationSite';
+import { PersonalInformation } from './PersonalInformation';
 
 const headerTabs = [
   'Phân bổ',
@@ -50,7 +51,9 @@ export const Admin = () => {
               </TabPanel>
               <TabPanel value="2" sx={{ padding: 0, mb: 10 }}></TabPanel>
               <TabPanel value="3" sx={{ padding: 0, mb: 10 }}></TabPanel>
-              <TabPanel value="4" sx={{ padding: 0, mb: 10 }}></TabPanel>
+              <TabPanel value="4" sx={{ padding: 0, mb: 10 }}>
+                <PersonalInformation />
+              </TabPanel>
               <TabPanel value="5" sx={{ padding: 0, mb: 10 }}></TabPanel>
               <TabPanel value="6" sx={{ padding: 0, mb: 10 }}></TabPanel>
             </Container>
