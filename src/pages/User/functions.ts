@@ -40,10 +40,10 @@ export const getWardName = (
       (value: DistrictType) => value.id === district_id
     )?.wards;
     if (listWard) {
-      let wardName = listWard.find(
+      let ward_name = listWard.find(
         (value: WardType) => value.id === ward_id
       )?.name;
-      return wardName;
+      return ward_name;
     }
   }
   return undefined;
