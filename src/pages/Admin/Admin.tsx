@@ -8,6 +8,7 @@ import { HeaderTabs } from '../HeaderTabs/HeaderTabs';
 import { UpdateDistributionTable } from '../../components/UpdateDistributionTable/UpdateDistributionTable';
 import { useUnitAdministrative } from '../../hooks/useUnitAdministrative';
 import { VaccinationSite } from './VaccinationSite';
+import { VaccineRegistration } from './VaccineRegistration';
 import { PersonalInformation } from './PersonalInformation';
 
 const headerTabs = [
@@ -15,7 +16,7 @@ const headerTabs = [
   'Điểm tiêm',
   'Đăng ký',
   'Chứng nhận',
-  'Người dùng',
+  'Thông tin cá nhân',
   'Tiền sử',
   'Tài liệu'
 ];
@@ -49,7 +50,9 @@ export const Admin = () => {
               <TabPanel value="1" sx={{ padding: 0, mb: 10 }}>
                 <VaccinationSite />
               </TabPanel>
-              <TabPanel value="2" sx={{ padding: 0, mb: 10 }}></TabPanel>
+              <TabPanel value="2" sx={{ padding: 0, mb: 10 }}>
+                <VaccineRegistration />
+              </TabPanel>
               <TabPanel value="3" sx={{ padding: 0, mb: 10 }}></TabPanel>
               <TabPanel value="4" sx={{ padding: 0, mb: 10 }}>
                 <PersonalInformation />

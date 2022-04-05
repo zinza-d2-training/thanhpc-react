@@ -6,7 +6,7 @@ import {
   VaccinationSiteUpdate
 } from '../pages/Admin/types';
 import axiosClient from '../utils/axios/axios';
-import { VaccinationSiteCreateResponse } from './types/VaccinationSiteUpdateResponse';
+import { VaccinationSiteCreateResponse } from './types/VaccinationSiteCreateResponse';
 
 export const useGetVaccinationSite = () => {
   const [vaccinationSites, setVaccinationSites] = useState<VaccinationSite[]>(

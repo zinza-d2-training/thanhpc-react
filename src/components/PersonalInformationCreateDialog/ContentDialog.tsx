@@ -7,7 +7,7 @@ import {
   CircularProgress,
   MenuItem
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Trans } from 'react-i18next';
 import { Label, StyledButton } from '..';
@@ -117,9 +117,6 @@ export const ContentDialog = (props: Props) => {
       setLoading(false);
     }
   };
-  useEffect(() => {
-    console.log('getValues()', getValues());
-  }, [getValues]);
   return (
     <>
       <Stack

@@ -1,4 +1,8 @@
-import { PersonalInformation, VaccinationSite } from './types';
+import {
+  PersonalInformation,
+  VaccinationSite,
+  VaccineRegistration
+} from './types';
 
 export const getVaccinationSiteById = (
   arrArgs: VaccinationSite[],
@@ -11,4 +15,10 @@ export const getPersonalInformationById = (
   id: number
 ) => {
   return arrArgs.find((value: PersonalInformation) => value.id === id);
+};
+export const getVaccineRegistrationById = (
+  arrArgs: VaccineRegistration[],
+  id: number
+) => {
+  return arrArgs.find((value: VaccineRegistration) => value.id === id);
 };

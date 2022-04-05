@@ -23,6 +23,18 @@ export const useGetPersonalInformation = () => {
   }, [reFetchPersonalInformations]);
   return { personalInformations, reFetchPersonalInformations };
 };
+export const useGetPersonalInformationByCitizenId = () => {
+  const getPersonalInformationByCitizenId = useCallback(
+    async (citizen_id: string): Promise<AxiosResponse> => {
+      return await axiosClient.get<PersonalInformation>(
+        `http://localhost:4000/personal-informations/${citizen_id}`
+      );
+    },
+    []
+  );
+
+  return { getPersonalInformationByCitizenId };
+};
 export const useDeletePersonalInformation = () => {
   const deletePersonalInformation = useCallback(
     async (id: number): Promise<AxiosResponse> => {
