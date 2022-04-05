@@ -15,8 +15,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Trans } from 'react-i18next';
 
-import { logout, loginSelector } from '../../features/login/loginSlice';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { logout } from '../../features/login/loginSlice';
+import { useAppDispatch } from '../../store/hooks';
 import { useNavigate } from 'react-router-dom';
 const defaultStyle = {
   color: '#fff',
@@ -32,7 +32,6 @@ export const SidebarUserMenu = (props: Props) => {
   const anchorRef = useRef<HTMLButtonElement>(null);
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const loginSelectorResult = useAppSelector(loginSelector);
   const navigate = useNavigate();
   const handleOpenMenu = () => {
     setOpen(true);

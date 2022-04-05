@@ -7,17 +7,17 @@ import {
 import { useLogin } from '../../hooks/useLogin';
 
 export async function FetchAccount(value: User) {
-  const { user } = useLogin();
-  const response = await user({
+  const { login } = useLogin();
+  const response = await login({
     citizen_id: value.citizen_id,
     password: value.password
   });
-  if (response.accessToken) {
-    const token = response.accessToken;
+  if (response.data.accessToken) {
+    const token = response.data.accessToken;
     const data: QueryResult<LoginQueryResult> = {
       payload: {
-        citizen_id: response.payload.citizen_id,
-        full_name: response.payload.full_name
+        citizen_id: response.data.payload.citizen_id,
+        full_name: response.data.payload.full_name
       },
       accessToken: token
     };

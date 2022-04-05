@@ -1,25 +1,29 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { FetchAccount } from './loginAPI';
-import { User } from '../../models/User';
-import { LoginQueryResponse } from './responseLogin';
+import { LoginQueryResponse, LoginQueryResult } from './responseLogin';
 import { RootState } from '../../store';
 
 interface LoginState {
   response: LoginQueryResponse | null;
-  loading: boolean;
 }
 const initialState: LoginState = {
-  response: null,
-  loading: false
+  response: null
 };
+
 export const loginAsync = createAsyncThunk(
   '/login/FetchAccount',
-  async (value: User, { rejectWithValue }) => {
+  async (value: LoginQueryResult, { rejectWithValue }) => {
     try {
-      const response = await FetchAccount(value);
-      return response;
+      return {
+        data: value,
+        statusCode: 200,
+        message: 'Đăng nhập thành công!'
+      };
     } catch (err: any) {
-      return rejectWithValue(err.data);
+      return rejectWithValue({
+        data: null,
+        statusCode: 404,
+        message: 'Tài khoản hoặc mật khẩu không chính xác!'
+      });
     }
   }
 );
@@ -29,20 +33,14 @@ export const loginSlice = createSlice({
   reducers: {
     logout(state) {
       state.response = null;
-      state.loading = false;
     }
   },
   extraReducers(builder) {
-    builder.addCase(loginAsync.pending, (state) => {
-      state.loading = true;
-    });
     builder.addCase(loginAsync.fulfilled, (state, action) => {
-      state.loading = false;
-      state.response = action.payload as unknown as LoginQueryResponse;
+      state.response = action.payload;
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.response = action.payload as LoginQueryResponse;
-      state.loading = false;
     });
   }
 });

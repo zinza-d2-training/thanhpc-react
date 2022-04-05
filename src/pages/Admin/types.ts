@@ -50,3 +50,60 @@ export interface VaccinationSiteCreate {
 export interface VaccinationSiteUpdate extends VaccinationSiteCreate {
   id: number;
 }
+
+export interface PriorityGroup {
+  id: number;
+  name: string;
+}
+export interface Injection {
+  id: number;
+  name: string;
+}
+export interface PersonalInformation {
+  id: number;
+  injection_id: number;
+  full_name: string;
+  dob: Date;
+  gender: number;
+  phone_number: string;
+  email: string | null;
+  citizen_id: string;
+  health_insurance_number: string | null;
+  occupation: string | null;
+  workplace: string | null;
+  address: string | null;
+  ward_id: number;
+  ethnic: string | null;
+  nationality: string | null;
+  priority_group_id: number;
+  expected_date: Date | null;
+  session_id: number | null;
+  priorityGroup: PriorityGroup;
+  injection: Injection;
+  ward: Ward;
+}
+
+export interface PersonalInformationCreate {
+  injection_id: number;
+  full_name: string;
+  dob: Date;
+  gender: number;
+  phone_number: string;
+  email: string | null;
+  citizen_id: string;
+  health_insurance_number: string | null;
+  occupation: string | null;
+  workplace: string | null;
+  address: string | null;
+  ward_id: number;
+  district_id: number;
+  province_id: number;
+  ethnic: string | null;
+  nationality: string | null;
+  priority_group_id: number;
+  expected_date: Date | null;
+  session_id: number | null;
+}
+export interface PersonalInformationUpdate extends PersonalInformationCreate {
+  id: number;
+}

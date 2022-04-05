@@ -7,7 +7,7 @@ import {
   CircularProgress,
   MenuItem
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Trans } from 'react-i18next';
 import { Label, StyledButton } from '..';
@@ -33,7 +33,7 @@ export const ContentDialog = (props: Props) => {
     clearErrors,
     setError,
     trigger,
-    formState: { isValid, errors }
+    formState: { isValid }
   } = useForm<VaccinationSiteCreate>({
     resolver: yupResolver(vaccinationSiteSchema),
     mode: 'onChange',
@@ -88,10 +88,6 @@ export const ContentDialog = (props: Props) => {
     clearErrors('ward_id');
     trigger();
   };
-  useEffect(() => {
-    if (errors.province_id || errors.district_id || errors.ward_id) {
-    }
-  }, [errors]);
   const formSubmitHandler: SubmitHandler<VaccinationSiteCreate> = async (
     data: VaccinationSiteCreate
   ) => {
