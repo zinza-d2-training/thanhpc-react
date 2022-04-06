@@ -41,7 +41,7 @@ export const VaccinatedTable = (props: Props) => {
               <TableCell component="th" scope="row">
                 {index}
               </TableCell>
-              <TableCell>{row.provinceName}</TableCell>
+              <TableCell>{row.province_name}</TableCell>
               <TableCell>{row.distributionPlan}</TableCell>
               <TableCell>{row.actualDistribution}</TableCell>
               <TableCell>{row.population}</TableCell>

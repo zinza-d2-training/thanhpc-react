@@ -16,6 +16,10 @@ export const vaccinationSiteSchema = yup.object().shape({
   site_manager: yup.string().required('Đây là trường bắt buộc!'),
   number_of_vaccination_table: yup.string().required('Đây là trường bắt buộc!')
 });
+export const vaccineRegistrationSchema = yup.object().shape({
+  status: yup.string().required('Đây là trường bắt buộc!'),
+  personal_info_id: yup.string().required('Đây là trường bắt buộc!')
+});
 export const personalInformationSchema = yup.object().shape({
   injection_id: yup.number().required('Đây là trường bắt buộc!'),
   full_name: yup.string().required('Đây là trường bắt buộc!'),

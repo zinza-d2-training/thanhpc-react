@@ -35,9 +35,9 @@ import { lowestInjectionRate } from '../../db/lowestInjectionRate';
 import { statisticVaccinationByLocal } from '../../db/statisticVaccinationByLocal';
 import { statisticVaccinationByLocalMore } from '../../db/statisticVaccinationByLocal';
 import { Address, StatisticVaccinationByLocal } from '../../pages/Home/types';
-import { lookUpInjectionSitesByLocation } from '../../db/lookUpInjectionSitesByLocation';
 import { LookUpInjectionSitesByLocation } from '../../pages/Home/types';
 import { WardType, DistrictType, ProvinceType } from '../../pages/User/types';
+import { useGetVaccinationSite } from '../../hooks/useVaccinationSite';
 
 import {
   Chart,
@@ -93,6 +93,7 @@ const dataAfterLookUpByLocationHeader = [
 ];
 
 export const Home = () => {
+  const { vaccinationSites } = useGetVaccinationSite();
   const { listProvince } = useUnitAdministrative();
   const { t } = useTranslation();
   const { control, getValues, setValue } = useForm<Address>({
@@ -112,6 +113,21 @@ export const Home = () => {
     LookUpInjectionSitesByLocation[]
   >([]);
 
+  const lookUpInjectionSitesByLocation: LookUpInjectionSitesByLocation[] =
+    vaccinationSites.map((vaccinationSite) => {
+      return {
+        name: vaccinationSite.name,
+        street_name: vaccinationSite.name,
+        ward_id: vaccinationSite.ward.id,
+        ward_name: vaccinationSite.ward.name,
+        district_id: vaccinationSite.ward.district.id,
+        district_name: vaccinationSite.ward.district.name,
+        province_id: vaccinationSite.ward.district.province.id,
+        province_name: vaccinationSite.ward.district.province.name,
+        manager: vaccinationSite.site_manager,
+        number_of_vaccination_table: vaccinationSite.number_of_vaccination_table
+      };
+    });
   const handleLoadMoreVaccinationByLocal = useCallback(() => {
     const newData: StatisticVaccinationByLocal[] =
       statisticVaccinationByLocalMore;
@@ -163,13 +179,13 @@ export const Home = () => {
     }
     newData.forEach((value) => {
       if (listProvince.length > 0) {
-        value.provinceName = getProvinceName(value.province_id, listProvince);
-        value.districtName = getDistrictName(
+        value.province_name = getProvinceName(value.province_id, listProvince);
+        value.district_name = getDistrictName(
           value.province_id,
           value.district_id,
           listProvince
         );
-        value.wardName = getWardName(
+        value.ward_name = getWardName(
           value.province_id,
           value.district_id,
           value.ward_id,
@@ -183,13 +199,13 @@ export const Home = () => {
   useEffect(() => {
     lookUpInjectionSitesByLocation.forEach((value) => {
       if (listProvince.length > 0) {
-        value.provinceName = getProvinceName(value.province_id, listProvince);
-        value.districtName = getDistrictName(
+        value.province_name = getProvinceName(value.province_id, listProvince);
+        value.district_name = getDistrictName(
           value.province_id,
           value.district_id,
           listProvince
         );
-        value.wardName = getWardName(
+        value.ward_name = getWardName(
           value.province_id,
           value.district_id,
           value.ward_id,
@@ -633,22 +649,22 @@ export const Home = () => {
                               scope="row">
                               {index}
                             </TableCell>
+                            <TableCell align="center">{row.name}</TableCell>
                             <TableCell align="center">
-                              {row.locationName}
+                              {row.street_name}
                             </TableCell>
                             <TableCell align="center">
-                              {row.streetName}
-                            </TableCell>
-                            <TableCell align="center">{row.wardName}</TableCell>
-                            <TableCell align="center">
-                              {row.districtName}
+                              {row.ward_name}
                             </TableCell>
                             <TableCell align="center">
-                              {row.provinceName}
+                              {row.district_name}
+                            </TableCell>
+                            <TableCell align="center">
+                              {row.province_name}
                             </TableCell>
                             <TableCell align="center">{row.manager}</TableCell>
                             <TableCell align="center">
-                              {row.numberOfInjectionTables}
+                              {row.number_of_vaccination_table}
                             </TableCell>
                           </TableRow>
                         )

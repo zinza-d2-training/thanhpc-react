@@ -107,3 +107,22 @@ export interface PersonalInformationCreate {
 export interface PersonalInformationUpdate extends PersonalInformationCreate {
   id: number;
 }
+export interface GetPersonalInformationByCitizenIdResult {
+  citizen_id: string;
+  full_name: string;
+  phone_number: string;
+  dob: Date;
+}
+
+export interface VaccineRegistration {
+  id: number;
+  status: string;
+  personalInformation: PersonalInformation;
+}
+export interface VaccineRegistrationCreate {
+  personal_info_id: number;
+  status: string;
+}
+export interface VaccineRegistrationUpdate extends VaccineRegistrationCreate {
+  id: number;
+}
